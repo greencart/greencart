@@ -1,31 +1,17 @@
 <?php
-/**
- * This is core configuration file.
+
+/*
+ * This file is part of the GreenCart package.
  *
- * Use it to configure core behaviour ofCake.
+ * Copyright (c) 2011 Sebastian Ionescu
  *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 /**
- * In this file you set up your database connection details.
- *
- * @package       cake.config
- */
-/**
- * Database configuration class.
- * You can specify multiple configurations for production, development and testing.
+ * Database configuration class. You can specify multiple configurations for production,
+ * development and testing.
  *
  * driver => The name of a supported driver; valid options are as follows:
  *		Datasabe/Mysql 		- MySQL 4 & 5,
@@ -33,10 +19,6 @@
  *		Datasabe/Postgres	- PostgreSQL 7 and higher,
  *		Datasabe/Mssql		- Microsoft SQL Server 2000 and higher,
  *		Datasabe/Oracle		- Oracle 8 and higher
- *
- * You can add custom database drivers (or override existing drivers) by adding the
- * appropriate file to app/models/datasources/database.  Drivers should be named 'MyDriver.php',
- *
  *
  * persistent => true / false
  * Determines whether or not the database should use a persistent connection
@@ -55,26 +37,27 @@
  * For MySQL, Postgres specifies the character encoding to use when connecting to the
  * database. Uses database default not specified.
  *
+ * @author CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  */
-class DATABASE_CONFIG {
-
+class DATABASE_CONFIG
+{
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'database_name',
-		'prefix' => '',
+		'host'       => 'localhost',
+		'login'      => 'root',
+		'password'   => 'password',
+		'database'   => 'greencart',
+		'prefix'     => 'gc_',
 	);
 
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'test_database_name',
-		'prefix' => '',
+		'host'       => 'localhost',
+		'login'      => 'root',
+		'password'   => 'password',
+		'database'   => 'greencart_test',
+		'prefix'     => 'gc_test_',
 	);
 }
