@@ -111,7 +111,13 @@ define('LOG_ERROR', 2);
  * - 'cache' - Use the Cache class to save sessions.
  */
 Configure::write('Session', array(
-	'defaults' => 'php'
+	'cookie'         => 'GCSID',
+	'cookieTimeout'  => 1440,
+	'timeout'        => 1440,
+	'checkAgent'     => true,
+	'autoRegenerate' => true,
+	'defaults'       => 'database',
+	'handler'        => array('database' => 'default', 'model' => 'Session', 'table' => 'sessions')
 ));
 
 /**
