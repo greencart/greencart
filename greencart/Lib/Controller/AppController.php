@@ -44,6 +44,27 @@ class AppController extends Controller
 	);
 
 	/**
+	 * The name of the View class this controller sends output to.
+	 *
+	 * @var string
+	 */
+	public $viewClass = 'Twig';
+
+	/**
+	 * The name of the View theme this controller uses.
+	 *
+	 * @var string
+	 */
+	public $theme = 'greencart';
+
+	/**
+	 * File extension for view templates.
+	 *
+	 * @var string
+	 */
+	public $ext = '.twig';
+
+	/**
 	 * Called before the controller action.
 	 *
 	 * @return void

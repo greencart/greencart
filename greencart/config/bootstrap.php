@@ -23,3 +23,16 @@ App::import('Lib', 'functions');
  * Setup a 'default' cache configuration for use in the application.
  */
 Cache::config('default', array('engine' => 'File', 'prefix' => 'gc_'));
+
+/**
+ * Twig Template Engine configuration
+ *
+ * @link http://www.twig-project.org/doc/api.html#environment-options
+ */
+Configure::write('Twig', array(
+	'debug'            => (bool) Configure::read('debug'),
+	'charset'          => strtolower(Configure::read('App.encoding')),
+	'cache'            => CACHE . 'views' . DS . 'twig',
+	'strict_variables' => true,
+	'autoescape'       => false
+));
