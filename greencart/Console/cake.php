@@ -21,6 +21,8 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  */
-require_once(dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'lib'. DIRECTORY_SEPARATOR . 'Cake' . DIRECTORY_SEPARATOR . 'Console' . DIRECTORY_SEPARATOR . 'ShellDispatcher.php');
+define('DS', DIRECTORY_SEPARATOR);
+
+require_once(dirname(dirname(dirname(__FILE__))) . DS . 'vendors' . DS . 'cakephp' . DS . 'lib'. DS . 'Cake' . DS . 'Console' . DS . 'ShellDispatcher.php');
 
 return ShellDispatcher::run($argv);
