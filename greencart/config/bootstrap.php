@@ -17,6 +17,12 @@
  * that your application uses.
  */
 
+App::build(array(
+	'GreenCart' => array('%sLib'.DS.'GreenCart'.DS)
+));
+
+App::uses('GreenCart', 'GreenCart');
+
 App::import('Lib', 'functions');
 
 /**
