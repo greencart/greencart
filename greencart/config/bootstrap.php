@@ -18,7 +18,8 @@
  */
 
 App::build(array(
-	'GreenCart' => array('%sLib'.DS.'GreenCart'.DS)
+	'locales'   => array(ROOT.DS.'languages'.DS),
+	'GreenCart' => array(APP.'Lib'.DS.'GreenCart'.DS)
 ));
 
 App::uses('GreenCart', 'GreenCart');
@@ -38,7 +39,7 @@ Cache::config('default', array('engine' => 'File', 'prefix' => 'gc_'));
 Configure::write('Twig', array(
 	'debug'            => (bool) Configure::read('debug'),
 	'charset'          => strtolower(Configure::read('App.encoding')),
-	'cache'            => CACHE . 'views' . DS . 'twig',
+	'cache'            => CACHE.'views'.DS.'twig',
 	'strict_variables' => true,
 	'autoescape'       => false
 ));

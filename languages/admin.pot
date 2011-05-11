@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GreenCart 1.0.0\n"
+"Report-Msgid-Bugs-To: sebastian@greencart-project.org\n"
+"POT-Creation-Date: 2011-05-10 20:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Sebastian Ionescu <sebastian@greencart-project.org>\n"
+"Language-Team: GreenCart <contact@greencart-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "error_auth_forbidden"
+msgstr "You are not authorized to access that location!"
+
+msgid "error_auth_login"
+msgstr "Invalid username or password!"
+
+msgid "error_auth_login_disabled"
+msgstr "Your account has been disabled!"
+
