@@ -19,11 +19,30 @@ App::uses('AppController', 'Controller');
 class AdministratorsController extends AppController
 {
 	/**
+	 * Called before the controller action.
+	 *
+	 * @return void
+	 */
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+
+		// Auth component settings
+
+		$this->Auth->allow('admin_dashboard');
+	}
+
+	/**
 	 * AdministratorsController::dashboard() Action
 	 *
 	 * @return void
 	 */
-	public function admin_dashboard() {}
+	public function admin_dashboard()
+	{
+		if (!$this->Auth->loggedIn()) {
+			$this->redirect($this->Auth->loginAction);
+		}
+	}
 
 	/**
 	 * AdministratorsController::login() Action
