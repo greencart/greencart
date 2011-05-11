@@ -17,6 +17,27 @@
  * different urls to chosen controllers and their actions (functions).
  */
 
-// Base path
+Router::parseExtensions('html', 'xml', 'rss', 'json', 'txt');
+Router::connectNamed(false);
 
-Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+$routes = array(
+
+	// Base path
+
+	'/' => array(
+		array('controller' => 'pages', 'action' => 'display', 'home')
+	),
+);
+
+$adminRoutes = array(
+
+	// Base path
+
+	'/admin' => array(
+		array('controller' => 'administrators', 'action' => 'dashboard', 'admin' => true)
+	),
+);
+
+foreach ($routes + $adminRoutes as $route => $options) {
+	Router::connect($route, $options[0], isset($options[1]) ? $options[1] : array());
+}

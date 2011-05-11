@@ -31,7 +31,7 @@ class AppController extends Controller
 	 * @var array
 	 */
 	public $components = array(
-		'Session', 'Cookie', 'Security', 'Auth', 'RequestHandler'
+		'Session', 'Cookie', 'Security', 'Auth', 'RequestHandler', 'Acl', 'Users'
 	);
 
 	/**
@@ -71,7 +71,34 @@ class AppController extends Controller
 	 */
 	public function beforeFilter()
 	{
-		$this->Auth->allow('*');
+		// General configuration
+
+		$this->request->addDetector('admin', array(
+			'callback' => array(__CLASS__, 'adminRequestDetector')
+		));
+
+		// Auth component settings
+
+		if ($this->request->isAdmin()) {
+			$properties = array(
+				'authenticate'   => array('Form' => array('userModel' => 'Administrator')),
+				'loginAction'    => array('controller' => 'administrators', 'action' => 'login'),
+				'loginRedirect'  => array('controller' => 'administrators', 'action' => 'dashboard'),
+				'logoutRedirect' => array('controller' => 'administrators', 'action' => 'login'),
+				'authError'      => __d('admin', 'error_auth_forbidden')
+			);
+			AuthComponent::$sessionKey = 'Auth.Administrator';
+		} else {
+			$properties = array();
+			$this->Auth->allow();
+		}
+		foreach ($properties as $property => $value) {
+			$this->Auth->{$property} = $value;
+		}
+
+		// Security component settings
+
+		$this->Security->requireAuth();
 	}
 
 	/**
@@ -79,7 +106,12 @@ class AppController extends Controller
 	 *
 	 * @return void
 	 */
-	public function beforeRender() {}
+	public function beforeRender()
+	{
+		if ($this->request->isAdmin()) {
+			$this->theme = 'greencart_admin';
+		}
+	}
 
 	/**
 	 * Called after the controller action is run and rendered.
@@ -87,4 +119,46 @@ class AppController extends Controller
 	 * @return void
 	 */
 	public function afterFilter() {}
+
+	/**
+	 * Used to set a session variable that can be used to output messages in the view.
+	 *
+	 * @param string $message Message to be flashed.
+	 * @param array $params Parameters to be sent to layout as view variables.
+	 * @return void
+	 */
+	public function setFlash($message, $params = array())
+	{
+		if (is_string($params)) {
+			$params = array('key' => $params);
+		}
+		$key     = (isset($params['key']) ? $params['key'] : 'flash');
+		$element = (isset($params['element']) ? $params['element'] : 'default');
+		unset($params['key'], $params['element']);
+
+		$this->Session->setFlash($message, $element, $params, $key);
+	}
+
+	/**
+	 * Clears request data.
+	 *
+	 * @return void
+	 */
+	public function clearRequestData()
+	{
+		$this->request->data = array();
+	}
+
+	/**
+	 * Request detector callback to determine whether the request
+	 * was made via an admin route or not.
+	 *
+	 * $this->request->isAdmin();
+	 *
+	 * @return bool
+	 */
+	public static function adminRequestDetector($request)
+	{
+		return !empty($request->params['admin']);
+	}
 }
