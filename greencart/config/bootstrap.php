@@ -40,6 +40,6 @@ Configure::write('Twig', array(
 	'debug'            => (bool) Configure::read('debug'),
 	'charset'          => strtolower(Configure::read('App.encoding')),
 	'cache'            => CACHE.'views'.DS.'twig',
-	'strict_variables' => true,
+	'strict_variables' => (bool) Configure::read('debug'),
 	'autoescape'       => false
 ));

@@ -10,32 +10,38 @@
  */
 
 /**
- * GreenCart extension for Twig
+ * GreenCart extension for Twig Template Engine
  *
  * @author Sebastian Ionescu <sebastian.c.ionescu@gmail.com>
  */
 class Twig_Extension_GreenCart extends Twig_Extension
 {
 	/**
-	 * Returns the token parser instances to add to the existing list.
+	 * Returns a list of functions to add to the existing list.
 	 *
-	 * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+	 * @return array An array of functions
 	 */
-	public function getTokenParsers()
+	public function getFunctions()
 	{
-		return array(new Twig_TokenParser_Trans());
+		return array(
+			'__'    => new Twig_Function_Function('__'),
+			'__n'   => new Twig_Function_Function('__n'),
+			'__d'   => new Twig_Function_Function('__d'),
+			'__dn'  => new Twig_Function_Function('__dn'),
+			'__dc'  => new Twig_Function_Function('__dc'),
+			'__dcn' => new Twig_Function_Function('__dcn'),
+			'__c'   => new Twig_Function_Function('__c'),
+		);
 	}
 
 	/**
-	 * Returns a list of filters to add to the existing list.
+	 * Returns a list of global variables to add to the existing list.
 	 *
-	 * @return array An array of filters
+	 * @return array An array of global variables
 	 */
-	public function getFilters()
+	public function getGlobals()
 	{
-		return array(
-			'trans' => new Twig_Filter_Function('__'),
-		);
+		return array();
 	}
 
 	/**

@@ -47,6 +47,7 @@ class TwigView extends ThemeView
 		$loader     = new Twig_Loader_Filesystem(current(App::path('View')));
 		$this->Twig = new Twig_Environment($loader, Configure::read('Twig'));
 
+		$this->Twig->addGlobal('view', $this);
 		$this->Twig->addExtension(new Twig_Extension_GreenCart());
 	}
 
@@ -70,22 +71,15 @@ class TwigView extends ThemeView
 			include($___viewFn);
 		} else {
 			foreach ($this->Helpers->enabled() as $helper) {
-				$this->{Inflector::underscore($helper)} = $this->Helpers->{$helper};
+				$this->Twig->addGlobal(lcfirst($helper), $this->Helpers->{$helper});
 			}
 
-			$___dataForView['view'] = $this;
 			$___viewFn = str_replace(current(App::path('View')), '', $___viewFn);
 
 			try {
 				echo $this->Twig->loadTemplate($___viewFn)->render($___dataForView);
-			} catch (RuntimeException $e) {
-				debug($e);
-			} catch (Twig_Error_Syntax $e) {
-				debug($e);
-			} catch (Twig_Error_Runtime $e) {
-				debug($e);
-			} catch (Twig_Error $e) {
-				debug($e);
+			} catch (Exception $e) {
+				die($e->getMessage());
 			}
 		}
 
