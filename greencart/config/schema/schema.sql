@@ -21,6 +21,15 @@ CREATE TABLE `gc_administrators` (
 	KEY         `updated`   (`updated`)
 ) ENGINE=MyISAM, CHARSET=UTF8;
 
+CREATE TABLE `gc_configuration` (
+	`id`        INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`key`       VARCHAR(255) NOT NULL,
+	`value`     TEXT,
+	`updated`   DATETIME NOT NULL,
+	PRIMARY KEY       (`id`),
+	UNIQUE KEY  `key` (`key`)
+) ENGINE=MyISAM, CHARSET=UTF8;
+
 CREATE TABLE `gc_sessions` (
 	`id`        CHAR(32) NOT NULL,
 	`data`      TEXT,

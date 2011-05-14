@@ -23,7 +23,9 @@ class AppController extends Controller
 	 *
 	 * @var array
 	 */
-	public $uses = array();
+	public $uses = array(
+		'Configuration'
+	);
 
 	/**
 	 * A list of components this controller uses.
@@ -73,6 +75,7 @@ class AppController extends Controller
 	{
 		// General configuration
 
+		$this->__initConfig();
 		$this->request->addDetector('admin', array(
 			'callback' => array(__CLASS__, 'adminRequestDetector')
 		));
@@ -160,5 +163,22 @@ class AppController extends Controller
 	public static function adminRequestDetector($request)
 	{
 		return !empty($request->params['admin']);
+	}
+
+	/**
+	 * Initializes configuration data.
+	 *
+	 * @return void
+	 */
+	private function __initConfig()
+	{
+		// General configuration
+
+		if (Configure::read('debug') || !($data = Cache::read(Configuration::CACHE_KEY))) {
+			$data = $this->Configuration->getParams();
+			Cache::write(Configuration::CACHE_KEY, $data);
+		}
+
+		Configure::write(Configuration::CONFIG_KEY, $data);
 	}
 }
