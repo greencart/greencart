@@ -74,7 +74,7 @@ class TwigView extends ThemeView
 				$this->Twig->addGlobal(lcfirst($helper), $this->Helpers->{$helper});
 			}
 
-			$___viewFn = str_replace(current(App::path('View')), '', $___viewFn);
+			$___viewFn = str_replace(reset(App::path('View')), '', $___viewFn);
 
 			try {
 				echo $this->Twig->loadTemplate($___viewFn)->render($___dataForView);
