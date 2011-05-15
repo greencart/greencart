@@ -42,7 +42,7 @@ class AppController extends Controller
 	 * @var array
 	 */
 	public $helpers = array(
-		'Session', 'Html', 'Form', 'Js'
+		'Session', 'Html', 'Form', 'Js', 'Page'
 	);
 
 	/**
@@ -102,6 +102,7 @@ class AppController extends Controller
 		// Security component settings
 
 		$this->Security->requireAuth();
+
 	}
 
 	/**
@@ -140,6 +141,24 @@ class AppController extends Controller
 		unset($params['key'], $params['element']);
 
 		$this->Session->setFlash($message, $element, $params, $key);
+	}
+
+	/**
+	 * Makes available the specified helper in view.
+	 *
+	 * @param string $helper The name of helper.
+	 * @param array $settings A list of settings.
+	 * @return void
+	 */
+	public function loadHelper($helper, $settings = array())
+	{
+		if (!in_array($helper, $this->helpers) && !array_key_exists($helper, $this->helpers)) {
+			if ($settings) {
+				$this->helpers[$helper] = $settings;
+			} else {
+				$this->helpers[] = $helper;
+			}
+		}
 	}
 
 	/**
