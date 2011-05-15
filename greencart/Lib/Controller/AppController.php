@@ -57,7 +57,7 @@ class AppController extends Controller
 	 *
 	 * @var string
 	 */
-	public $theme = 'greencart';
+	public $theme = 'GreenCart';
 
 	/**
 	 * File extension for view templates.
@@ -113,7 +113,7 @@ class AppController extends Controller
 	public function beforeRender()
 	{
 		if ($this->request->isAdmin()) {
-			$this->theme = 'greencart_admin';
+			$this->theme = 'GreenCartAdmin';
 		}
 	}
 
