@@ -191,6 +191,8 @@ class AppController extends Controller
 	 */
 	private function __initConfig()
 	{
+		App::uses('Configuration', 'Model');
+
 		// General configuration
 
 		if (Configure::read('debug') || !($data = Cache::read(Configuration::CACHE_KEY))) {
