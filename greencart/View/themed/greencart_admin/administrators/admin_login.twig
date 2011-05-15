@@ -1,8 +1,42 @@
-{{ view.session.flash('auth') }}
-{{ view.form.create('Administrator') }}
-<fieldset>
-	{{ view.form.input('username') }}
-	{{ view.form.input('password') }}
-	{{ view.form.submit('Login') }}
-</fieldset>
-{{ view.form.end() }}
+{{ page.title(__d('admin', 'page_title_administrators_login')) }}
+{{ html.script('administrators_login', false) }}
+
+{{ form.create('Administrator') }}
+	<div class="modal authModal">
+		<div class="modalTitlebar">
+			<div class="title1">{{ __('Welcome to administration panel') }}</div>
+			<div class="title2">{{ __('Please enter your login credentials to continue.') }}</div>
+		</div>
+		<div class="modalContent">
+			{{ session.flash('auth') }}
+			{{
+				form.input('username', {
+					'label': __('Administrator:')
+				})
+			}}
+			{{
+				form.input('password', {
+					'label': __('Password:')
+				})
+			}}
+			<div class="cf" style="margin-top: 10px;">
+				<div class="fl">
+				{{
+					form.input('Auth.remember', {
+						'type' : 'checkbox',
+						'label': __('Keep me logged in')
+					})
+				}}
+				</div>
+				<div class="fr">
+				{{
+					form.submit(__('Login'))
+				}}
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="notice">{{ __('You should not save password information on<br />public or shared computers.') }}</div>
+		</div>
+	</div>
+	<div class="modalOverlay"></div>
+{{ form.end() }}

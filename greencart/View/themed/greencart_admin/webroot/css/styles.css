@@ -1,0 +1,202 @@
+/*
+Theme Name: GreenCart - Admin Panel
+Theme URI: http://www.greencart-project.com/
+Description: Visual theme for GreenCart's Administration Panel
+Version: 1.0
+Author: Sebastian Ionescu
+Author URI: http://www.greencart-project.com/
+*/
+
+@charset "UTF-8";
+
+/* HTML Elements */
+
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+*:focus {
+	outline: 0 !important;
+}
+body {
+	background-color: #FFF;
+	color: #222;
+	font-family: Arial,Tahoma,Verdana,sans-serif;
+	font-size: 12px;
+	margin: 0;
+}
+h1, h2, h3 {
+}
+h2.title {
+}
+h3.title {
+}
+p {
+	margin: 15px 0;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+	text-align: left;
+	width: 100%;
+}
+th {
+	text-align: center;
+}
+th, td {
+	padding: 5px;
+	vertical-align: middle;
+}
+ul, ol {
+}
+
+/* Floated Elements */
+
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.cf:after {
+	clear: both;
+	content: "";
+	display: block;
+}
+
+/* Hidden Dimensions */
+
+.hdim {
+	display: block !important;
+	position: absolute !important;
+	visibility: hidden !important;
+}
+
+/* Header */
+
+#pageHeader {
+	background: transparent url("../img/header.png") repeat-x;
+	height: 120px;
+	width: 100%;
+}
+
+/* Login */
+
+.modal {
+	background-color: #f0f0f0;
+	border: 1px solid #c0c0c0;
+	margin: 30px auto;
+	position: relative;
+	width: 300px;
+	z-index: 20000;
+
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+
+	-moz-box-shadow: 0 0 5px #333;
+	-webkit-box-shadow: 0 0 5px #333;
+	box-shadow: 0 0 5px #333;
+}
+.modalTitlebar {
+	border-bottom: 1px solid #c0c0c0;
+	padding: 10px 20px;
+
+	background: #e0e0e0;
+	background: -moz-linear-gradient(top, #f0f0f0 0%, #e0e0e0 100%);
+	background: -webkit-linear-gradient(top, #f0f0f0 0%,#e0e0e0 100%);
+	background: -o-linear-gradient(top, #f0f0f0 0%,#e0e0e0 100%);
+	background: -ms-linear-gradient(top, #f0f0f0 0%,#e0e0e0 100%);
+	background: linear-gradient(top, #f0f0f0 0%,#e0e0e0 100%);
+
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
+}
+.modalTitlebar .title1 {
+	font-family: "Trebuchet MS",Arial,Tahoma,sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	margin-bottom: 3px;
+}
+.modalTitlebar .title2 {
+	color: #555;
+	font-size: 11px;
+}
+.modalContent {
+	padding: 15px 20px;
+}
+.modalContent .input {
+	margin-top: 10px;
+}
+.modalContent .input:first-child {
+	margin-top: 0;
+}
+.modalContent label {
+	display: block;
+	font-size: 10px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.modalContent .checkbox {
+	margin-top: 5px !important;
+}
+.modalContent .checkbox label {
+	display: inline;
+	font-weight: normal;
+	margin: 0 0 0 5px;
+	vertical-align: top;
+}
+.modalContent input[type="text"],
+.modalContent input[type="password"] {
+	background-color: #fff;
+	border: 1px solid #c0c0c0;
+	font-size: 18px;
+	padding: 5px;
+	width: 248px;
+}
+.modalContent input[type="submit"] {
+	background: #333;
+	color: #eee;
+	font-family: "Trebuchet MS",Arial,Tahoma,sans-serif;
+	font-size: 12px;
+	padding: 3px 15px;
+
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+.modalContent input[type="submit"]:hover {
+	background: #444;
+}
+.modalContent .divider {
+	background-color: #c0c0c0;
+	height: 1px;
+	margin: 10px 0;
+	width: 100%;
+}
+.modalContent .notice {
+	color: #777;
+	font-size: 11px;
+	text-align: center;
+}
+.modalOverlay {
+	background-color: #000;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	opacity: 0.7;
+	z-index: 15000;
+	display: block;
+}
+.authModal #authMessage {
+	background-color: #ffcece;
+	border: 1px solid #ffaaaa;
+	color: #b00;
+	padding: 3px;
+	text-align: center;
+}
