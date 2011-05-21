@@ -16,7 +16,7 @@
  * @since         CakePHP(tm) v 1.2.0.5435
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
- 
+
 App::uses('AclComponent', 'Controller/Component');
 App::uses('AclNode', 'Model');
 class_exists('AclComponent');
@@ -210,7 +210,7 @@ class AclComponentTest extends CakeTestCase {
 	}
 
 /**
- * test that construtor throws an exception when Acl.classname is a 
+ * test that construtor throws an exception when Acl.classname is a
  * non-existant class
  *
  * @expectedException CakeException
@@ -262,7 +262,7 @@ class IniAclTest extends CakeTestCase {
  * @return void
  */
 	function testCheck() {
-		$iniFile = LIBS . 'Test' . DS . 'test_app' . DS . 'Config'. DS . 'acl.ini.php';
+		$iniFile = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS . 'acl.ini.php';
 
 		$Ini = new IniAcl();
 		$Ini->config = $Ini->readConfigFile($iniFile);
@@ -285,7 +285,7 @@ class IniAclTest extends CakeTestCase {
  * @return void
  */
 	function testCheckArray() {
-		$iniFile = LIBS . 'Test' . DS . 'test_app' . DS . 'Config'. DS . 'acl.ini.php';
+		$iniFile = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS . 'acl.ini.php';
 
 		$Ini = new IniAcl();
 		$Ini->config = $Ini->readConfigFile($iniFile);
@@ -549,7 +549,7 @@ class DbAclTest extends CakeTestCase {
 			array('AroTwoTest' => array('id' => '4', 'parent_id' => '1', 'model' => 'Group', 'foreign_key' => 3, 'alias' => 'users')),
 			array('AroTwoTest' => array('id' => '1', 'parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'root'))
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$result = $this->Acl->Aco->node('ROOT/tpsReports/view/current');
 		$expected = array(
@@ -558,7 +558,7 @@ class DbAclTest extends CakeTestCase {
 			array('AcoTwoTest' => array('id' => '2', 'parent_id' => '1', 'model' => null, 'foreign_key' => null, 'alias' => 'tpsReports')),
 			array('AcoTwoTest' => array('id' => '1', 'parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'ROOT')),
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 	}
 
 /**

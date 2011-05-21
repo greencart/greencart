@@ -174,11 +174,11 @@ class HtmlHelperTest extends CakeTestCase {
 	function testDocType() {
 		$result = $this->Html->docType();
 		$expected = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$result = $this->Html->docType('html4-strict');
 		$expected = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$this->assertNull($this->Html->docType('non-existing-doctype'));
 	}
@@ -206,7 +206,7 @@ class HtmlHelperTest extends CakeTestCase {
 			'Home',
 			'/a'
 		);
-		$this->assertTags($result, $expected, true);
+		$this->assertTags($result, $expected);
 
 		$result = $this->Html->link('Home', '/home', array('default' => false));
 		$expected = array(
@@ -381,7 +381,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$file = new File($testfile, true);
 
 		App::build(array(
-			'views' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'views' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 		Configure::write('Asset.timestamp', true);
 		Configure::write('debug', 1);
@@ -416,10 +416,10 @@ class HtmlHelperTest extends CakeTestCase {
  */
 	function testThemeAssetsInMainWebrootPath() {
 		App::build(array(
-			'views' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'views' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 		$webRoot = Configure::read('App.www_root');
-		Configure::write('App.www_root', LIBS . 'Test' . DS . 'test_app' . DS . 'webroot' . DS);
+		Configure::write('App.www_root', CAKE . 'Test' . DS . 'test_app' . DS . 'webroot' . DS);
 
 		$this->Html->theme = 'test_theme';
 		$result = $this->Html->css('webroot_test');
@@ -662,7 +662,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$file = new File($testfile, true);
 
 		App::build(array(
-			'views' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'views' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 
 		$this->Html->webroot = '/';
@@ -1251,7 +1251,7 @@ class HtmlHelperTest extends CakeTestCase {
 		);
 		$result = $this->Html->tableCells($tr, array('class' => 'odd'), array('class' => 'even'));
 		$expected = "<tr class=\"even\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"odd\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"even\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>";
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$tr = array(
 			array('td content 1', 'td content 2', 'td content 3'),
@@ -1261,7 +1261,7 @@ class HtmlHelperTest extends CakeTestCase {
 		);
 		$result = $this->Html->tableCells($tr, array('class' => 'odd'), array('class' => 'even'));
 		$expected = "<tr class=\"odd\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"even\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"odd\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"even\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>";
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$tr = array(
 			array('td content 1', 'td content 2', 'td content 3'),
@@ -1271,7 +1271,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$this->Html->tableCells($tr, array('class' => 'odd'), array('class' => 'even'));
 		$result = $this->Html->tableCells($tr, array('class' => 'odd'), array('class' => 'even'), false, false);
 		$expected = "<tr class=\"odd\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"even\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>\n<tr class=\"odd\"><td>td content 1</td> <td>td content 2</td> <td>td content 3</td></tr>";
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -1383,7 +1383,7 @@ class HtmlHelperTest extends CakeTestCase {
  */
 
 	public function testLoadConfig() {
-		$path = LIBS . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
+		$path = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
 
 		$result = $this->Html->loadConfig('htmlhelper_tags', $path);
 		$expected = array(
@@ -1392,7 +1392,7 @@ class HtmlHelperTest extends CakeTestCase {
 				'formend' => 'finish form'
 			)
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 		$tags = $this->Html->getAttribute('_tags');
 		$this->assertEqual($tags['form'], 'start form');
 		$this->assertEqual($tags['formend'], 'finish form');
@@ -1402,7 +1402,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$expected = array(
 			'minimizedAttributeFormat' => 'format'
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 		$this->assertEqual($this->Html->getAttribute('_minimizedAttributeFormat'), 'format');
 	}
 
@@ -1423,7 +1423,7 @@ class HtmlHelperTest extends CakeTestCase {
  * @expectedException ConfigureException
  */
 	public function testLoadConfigWrongReader() {
-		$path = LIBS . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
+		$path = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
 		$result = $this->Html->loadConfig(array('htmlhelper_tags', 'wrong_reader'), $path);
 	}
 

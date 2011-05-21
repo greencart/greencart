@@ -157,7 +157,7 @@ class EmailComponentTest extends CakeTestCase {
 		$this->Controller->EmailTest->initialize($this->Controller, array());
 
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 	}
 
@@ -432,7 +432,7 @@ HTMLBLOC;
  */
 	function testMessageRetrievalWithoutTemplate() {
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
@@ -470,7 +470,7 @@ HTMLBLOC;
  */
 	function testMessageRetrievalWithTemplate() {
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 
 		$this->Controller->set('value', 22091985);
@@ -582,18 +582,18 @@ HTMLBLOC;
 
 		$result = $this->Controller->EmailTest->strip($content, true);
 		$expected = "Previous content\n--alt-\n text/html; utf-8\n 7bit\n\n<p>My own html content</p>";
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$content = '<p>Some HTML content with an <a href="mailto:test@example.com">email link</a>';
 		$result  = $this->Controller->EmailTest->strip($content, true);
 		$expected = $content;
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$content  = '<p>Some HTML content with an ';
 		$content .= '<a href="mailto:test@example.com,test2@example.com">email link</a>';
 		$result  = $this->Controller->EmailTest->strip($content, true);
 		$expected = $content;
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -799,8 +799,8 @@ HTMLBLOC;
 
 	function testPluginCustomViewClass() {
 		App::build(array(
-			'plugins' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 
 		$this->Controller->view = 'TestPlugin.Email';

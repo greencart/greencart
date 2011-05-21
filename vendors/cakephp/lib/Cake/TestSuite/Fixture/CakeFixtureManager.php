@@ -105,7 +105,7 @@ class CakeFixtureManager {
 
 			if (strpos($fixture, 'core.') === 0) {
 				$fixture = substr($fixture, strlen('core.'));
-				$fixturePaths[] = LIBS . 'Test' . DS . 'Fixture';
+				$fixturePaths[] = CAKE . 'Test' . DS . 'Fixture';
 			} elseif (strpos($fixture, 'app.') === 0) {
 				$fixture = substr($fixture, strlen('app.'));
 				$fixturePaths = array(
@@ -116,13 +116,13 @@ class CakeFixtureManager {
 				$pluginName = $parts[1];
 				$fixture = $parts[2];
 				$fixturePaths = array(
-					App::pluginPath($pluginName) . 'tests' . DS . 'Fixture',
+					CakePlugin::path(Inflector::camelize($pluginName)) . 'Test' . DS . 'Fixture',
 					TESTS . 'Fixture'
 				);
 			} else {
 				$fixturePaths = array(
 					TESTS . 'Fixture',
-					LIBS  . 'tests' . DS . 'Fixture'
+					CAKE  . 'Test' . DS . 'Fixture'
 				);
 			}
 

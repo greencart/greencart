@@ -439,9 +439,9 @@ class ControllerTest extends CakeTestCase {
  */
 	function testLoadModelInPlugins() {
 		App::build(array(
-			'plugins' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'Controller' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Controller' . DS),
-			'Model' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Model' . DS)
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'Controller' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Controller' . DS),
+			'Model' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Model' . DS)
 		));
 		CakePlugin::load('TestPlugin');
 		App::uses('TestPluginAppController', 'TestPlugin.Controller');
@@ -482,7 +482,7 @@ class ControllerTest extends CakeTestCase {
 
 		unset($Controller);
 
-		App::build(array('plugins' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
+		App::build(array('plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
 		CakePlugin::load('TestPlugin');
 
 		$Controller = new Controller($request);
@@ -569,10 +569,10 @@ class ControllerTest extends CakeTestCase {
 		</html>';
 		$result = str_replace(array("\t", "\r\n", "\n"), "", $result);
 		$expected =  str_replace(array("\t", "\r\n", "\n"), "", $expected);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
 		$Controller = new Controller($request);
 		$Controller->response = $this->getMock('CakeResponse', array('_sendHeader'));
@@ -634,13 +634,13 @@ class ControllerTest extends CakeTestCase {
  */
 	function testRender() {
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		), true);
 		$request = new CakeRequest('controller_posts/index');
 		$request->params['action'] = 'index';
 
 		$Controller = new Controller($request, $this->getMock('CakeResponse'));
-		$Controller->viewPath = 'posts';
+		$Controller->viewPath = 'Posts';
 
 		$result = $Controller->render('index');
 		$this->assertPattern('/posts index/', $result);
@@ -649,7 +649,7 @@ class ControllerTest extends CakeTestCase {
 		$result = $Controller->render();
 		$this->assertPattern('/posts index/', $result);
 
-		$result = $Controller->render('/elements/test_element');
+		$result = $Controller->render('/Elements/test_element');
 		$this->assertPattern('/this is the test element/', $result);
 		$Controller->view = null;
 
@@ -660,7 +660,7 @@ class ControllerTest extends CakeTestCase {
 		$expected = $Controller->ControllerComment->validationErrors;
 
 		ClassRegistry::flush();
-		$Controller->viewPath = 'posts';
+		$Controller->viewPath = 'Posts';
 		$result = $Controller->render('index');
 		$View = $Controller->View;
 		$this->assertTrue(isset($View->validationErrors['ControllerComment']));
@@ -680,7 +680,7 @@ class ControllerTest extends CakeTestCase {
 	function testComponentBeforeRenderChangingViewClass() {
 		App::build(array(
 			'View' => array(
-				LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS
+				CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS
 			)
 		), true);
 		$Controller = new Controller($this->getMock('CakeRequest'));
@@ -688,7 +688,7 @@ class ControllerTest extends CakeTestCase {
 		$Controller->components = array('Test');
 		$Controller->constructClasses();
 		$Controller->Test->viewclass = 'Theme';
-		$Controller->viewPath = 'posts';
+		$Controller->viewPath = 'Posts';
 		$Controller->theme = 'TestTheme';
 		$result = $Controller->render('index');
 		$this->assertPattern('/default test_theme layout/', $result);
@@ -1035,7 +1035,7 @@ class ControllerTest extends CakeTestCase {
 		$comment->set('someVar', 'data');
 		$result = $TestController->validateErrors($comment);
 		$expected = array('some_field' => array('error_message'), 'some_field2' => array('error_message2'));
-		$this->assertIdentical($result, $expected);
+		$this->assertIdentical($expected, $result);
 		$this->assertEqual($TestController->validate($comment), 2);
 	}
 
@@ -1053,7 +1053,7 @@ class ControllerTest extends CakeTestCase {
 		$result = $TestController->validateErrors($Post);
 
 		$expected = array('title' => array('This field cannot be left blank'));
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -1078,7 +1078,7 @@ class ControllerTest extends CakeTestCase {
 			'Model3.field3' => '23',
 		);
 		$result = $Controller->postConditions($data);
-		$this->assertIdentical($result, $expected);
+		$this->assertIdentical($expected, $result);
 
 
 		$data = array();
@@ -1093,7 +1093,7 @@ class ControllerTest extends CakeTestCase {
 			'Model3.field3' => '23',
 		);
 		$result = $Controller->postConditions($data);
-		$this->assertIdentical($result, $expected);
+		$this->assertIdentical($expected, $result);
 
 
 		$data = array();
@@ -1119,7 +1119,7 @@ class ControllerTest extends CakeTestCase {
 			'Model3.field3 <=' => '23',
 		);
 		$result = $Controller->postConditions($data, $ops);
-		$this->assertIdentical($result, $expected);
+		$this->assertIdentical($expected, $result);
 	}
 
 /**

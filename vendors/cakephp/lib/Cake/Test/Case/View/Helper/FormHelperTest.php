@@ -737,7 +737,7 @@ class FormHelperTest extends CakeTestCase {
 			)),
 			'/div'
 		);
-		$this->assertTags($result, $expected,true);
+		$this->assertTags($result, $expected);
 
 		$result = $this->Form->create('Contact', array('url' => '/contacts/add', 'id' => 'MyForm'));
 		$expected['form']['id'] = 'MyForm';
@@ -1065,7 +1065,7 @@ class FormHelperTest extends CakeTestCase {
 			'Addresses.id' => '123456', 'Addresses.title', 'Addresses.last_name',
 			'Addresses.city', 'Addresses.phone'
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$result = $this->Form->secure($expected);
 
@@ -1186,7 +1186,7 @@ class FormHelperTest extends CakeTestCase {
 			'UserForm.published', 'UserForm.other', 'UserForm.stuff' => '',
 			'UserForm.hidden' => '0', 'UserForm.something'
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 
 		$hash = 'bd7c4a654e5361f9a433a43f488ff9a1065d0aaf%3AUserForm.hidden%7CUserForm.stuff';
 
@@ -1281,7 +1281,7 @@ class FormHelperTest extends CakeTestCase {
 		$expected = array(
 			'Addresses.id' => '123456', 'Addresses.title',
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
 	}
 /**
  * testPasswordValidation method
@@ -3090,7 +3090,7 @@ class FormHelperTest extends CakeTestCase {
  */
 	function testRadioDisabled() {
 		$result = $this->Form->radio(
-			'Model.field', 
+			'Model.field',
 			array('option A', 'option B'),
 			array('disabled' => array('option A'), 'value' => 'option A')
 		);
@@ -6004,7 +6004,7 @@ class FormHelperTest extends CakeTestCase {
 			'input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST'),
 			'/div'
 		);
-		$this->assertTags($result, $expected, true);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -6059,7 +6059,7 @@ class FormHelperTest extends CakeTestCase {
 			'input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST'),
 			'/div'
 		);
-		$this->assertTags($result, $expected, true);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -6451,7 +6451,7 @@ class FormHelperTest extends CakeTestCase {
 			),
 			'/div'
 		);
-		$this->assertTags($result, $expected, true);
+		$this->assertTags($result, $expected);
 	}
 
 /**

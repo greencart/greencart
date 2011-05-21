@@ -45,12 +45,12 @@ class PagesControllerTest extends CakeTestCase {
 	function testDisplay() {
 		App::build(array(
 			'View' => array(
-				LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS
+				CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS
 			)
 		));
 		$Pages = new PagesController(new CakeRequest(null, false));
 
-		$Pages->viewPath = 'posts';
+		$Pages->viewPath = 'Posts';
 		$Pages->display('index');
 		$this->assertPattern('/posts index/', $Pages->getResponse()->body());
 		$this->assertEqual($Pages->viewVars['page'], 'index');

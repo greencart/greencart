@@ -279,9 +279,10 @@ class ScaffoldViewTest extends CakeTestCase {
 		$this->Controller->response = $this->getMock('CakeResponse', array('_sendHeader'));
 
 		App::build(array(
-			'View' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'View' . DS),
-			'plugins' => array(LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
+			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
+		CakePlugin::load('TestPlugin');
 	}
 
 /**
@@ -292,6 +293,7 @@ class ScaffoldViewTest extends CakeTestCase {
 	function tearDown() {
 		parent::tearDown();
 		unset($this->Controller, $this->request);
+		CakePlugin::unload();
 	}
 
 /**
@@ -307,58 +309,58 @@ class ScaffoldViewTest extends CakeTestCase {
 		$this->Controller->request->params['action'] = 'index';
 		$ScaffoldView = new TestScaffoldView($this->Controller);
 		$result = $ScaffoldView->testGetFilename('index');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'index.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'index.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('edit');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('add');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('view');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'view.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'view.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('admin_index');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'index.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'index.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('admin_view');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'view.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'view.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('admin_edit');
-		$expected =LIBS . 'View' . DS . 'scaffolds' . DS . 'form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected =CAKE . 'View' . DS . 'Scaffolds' . DS . 'form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('admin_add');
-		$expected = LIBS . 'View' . DS . 'scaffolds' . DS . 'form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Scaffolds' . DS . 'form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('error');
-		$expected = LIBS . 'View' . DS . 'errors' . DS . 'scaffold_error.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'View' . DS . 'Errors' . DS . 'scaffold_error.ctp';
+		$this->assertEqual($expected, $result);
 
 		$Controller = new ScaffoldMockController($this->request);
 		$Controller->scaffold = 'admin';
-		$Controller->viewPath = 'posts';
+		$Controller->viewPath = 'Posts';
 		$Controller->request['action'] = 'admin_edit';
 
 		$ScaffoldView = new TestScaffoldView($Controller);
 		$result = $ScaffoldView->testGetFilename('admin_edit');
-		$expected = LIBS . 'Test' . DS . 'test_app' .DS . 'View' . DS . 'Posts' . DS . 'scaffold.form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'Test' . DS . 'test_app' .DS . 'View' . DS . 'Posts' . DS . 'scaffold.form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('edit');
-		$expected = LIBS . 'Test' . DS . 'test_app' .DS . 'View' . DS . 'Posts' . DS . 'scaffold.form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'Test' . DS . 'test_app' .DS . 'View' . DS . 'Posts' . DS . 'scaffold.form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$Controller = new ScaffoldMockController($this->request);
 		$Controller->scaffold = 'admin';
-		$Controller->viewPath = 'tests';
+		$Controller->viewPath = 'Tests';
 		$Controller->request->addParams(array(
 			'plugin' => 'test_plugin',
 			'action' => 'admin_add',
@@ -368,14 +370,14 @@ class ScaffoldViewTest extends CakeTestCase {
 
 		$ScaffoldView = new TestScaffoldView($Controller);
 		$result = $ScaffoldView->testGetFilename('admin_add');
-		$expected = LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin'
-			. DS .'test_plugin' . DS . 'View' . DS . 'tests' . DS . 'scaffold.form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin'
+			. DS .'TestPlugin' . DS . 'View' . DS . 'Tests' . DS . 'scaffold.form.ctp';
+		$this->assertEqual($expected, $result);
 
 		$result = $ScaffoldView->testGetFilename('add');
-		$expected = LIBS . 'Test' . DS . 'test_app' . DS . 'Plugin'
-			. DS .'test_plugin' . DS . 'View' . DS . 'tests' . DS . 'scaffold.form.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin'
+			. DS .'TestPlugin' . DS . 'View' . DS . 'Tests' . DS . 'scaffold.form.ctp';
+		$this->assertEqual($expected, $result);
 
 		Configure::write('Routing.prefixes', $_admin);
 	}
@@ -387,14 +389,14 @@ class ScaffoldViewTest extends CakeTestCase {
  */
 	function testGetViewFileNameWithTheme() {
 		$this->Controller->request['action'] = 'index';
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->theme = 'test_theme';
+		$this->Controller->viewPath = 'Posts';
+		$this->Controller->theme = 'TestTheme';
 		$ScaffoldView = new TestScaffoldView($this->Controller);
 
 		$result = $ScaffoldView->testGetFilename('index');
-		$expected = LIBS . 'Test' . DS . 'test_app' . DS . 'View' . DS 
-			. 'themed' . DS . 'test_theme' . DS . 'posts' . DS . 'scaffold.index.ctp';
-		$this->assertEqual($result, $expected);
+		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS
+			. 'Themed' . DS . 'TestTheme' . DS . 'Posts' . DS . 'scaffold.index.ctp';
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -456,7 +458,7 @@ class ScaffoldViewTest extends CakeTestCase {
 			'action' => 'view',
 		);
 		$this->Controller->request->addParams($params);
-	
+
 		//set router.
 		Router::reload();
 		Router::setRequestInfo($this->Controller->request);
@@ -772,7 +774,7 @@ class ScaffoldTest extends CakeTestCase {
  */
 	function testScaffoldChangingViewProperty() {
 		$this->Controller->action = 'edit';
-		$this->Controller->theme = 'test_theme';
+		$this->Controller->theme = 'TestTheme';
 		$this->Controller->viewClass = 'Theme';
 		$this->Controller->constructClasses();
 		$Scaffold = new TestScaffoldMock($this->Controller, $this->Controller->request);

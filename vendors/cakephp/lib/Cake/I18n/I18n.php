@@ -20,8 +20,16 @@
 /**
  * Included libraries.
  */
+App::uses('CakePlugin', 'Core');
 App::uses('L10n', 'I18n');
 App::uses('Multibyte', 'I18n');
+
+if (function_exists('mb_internal_encoding')) {
+	$encoding = Configure::read('App.encoding');
+	if (!empty($encoding)) {
+		mb_internal_encoding($encoding);
+	}
+}
 
 /**
  * I18n handles translation of Text and time format strings.
@@ -110,7 +118,7 @@ class I18n {
  */
 	public static function translate($singular, $plural = null, $domain = null, $category = 6, $count = null) {
 		$_this = I18n::getInstance();
-		
+
 		if (strpos($singular, "\r\n") !== false) {
 			$singular = str_replace("\r\n", "\n", $singular);
 		}
@@ -269,7 +277,7 @@ class I18n {
 			foreach ($plugins as $plugin) {
 				$pluginDomain = Inflector::underscore($plugin);
 				if ($pluginDomain === $domain) {
-					$searchPaths[] = CakePlugin::path($plugin) . DS . 'locale' . DS;
+					$searchPaths[] = CakePlugin::path($plugin) . DS . 'Locale' . DS;
 					$searchPaths = array_reverse($searchPaths);
 					break;
 				}
@@ -319,10 +327,10 @@ class I18n {
 			$this->__domains[$domain][$this->__lang][$this->category] = array();
 			return $domain;
 		}
-		
+
 		if (isset($this->__domains[$domain][$this->__lang][$this->category][""])) {
 			$head = $this->__domains[$domain][$this->__lang][$this->category][""];
-			
+
 			foreach (explode("\n", $head) as $line) {
 				$header = strtok($line,":");
 				$line = trim(strtok("\n"));

@@ -158,7 +158,7 @@ class ExceptionRendererTest extends CakeTestCase {
 	function setUp() {
 		App::build(array(
 			'views' => array(
-				LIBS . 'Test' . DS . 'test_app' . DS . 'View'. DS
+				CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS
 			)
 		), true);
 		Router::reload();
@@ -203,7 +203,7 @@ class ExceptionRendererTest extends CakeTestCase {
  */
 	function testSubclassMethodsNotBeingConvertedToError() {
 		Configure::write('debug', 2);
-		
+
 		$exception = new MissingWidgetThingException('Widget not found');
 		$ExceptionRenderer = $this->_mockResponse(new MyCustomExceptionRenderer($exception));
 
@@ -240,10 +240,10 @@ class ExceptionRendererTest extends CakeTestCase {
  */
 	function testSubclassConvertingFrameworkErrors() {
 		Configure::write('debug', 0);
-		
+
 		$exception = new MissingControllerException('PostsController');
 		$ExceptionRenderer = $this->_mockResponse(new MyCustomExceptionRenderer($exception));
-		
+
 		$this->assertEqual('error400', $ExceptionRenderer->method);
 
 		ob_start();
@@ -635,5 +635,29 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		sort($ExceptionRenderer->controller->helpers);
 		$this->assertEquals(array('Form', 'Html', 'Session'), $ExceptionRenderer->controller->helpers);
+	}
+
+/**
+ * Test that exceptions can be rendered when an request hasn't been registered
+ * with Router
+ *
+ * @return void
+ */
+	function testRenderWithNoRequest() {
+		Router::reload();
+		$this->assertNull(Router::getRequest(false));
+
+		$exception = new Exception('Terrible');
+		$ExceptionRenderer = new ExceptionRenderer($exception);
+		$ExceptionRenderer->controller->response = $this->getMock('CakeResponse', array('statusCode', '_sendHeader'));
+		$ExceptionRenderer->controller->response->expects($this->once())
+			->method('statusCode')
+			->with(500);
+
+		ob_start();
+		$ExceptionRenderer->render();
+		$result = ob_get_clean();
+
+		$this->assertContains('Internal Error', $result);
 	}
 }

@@ -16,8 +16,9 @@ class CakePluginTest extends CakeTestCase {
  */
 	public function setUp() {
 		App::build(array(
-			'plugins' => array(CAKE_TESTS . 'test_app' . DS . 'Plugin' . DS)
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		), true);
+		App::objects('plugins', null, false);
 	}
 
 /**
@@ -37,6 +38,7 @@ class CakePluginTest extends CakeTestCase {
  * @return void
  */
 	public function testLoadSingle() {
+		CakePlugin::unload();
 		CakePlugin::load('TestPlugin');
 		$expected = array('TestPlugin');
 		$this->assertEquals($expected, CakePlugin::loaded());
@@ -51,14 +53,14 @@ class CakePluginTest extends CakeTestCase {
 		CakePlugin::load('TestPlugin');
 		$expected = array('TestPlugin');
 		$this->assertEquals($expected, CakePlugin::loaded());
-		
+
 		CakePlugin::unload('TestPlugin');
 		$this->assertEquals(array(), CakePlugin::loaded());
 
 		CakePlugin::load('TestPlugin');
 		$expected = array('TestPlugin');
 		$this->assertEquals($expected, CakePlugin::loaded());
-		
+
 		CakePlugin::unload('TestFakePlugin');
 		$this->assertEquals($expected, CakePlugin::loaded());
 	}
@@ -177,10 +179,10 @@ class CakePluginTest extends CakeTestCase {
  */
 	public function testPath() {
 		CakePlugin::load(array('TestPlugin', 'TestPluginTwo'));
-		$expected = CAKE_TESTS . 'test_app' . DS . 'Plugin' . DS . 'TestPlugin' . DS;
+		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'TestPlugin' . DS;
 		$this->assertEquals(CakePlugin::path('TestPlugin'), $expected);
 
-		$expected = CAKE_TESTS . 'test_app' . DS . 'Plugin' . DS . 'TestPluginTwo' . DS;
+		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'TestPluginTwo' . DS;
 		$this->assertEquals(CakePlugin::path('TestPluginTwo'), $expected);
 	}
 

@@ -121,8 +121,19 @@ class ErrorHandler {
 			list($plugin, $renderer) = pluginSplit($renderer, true);
 			App::uses($renderer, $plugin . 'Error');
 		}
-		$error = new $renderer($exception);
-		$error->render();
+		try {
+			$error = new $renderer($exception);
+			$error->render();
+		} catch (Exception $e) {
+			set_error_handler(Configure::read('Error.handler')); // Should be using configured ErrorHandler
+			Configure::write('Error.trace', false); // trace is useless here since it's internal
+			$message = sprintf("[%s] %s\n%s", // Keeping same message format
+				get_class($e),
+				$e->getMessage(),
+				$e->getTraceAsString()
+			);
+			trigger_error($message, E_USER_ERROR);
+		}
 	}
 
 /**
@@ -178,6 +189,7 @@ class ErrorHandler {
  * @return array Array of error word, and log location.
  */
 	protected static function _mapErrorCode($code) {
+		$error = $log = null;
 		switch ($code) {
 			case E_PARSE:
 			case E_ERROR:
