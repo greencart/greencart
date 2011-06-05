@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP(tm) v 1.3
@@ -83,7 +83,7 @@ class FixtureTaskTest extends CakeTestCase {
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
 
 		$Task = new FixtureTask($out, $out, $in);
-		$this->assertEqual($Task->path, APP . 'tests' . DS . 'Fixture' . DS);
+		$this->assertEqual($Task->path, APP . 'Test' . DS . 'Fixture' . DS);
 	}
 
 /**
@@ -159,7 +159,7 @@ class FixtureTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testImportOptionsAlternateConnection() {
+	public function testImportOptionsAlternateConnection() {
 		$this->Task->connection = 'test';
 		$result = $this->Task->bake('Article', false, array('schema' => 'Article'));
 		$this->assertPattern("/'connection' => 'test'/", $result);
@@ -362,7 +362,7 @@ class FixtureTaskTest extends CakeTestCase {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
 		$this->Task->plugin = 'TestFixture';
-		$filename = APP . 'Plugin' . DS . 'TestFixture' . DS . 'tests' . DS . 'Fixture' . DS . 'ArticleFixture.php';
+		$filename = APP . 'Plugin' . DS . 'TestFixture' . DS . 'Test' . DS . 'Fixture' . DS . 'ArticleFixture.php';
 
 		//fake plugin path
 		CakePlugin::load('TestFixture', array('path' =>  APP . 'Plugin' . DS . 'TestFixture' . DS));

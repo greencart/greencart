@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.model
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -36,7 +36,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFetchingNonUniqueFKJoinTableRecords() {
+	public function testFetchingNonUniqueFKJoinTableRecords() {
 		$this->loadFixtures('Something', 'SomethingElse', 'JoinThing');
 		$Something = new Something();
 
@@ -77,14 +77,12 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testGroupBy() {
+	public function testGroupBy() {
 		$db = ConnectionManager::getDataSource('test');
-		$isStrictGroupBy = $this->db instanceof Postgres || $this->db instanceof Sqlite || $this->db instanceof Oracle;
-		$message = 'Postgres and Oracle have strict GROUP BY and are incompatible with this test.';
+		$isStrictGroupBy = $this->db instanceof Postgres || $this->db instanceof Sqlite || $this->db instanceof Oracle || $this->db instanceof Sqlserver;
+		$message = 'Postgres, Oracle, SQLite and SQL Server have strict GROUP BY and are incompatible with this test.';
 
-		if ($this->skipIf($isStrictGroupBy, $message )) {
-			return;
-		}
+		$this->skipIf($isStrictGroupBy, $message);
 
 		$this->loadFixtures('Project', 'Product', 'Thread', 'Message', 'Bid');
 		$Thread = new Thread();
@@ -238,7 +236,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testOldQuery() {
+	public function testOldQuery() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag', 'Comment', 'Attachment');
 		$Article = new Article();
 
@@ -275,7 +273,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testPreparedQuery() {
+	public function testPreparedQuery() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag');
 		$Article = new Article();
 
@@ -344,7 +342,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testParameterMismatch() {
+	public function testParameterMismatch() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag');
 		$Article = new Article();
 
@@ -366,14 +364,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testVeryStrangeUseCase() {
-		$message = "skipping SELECT * FROM ? WHERE ? = ? AND ? = ?; prepared query.";
-		$message .= " MSSQL is incompatible with this test.";
-
-		if ($this->skipIf($this->db instanceof Mssql, $message)) {
-			return;
-		}
-
+	public function testVeryStrangeUseCase() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag');
 		$Article = new Article();
 
@@ -396,7 +387,9 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testRecursiveUnbind() {
+	public function testRecursiveUnbind() {
+		$this->skipIf($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
+		
 		$this->loadFixtures('Apple', 'Sample');
 		$TestModel = new Apple();
 		$TestModel->recursive = 2;
@@ -2991,8 +2984,8 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSelfAssociationAfterFind() {
-		$this->loadFixtures('Apple');
+	public function testSelfAssociationAfterFind() {
+		$this->loadFixtures('Apple', 'Sample');
 		$afterFindModel = new NodeAfterFind();
 		$afterFindModel->recursive = 3;
 		$afterFindData = $afterFindModel->find('all');
@@ -3019,7 +3012,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllThreaded() {
+	public function testFindAllThreaded() {
 		$this->loadFixtures('Category');
 		$TestModel = new Category();
 
@@ -3650,7 +3643,9 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindCombinedRelations() {
+	public function testFindCombinedRelations() {
+		$this->skipIf($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
+		
 		$this->loadFixtures('Apple', 'Sample');
 		$TestModel = new Apple();
 
@@ -3927,7 +3922,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveEmpty() {
+	public function testSaveEmpty() {
 		$this->loadFixtures('Thread');
 		$TestModel = new Thread();
 		$data = array();
@@ -3942,12 +3937,12 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllWithConditionInChildQuery() {
+	public function testFindAllWithConditionInChildQuery() {
 		$this->loadFixtures('Basket', 'FilmFile');
 
 		$TestModel = new Basket();
 		$recursive = 3;
-		$result = $TestModel->find('all', compact('conditions', 'recursive'));
+		$result = $TestModel->find('all', compact('recursive'));
 
 		$expected = array(
 			array(
@@ -3986,7 +3981,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllWithConditionsHavingMixedDataTypes() {
+	public function testFindAllWithConditionsHavingMixedDataTypes() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag');
 		$TestModel = new Article();
 		$expected = array(
@@ -4019,9 +4014,8 @@ class ModelReadTest extends BaseModelTest {
 		$result = $TestModel->find('all', compact('conditions', 'recursive', 'order'));
 		$this->assertEqual($expected, $result);
 
-		if ($this->skipIf($this->db instanceof Postgres, 'The rest of testFindAllWithConditionsHavingMixedDataTypes test is not compatible with Postgres')) {
-			return;
-		}
+		$this->skipIf($this->db instanceof Postgres, 'The rest of testFindAllWithConditionsHavingMixedDataTypes test is not compatible with Postgres.');
+
 		$conditions = array('id' => array('1', 2, '3.0'));
 		$order = 'Article.id ASC';
 		$result = $TestModel->find('all', compact('recursive', 'conditions', 'order'));
@@ -4069,7 +4063,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testBindUnbind() {
+	public function testBindUnbind() {
 		$this->loadFixtures(
 			'User',
 			'Comment',
@@ -4553,7 +4547,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testBindMultipleTimes() {
+	public function testBindMultipleTimes() {
 		$this->loadFixtures('User', 'Comment', 'Article', 'Tag', 'ArticlesTag');
 		$TestModel = new User();
 
@@ -4725,7 +4719,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testBindModelMultipleTimesResetCorrectly() {
+	public function testBindModelMultipleTimesResetCorrectly() {
 		$this->loadFixtures('User', 'Comment', 'Article');
 		$TestModel = new User();
 
@@ -4742,7 +4736,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testBindMultipleTimesWithDifferentResetSettings() {
+	public function testBindMultipleTimesWithDifferentResetSettings() {
 		$this->loadFixtures('User', 'Comment', 'Article');
 		$TestModel = new User();
 
@@ -4776,7 +4770,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function bindWithCustomPrimaryKey() {
+	public function bindWithCustomPrimaryKey() {
 		$this->loadFixtures('Story', 'StoriesTag', 'Tag');
 		$Model = ClassRegistry::init('StoriesTag');
 		$Model->bindModel(array(
@@ -4796,7 +4790,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testUnbindMultipleTimesResetCorrectly() {
+	public function testUnbindMultipleTimesResetCorrectly() {
 		$this->loadFixtures('User', 'Comment', 'Article');
 		$TestModel = new Article10();
 
@@ -4813,7 +4807,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUnBindMultipleTimesWithDifferentResetSettings() {
+	public function testUnBindMultipleTimesWithDifferentResetSettings() {
 		$this->loadFixtures('User', 'Comment', 'Article');
 		$TestModel = new Comment();
 
@@ -4848,7 +4842,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testAssociationAfterFind() {
+	public function testAssociationAfterFind() {
 		$this->loadFixtures('Post', 'Author', 'Comment');
 		$TestModel = new Post();
 		$result = $TestModel->find('all');
@@ -4941,7 +4935,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCallbackDisabling() {
+	public function testCallbackDisabling() {
 		$this->loadFixtures('Author');
 		$TestModel = new ModifiedAuthor();
 
@@ -4969,7 +4963,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCallbackSourceChange() {
+	public function testCallbackSourceChange() {
 		$this->loadFixtures('Post');
 		$TestModel = new Post();
 		$this->assertEqual(3, count($TestModel->find('all')));
@@ -4984,7 +4978,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testMultipleBelongsToWithSameClass() {
+	public function testMultipleBelongsToWithSameClass() {
 		$this->loadFixtures(
 			'DeviceType',
 			'DeviceTypeCategory',
@@ -5083,7 +5077,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmRecursiveBelongsTo() {
+	public function testHabtmRecursiveBelongsTo() {
 		$this->loadFixtures('Portfolio', 'Item', 'ItemsPortfolio', 'Syfile', 'Image');
 		$Portfolio = new Portfolio();
 
@@ -5142,7 +5136,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testNonNumericHabtmJoinKey() {
+	public function testNonNumericHabtmJoinKey() {
 		$this->loadFixtures('Post', 'Tag', 'PostsTag', 'Author');
 		$Post = new Post();
 		$Post->bindModel(array(
@@ -5243,7 +5237,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmFinderQuery() {
+	public function testHabtmFinderQuery() {
 		$this->loadFixtures('Article', 'Tag', 'ArticlesTag');
 		$Article = new Article();
 
@@ -5292,7 +5286,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmLimitOptimization() {
+	public function testHabtmLimitOptimization() {
 		$this->loadFixtures('Article', 'User', 'Comment', 'Tag', 'ArticlesTag');
 		$TestModel = new Article();
 
@@ -5363,7 +5357,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHasManyLimitOptimization() {
+	public function testHasManyLimitOptimization() {
 		$this->loadFixtures('Project', 'Thread', 'Message', 'Bid');
 		$Project = new Project();
 		$Project->recursive = 3;
@@ -5478,7 +5472,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllRecursiveSelfJoin() {
+	public function testFindAllRecursiveSelfJoin() {
 		$this->loadFixtures('Home', 'AnotherArticle', 'Advertisement');
 		$TestModel = new Home();
 		$TestModel->recursive = 2;
@@ -5653,7 +5647,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testReadFakeThread() {
+	public function testReadFakeThread() {
 		$this->loadFixtures('CategoryThread');
 		$TestModel = new CategoryThread();
 
@@ -5718,7 +5712,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindFakeThread() {
+	public function testFindFakeThread() {
 		$this->loadFixtures('CategoryThread');
 		$TestModel = new CategoryThread();
 
@@ -5783,7 +5777,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllFakeThread() {
+	public function testFindAllFakeThread() {
 		$this->loadFixtures('CategoryThread');
 		$TestModel = new CategoryThread();
 
@@ -6004,7 +5998,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testConditionalNumerics() {
+	public function testConditionalNumerics() {
 		$this->loadFixtures('NumericArticle');
 		$NumericArticle = new NumericArticle();
 		$data = array('conditions' => array('title' => '12345abcde'));
@@ -6022,7 +6016,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAll() {
+	public function testFindAll() {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 		$TestModel->cacheQueries = false;
@@ -6227,7 +6221,7 @@ class ModelReadTest extends BaseModelTest {
 
 		// These tests are expected to fail on SQL Server since the LIMIT/OFFSET
 		// hack can't handle small record counts.
-		if ($this->db instanceof Mssql) {
+		if (!($this->db instanceof Sqlserver)) {
 			$result = $TestModel->find('all', array('limit' => 3, 'page' => 2));
 			$expected = array(
 				array(
@@ -6252,7 +6246,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testGenerateFindList() {
+	public function testGenerateFindList() {
 		$this->loadFixtures('Article', 'Apple', 'Post', 'Author', 'User', 'Comment');
 
 		$TestModel = new Article();
@@ -6528,7 +6522,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindField() {
+	public function testFindField() {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 
@@ -6558,7 +6552,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindUnique() {
+	public function testFindUnique() {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 
@@ -6581,7 +6575,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindCount() {
+	public function testFindCount() {
 		$this->loadFixtures('User', 'Project');
 
 		$TestModel = new User();
@@ -6605,7 +6599,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testFindFirstNoIdUsed() {
+	public function testFindFirstNoIdUsed() {
 		$this->loadFixtures('Project');
 
 		$Project = new Project();
@@ -6620,14 +6614,10 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testFindCountDistinct() {
-		$skip = $this->skipIf(
-			$this->db instanceof Sqlite,
-			'SELECT COUNT(DISTINCT field) is not compatible with SQLite'
-		);
-		if ($skip) {
-			return;
-		}
+	public function testFindCountDistinct() {
+		$this->skipIf($this->db instanceof Sqlite, 'SELECT COUNT(DISTINCT field) is not compatible with SQLite.');
+		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+
 		$this->loadFixtures('Project');
 		$TestModel = new Project();
 		$TestModel->create(array('name' => 'project')) && $TestModel->save();
@@ -6644,10 +6634,9 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindCountWithDbExpressions() {
-		if ($this->skipIf($this->db instanceof Postgres, 'testFindCountWithExpressions is not compatible with Postgres')) {
-			return;
-		}
+	public function testFindCountWithDbExpressions() {
+		$this->skipIf($this->db instanceof Postgres, 'testFindCountWithDbExpressions is not compatible with Postgres.');
+
 		$this->loadFixtures('Project');
 		$db = ConnectionManager::getDataSource('test');
 		$TestModel = new Project();
@@ -6669,7 +6658,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindMagic() {
+	public function testFindMagic() {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 
@@ -6701,7 +6690,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testRead() {
+	public function testRead() {
 		$this->loadFixtures('User', 'Article');
 		$TestModel = new User();
 
@@ -6782,7 +6771,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testRecursiveRead() {
+	public function testRecursiveRead() {
 		$this->loadFixtures(
 			'User',
 			'Article',
@@ -6890,7 +6879,7 @@ class ModelReadTest extends BaseModelTest {
 		$this->assertEqual($expected, $result);
 	}
 
-	function testRecursiveFindAll() {
+	public function testRecursiveFindAll() {
 		$this->loadFixtures(
 			'User',
 			'Article',
@@ -7208,7 +7197,7 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testRecursiveFindAllWithLimit() {
+	public function testRecursiveFindAllWithLimit() {
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag', 'Comment', 'Attachment');
 		$TestModel = new Article();
 
@@ -7373,7 +7362,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testFindQueryTypeInCallbacks() {
+	public function testFindQueryTypeInCallbacks() {
 		$this->loadFixtures('Comment');
 		$Comment = new AgainModifiedComment();
 		$comments = $Comment->find('all');
@@ -7391,17 +7380,20 @@ class ModelReadTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testVirtualFields() {
+	public function testVirtualFields() {
 		$this->loadFixtures('Post', 'Author');
 		$Post = ClassRegistry::init('Post');
 		$Post->virtualFields = array('two' => "1 + 1");
 		$result = $Post->find('first');
 		$this->assertEqual($result['Post']['two'], 2);
 
-		$Post->Author->virtualFields = array('false' => '1 = 2');
-		$result = $Post->find('first');
-		$this->assertEqual($result['Post']['two'], 2);
-		$this->assertFalse((bool)$result['Author']['false']);
+		// SQL Server does not support operators in expressions
+		if (!($this->db instanceof Sqlserver)) {
+			$Post->Author->virtualFields = array('false' => '1 = 2');
+			$result = $Post->find('first');
+			$this->assertEqual($result['Post']['two'], 2);
+			$this->assertFalse((bool)$result['Author']['false']);
+		}
 
 		$result = $Post->find('first',array('fields' => array('author_id')));
 		$this->assertFalse(isset($result['Post']['two']));
@@ -7470,9 +7462,8 @@ class ModelReadTest extends BaseModelTest {
  *
  */
 	public function testVirtualFieldsMysql() {
-		if ($this->skipIf(!($this->db instanceof Mysql), 'The rest of virtualFieds test is not compatible with Postgres')) {
-			return;
-		}
+		$this->skipIf(!($this->db instanceof Mysql), 'The rest of virtualFieds test only compatible with Mysql.');
+
 		$this->loadFixtures('Post', 'Author');
 		$Post = ClassRegistry::init('Post');
 
@@ -7522,7 +7513,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testVirtualFieldAsAString() {
+	public function testVirtualFieldAsAString() {
 		$this->loadFixtures('Post', 'Author');
 		$Post = new Post();
 		$Post->virtualFields = array(
@@ -7537,7 +7528,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testIsVirtualField() {
+	public function testIsVirtualField() {
 		$this->loadFixtures('Post');
 		$Post = ClassRegistry::init('Post');
 		$Post->virtualFields = array('other_field' => 'COUNT(Post.id) + 1');
@@ -7554,7 +7545,7 @@ class ModelReadTest extends BaseModelTest {
  *
  * @return void
  */
-	function testGetVirtualField() {
+	public function testGetVirtualField() {
 		$this->loadFixtures('Post');
 		$Post = ClassRegistry::init('Post');
 		$Post->virtualFields = array('other_field' => 'COUNT(Post.id) + 1');

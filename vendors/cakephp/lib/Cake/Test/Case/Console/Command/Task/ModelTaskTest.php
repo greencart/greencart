@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP v 1.2.6
@@ -155,7 +155,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGetNameValidOption() {
+	public function testGetNameValidOption() {
 		$listing = $this->Task->listAll('test');
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls(1, 4));
 
@@ -171,7 +171,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGetNameWithOutOfBoundsOption() {
+	public function testGetNameWithOutOfBoundsOption() {
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls(99, 1));
 		$this->Task->expects($this->once())->method('err');
 
@@ -195,7 +195,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGetTableNameCustom() {
+	public function testGetTableNameCustom() {
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls('n', 'my_table'));
 		$result = $this->Task->getTable('BakeArticle', 'test');
 		$expected = 'my_table';
@@ -262,7 +262,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testInteractiveFieldValidationWithBogusResponse() {
+	public function testInteractiveFieldValidationWithBogusResponse() {
 		$this->_useMockedOut();
 		$this->Task->initValidations();
 		$this->Task->interactive = true;
@@ -283,7 +283,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testInteractiveFieldValidationWithRegexp() {
+	public function testInteractiveFieldValidationWithRegexp() {
 		$this->Task->initValidations();
 		$this->Task->interactive = true;
 		$this->Task->expects($this->any())->method('in')
@@ -555,7 +555,7 @@ class ModelTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testBakeFixture() {
-		$this->Task->plugin = 'test_plugin';
+		$this->Task->plugin = 'TestPlugin';
 		$this->Task->interactive = true;
 		$this->Task->Fixture->expects($this->at(0))->method('bake')->with('BakeArticle', 'bake_articles');
 		$this->Task->bakeFixture('BakeArticle', 'bake_articles');
@@ -571,7 +571,7 @@ class ModelTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testBakeTest() {
-		$this->Task->plugin = 'test_plugin';
+		$this->Task->plugin = 'TestPlugin';
 		$this->Task->interactive = true;
 		$this->Task->Test->expects($this->at(0))->method('bake')->with('Model', 'BakeArticle');
 		$this->Task->bakeTest('BakeArticle');
@@ -876,7 +876,7 @@ STRINGEND;
  *
  * @return void
  */
-	function testSkipTablesAndAll() {
+	public function testSkipTablesAndAll() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
 			$this->markTestSkipped('Additional tables detected.');

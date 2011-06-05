@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs
  * @since         CakePHP v 2.0
@@ -64,7 +64,7 @@ class CommandListTest extends CakeTestCase {
  *
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		unset($this->Shell);
 		CakePlugin::unload();
@@ -75,7 +75,7 @@ class CommandListTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMain() {
+	public function testMain() {
 		$this->Shell->main();
 		$output = $this->Shell->stdout->output;
 
@@ -116,7 +116,7 @@ class CommandListTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSortPlugin() {
+	public function testSortPlugin() {
 		$this->Shell->params['sort'] = true;
 		$this->Shell->main();
 
@@ -140,7 +140,7 @@ class CommandListTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMainXml() {
+	public function testMainXml() {
 		$this->Shell->params['xml'] = true;
 		$this->Shell->main();
 

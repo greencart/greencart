@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs
  * @since         CakePHP(tm) v 1.2.0.4116
@@ -558,7 +558,7 @@ class I18n {
  * @param string $domain Domain where format is stored
  * @return mixed translated format string if only value or array of translated strings for corresponding format.
  */
-	function __translateTime($format, $domain) {
+	private function __translateTime($format, $domain) {
 		if (!empty($this->__domains[$domain][$this->__lang]['LC_TIME'][$format])) {
 			if (($trans = $this->__domains[$domain][$this->__lang][$this->category][$format])) {
 				return $trans;

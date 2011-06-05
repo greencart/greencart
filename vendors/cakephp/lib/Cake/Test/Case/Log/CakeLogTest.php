@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
@@ -32,7 +32,7 @@ class CakeLogTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$streams = CakeLog::configured();
 		foreach ($streams as $stream) {
@@ -45,7 +45,7 @@ class CakeLogTest extends CakeTestCase {
  *
  * @return void
  */
-	function testImportingLoggers() {
+	public function testImportingLoggers() {
 		App::build(array(
 			'libs' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Lib' . DS),
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
@@ -74,7 +74,7 @@ class CakeLogTest extends CakeTestCase {
  * @expectedException CakeLogException
  * @return void
  */
-	function testImportingLoggerFailure() {
+	public function testImportingLoggerFailure() {
 		CakeLog::config('fail', array());
 	}
 
@@ -84,7 +84,7 @@ class CakeLogTest extends CakeTestCase {
  * @expectedException CakeLogException
  * @return void
  */
-	function testNotImplementingInterface() {
+	public function testNotImplementingInterface() {
 		CakeLog::config('fail', array('engine' => 'stdClass'));
 	}
 
@@ -94,8 +94,10 @@ class CakeLogTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAutoConfig() {
-		@unlink(LOGS . 'error.log');
+	public function testAutoConfig() {
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
+		}
 		CakeLog::write(LOG_WARNING, 'Test warning');
 		$this->assertTrue(file_exists(LOGS . 'error.log'));
 
@@ -109,7 +111,7 @@ class CakeLogTest extends CakeTestCase {
  *
  * @return void
  */
-	function testConfig() {
+	public function testConfig() {
 		CakeLog::config('file', array(
 			'engine' => 'FileLog',
 			'path' => LOGS
@@ -133,7 +135,7 @@ class CakeLogTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testDrop() {
+	public function testDrop() {
 		CakeLog::config('file', array(
 			'engine' => 'FileLog',
 			'path' => LOGS
@@ -152,8 +154,10 @@ class CakeLogTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testLogFileWriting() {
-		@unlink(LOGS . 'error.log');
+	public function testLogFileWriting() {
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
+		}
 		$result = CakeLog::write(LOG_WARNING, 'Test warning');
 		$this->assertTrue($result);
 		$this->assertTrue(file_exists(LOGS . 'error.log'));

@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view
  * @since         CakePHP(tm) v 0.2.9
@@ -51,7 +51,7 @@ class Helper extends Object {
 	public $theme = null;
 
 /**
- * Request object 
+ * Request object
  *
  * @var CakeRequest
  */
@@ -322,7 +322,7 @@ class Helper extends Object {
  * @param string $insertAfter String to be inserted after options.
  * @return string Composed attributes.
  */
-	public function _parseAttributes($options, $exclude = null, $insertBefore = ' ', $insertAfter = null) {
+	protected function _parseAttributes($options, $exclude = null, $insertBefore = ' ', $insertAfter = null) {
 		if (!is_string($options)) {
 			$options = (array) $options + array('escape' => true);
 
@@ -430,8 +430,8 @@ class Helper extends Object {
 			$ModelObj = ClassRegistry::getObject($model);
 			for ($i = 0; $i < $count; $i++) {
 				if (
-					is_a($ModelObj, 'Model') && 
-					($ModelObj->hasField($parts[$i]) || 
+					is_a($ModelObj, 'Model') &&
+					($ModelObj->hasField($parts[$i]) ||
 					array_key_exists($parts[$i], $ModelObj->validate))
 				) {
 					$hasField = $i;
@@ -821,7 +821,7 @@ class Helper extends Object {
  * @return array
  * @access private
  */
-	function __selectedArray($data, $key = 'id') {
+	private function __selectedArray($data, $key = 'id') {
 		if (!is_array($data)) {
 			$model = $data;
 			if (!empty($this->request->data[$model][$model])) {
@@ -846,7 +846,7 @@ class Helper extends Object {
  * @return void
  * @access private
  */
-	function __reset() {
+	private function __reset() {
 		$this->__tainted = null;
 		$this->__cleaned = null;
 	}
@@ -857,7 +857,7 @@ class Helper extends Object {
  * @return void
  * @access private
  */
-	function __clean() {
+	private function __clean() {
 		if (get_magic_quotes_gpc()) {
 			$this->__cleaned = stripslashes($this->__tainted);
 		} else {

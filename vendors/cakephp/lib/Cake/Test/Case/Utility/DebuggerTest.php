@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
@@ -44,7 +44,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setup();
 		Configure::write('debug', 2);
 		Configure::write('log', false);
@@ -56,7 +56,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::teardown();
 		Configure::write('log', true);
 		if ($this->_restoreError) {
@@ -70,7 +70,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDocRef() {
+	public function testDocRef() {
 		ini_set('docref_root', '');
 		$this->assertEqual(ini_get('docref_root'), '');
 		$debugger = new Debugger();
@@ -83,7 +83,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testExcerpt() {
+	public function testExcerpt() {
 		$result = Debugger::excerpt(__FILE__, __LINE__, 2);
 		$this->assertTrue(is_array($result));
 		$this->assertEqual(count($result), 5);
@@ -107,7 +107,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testOutput() {
+	public function testOutput() {
 		set_error_handler('Debugger::showError');
 		$this->_restoreError = true;
 
@@ -162,7 +162,7 @@ class DebuggerTest extends CakeTestCase {
  *
  * @return void
  */
-	function testChangeOutputFormats() {
+	public function testChangeOutputFormats() {
 		set_error_handler('Debugger::showError');
 		$this->_restoreError = true;
 
@@ -202,7 +202,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testTrimPath() {
+	public function testTrimPath() {
 		$this->assertEqual(Debugger::trimPath(APP), 'APP' . DS);
 		$this->assertEqual(Debugger::trimPath(CAKE_CORE_INCLUDE_PATH), 'CORE');
 	}
@@ -213,7 +213,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testExportVar() {
+	public function testExportVar() {
 		App::uses('Controller', 'Controller');
 		$Controller = new Controller();
 		$Controller->helpers = array('Html', 'Form');
@@ -259,7 +259,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testLog() {
+	public function testLog() {
 		if (file_exists(LOGS . 'debug.log')) {
 			unlink(LOGS . 'debug.log');
 		}
@@ -286,7 +286,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDump() {
+	public function testDump() {
 		$var = array('People' => array(
 					array(
 					'name' => 'joeseph',
@@ -313,7 +313,7 @@ class DebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetInstance() {
+	public function testGetInstance() {
 		$result = Debugger::getInstance();
 		$this->assertIsA($result, 'Debugger');
 

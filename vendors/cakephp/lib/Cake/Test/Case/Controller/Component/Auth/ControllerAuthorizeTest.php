@@ -2,12 +2,12 @@
 /**
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.tests.cases.libs.controller.components.auth
  * @since         CakePHP(tm) v 2.0
@@ -26,7 +26,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->controller = $this->getMock('Controller', array('isAuthorized'), array(), '', false);
 		$this->components = $this->getMock('ComponentCollection');
@@ -41,14 +41,14 @@ class ControllerAuthorizeTest extends CakeTestCase {
  * 
  * @expectedException CakeException
  */
-	function testControllerTypeError() {
+	public function testControllerTypeError() {
 		$this->auth->controller(new StdClass());
 	}
 
 /**
  * @expectedException CakeException
  */
-	function testControllerErrorOnMissingMethod() {
+	public function testControllerErrorOnMissingMethod() {
 		$this->auth->controller(new Controller());
 	}
 
@@ -57,7 +57,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAuthorizeFailure() {
+	public function testAuthorizeFailure() {
 		$user = array();
 		$request = new CakeRequest('/posts/index', false);
 		$this->assertFalse($this->auth->authorize($user, $request));
@@ -68,7 +68,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAuthorizeSuccess() {
+	public function testAuthorizeSuccess() {
 		$user = array('User' => array('username' => 'mark'));
 		$request = new CakeRequest('/posts/index', false);
 		

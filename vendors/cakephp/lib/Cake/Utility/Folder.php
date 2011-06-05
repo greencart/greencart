@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs
  * @since         CakePHP(tm) v 0.2.9
@@ -89,7 +89,7 @@ class Folder {
  * @param boolean $create Create folder if not found
  * @param mixed $mode Mode (CHMOD) to apply to created folder, false to ignore
  */
-	function __construct($path = false, $create = false, $mode = false) {
+	public function __construct($path = false, $create = false, $mode = false) {
 		if (empty($path)) {
 			$path = TMP;
 		}
@@ -215,7 +215,7 @@ class Folder {
  * @return array Files matching pattern
  * @access private
  */
-	function _findRecursive($pattern, $sort = false) {
+	protected function _findRecursive($pattern, $sort = false) {
 		list($dirs, $files) = $this->read($sort);
 		$found = array();
 
@@ -428,7 +428,7 @@ class Folder {
  * @param mixed $exceptions Array of files to exclude from the read that will be performed.
  * @access private
  */
-	function __tree($path, $exceptions) {
+	public function __tree($path, $exceptions) {
 		$this->path = $path;
 		list($dirs, $files) = $this->read(false, $exceptions, true);
 		$this->__directories = array_merge($this->__directories, $dirs);
@@ -702,7 +702,7 @@ class Folder {
  * @param string $path Path to resolve
  * @return string The resolved path
  */
-	function realpath($path) {
+	public function realpath($path) {
 		$path = str_replace('/', DS, trim($path));
 		if (strpos($path, '..') === false) {
 			if (!Folder::isAbsolute($path)) {

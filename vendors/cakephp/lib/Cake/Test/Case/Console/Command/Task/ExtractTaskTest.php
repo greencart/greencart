@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP v 1.2.0.7726
@@ -159,7 +159,7 @@ class ExtractTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testExtractWithExclude() {
+	public function testExtractWithExclude() {
 		$this->Task->interactive = false;
 
 		$this->Task->params['paths'] = CAKE . 'Test' . DS . 'test_app' . DS . 'View';
@@ -185,7 +185,7 @@ class ExtractTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testExtractMultiplePaths() {
+	public function testExtractMultiplePaths() {
 		$this->Task->interactive = false;
 
 		$this->Task->params['paths'] =

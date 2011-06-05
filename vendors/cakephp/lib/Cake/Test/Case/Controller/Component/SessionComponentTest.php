@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.controller.components
  * @since         CakePHP(tm) v 1.2.0.5436
@@ -114,7 +114,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$_SESSION = null;
 		$this->ComponentCollection = new ComponentCollection();
@@ -126,7 +126,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		CakeSession::destroy();
 	}
@@ -137,7 +137,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionIdConsistentAcrossRequestAction() {
+	public function testSessionIdConsistentAcrossRequestAction() {
 		$Session = new SessionComponent($this->ComponentCollection);
 		$Session->check('Test');
 		$this->assertTrue(isset($_SESSION));
@@ -159,7 +159,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionValid() {
+	public function testSessionValid() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$this->assertTrue($Session->valid());
@@ -179,7 +179,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionError() {
+	public function testSessionError() {
 		$Session = new SessionComponent($this->ComponentCollection);
 		$this->assertFalse($Session->error());
 	}
@@ -190,7 +190,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionReadWrite() {
+	public function testSessionReadWrite() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$this->assertNull($Session->read('Test'));
@@ -224,7 +224,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionDelete() {
+	public function testSessionDelete() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$this->assertFalse($Session->delete('Test'));
@@ -239,7 +239,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionCheck() {
+	public function testSessionCheck() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$this->assertFalse($Session->check('Test'));
@@ -255,7 +255,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionFlash() {
+	public function testSessionFlash() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$this->assertNull($Session->read('Message.flash'));
@@ -281,7 +281,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionId() {
+	public function testSessionId() {
 		unset($_SESSION);
 		$Session = new SessionComponent($this->ComponentCollection);
 		$Session->check('test');
@@ -294,7 +294,7 @@ class SessionComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSessionDestroy() {
+	public function testSessionDestroy() {
 		$Session = new SessionComponent($this->ComponentCollection);
 
 		$Session->write('Test', 'some value');

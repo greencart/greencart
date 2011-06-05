@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.log
  * @since         CakePHP(tm) v 1.3
@@ -31,8 +31,10 @@ class FileLogTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testLogFileWriting() {
-		@unlink(LOGS . 'error.log');
+	public function testLogFileWriting() {
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
+		}
 		$log = new FileLog();
 		$log->write('warning', 'Test warning');
 		$this->assertTrue(file_exists(LOGS . 'error.log'));
@@ -41,7 +43,9 @@ class FileLogTest extends CakeTestCase {
 		$this->assertPattern('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning/', $result);
 		unlink(LOGS . 'error.log');
 
-		@unlink(LOGS . 'debug.log');
+		if (file_exists(LOGS . 'debug.log')) {
+			unlink(LOGS . 'debug.log');
+		}
 		$log->write('debug', 'Test warning');
 		$this->assertTrue(file_exists(LOGS . 'debug.log'));
 
@@ -49,7 +53,9 @@ class FileLogTest extends CakeTestCase {
 		$this->assertPattern('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Debug: Test warning/', $result);
 		unlink(LOGS . 'debug.log');
 
-		@unlink(LOGS . 'random.log');
+		if (file_exists(LOGS . 'random.log')) {
+			unlink(LOGS . 'random.log');
+		}
 		$log->write('random', 'Test warning');
 		$this->assertTrue(file_exists(LOGS . 'random.log'));
 
@@ -63,9 +69,11 @@ class FileLogTest extends CakeTestCase {
  *
  * @return void
  */
-	function testPathSetting() {
+	public function testPathSetting() {
 		$path = TMP . 'tests' . DS;
-		@unlink($path . 'error.log');
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
+		}
 
 		$log = new FileLog(compact('path'));
 		$log->write('warning', 'Test warning');

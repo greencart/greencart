@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.model
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -30,7 +30,7 @@ class ModelWriteTest extends BaseModelTest {
 	 * @access public
 	 * @return void
 	 */
-		function testInsertAnotherHabtmRecordWithSameForeignKey() {
+		public function testInsertAnotherHabtmRecordWithSameForeignKey() {
 			$this->loadFixtures('JoinA', 'JoinB', 'JoinAB', 'JoinC', 'JoinAC');
 			$TestModel = new JoinA();
 
@@ -86,7 +86,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveDateAsFirstEntry() {
+	public function testSaveDateAsFirstEntry() {
 		$this->loadFixtures('Article', 'User', 'Comment', 'Attachment', 'Tag', 'ArticlesTag');
 
 		$Article = new Article();
@@ -118,7 +118,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUnderscoreFieldSave() {
+	public function testUnderscoreFieldSave() {
 		$this->loadFixtures('UnderscoreField');
 		$UnderscoreField = new UnderscoreField();
 
@@ -144,9 +144,9 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testAutoSaveUuid() {
+	public function testAutoSaveUuid() {
 		// SQLite does not support non-integer primary keys
-		$this->skipIf($this->db instanceof Sqlite);
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
 
 		$this->loadFixtures('Uuid');
 		$TestModel = new Uuid();
@@ -168,7 +168,7 @@ class ModelWriteTest extends BaseModelTest {
  */
 	public function testSaveUuidNull() {
 		// SQLite does not support non-integer primary keys
-		$this->skipIf($this->db instanceof Sqlite);
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
 
 		$this->loadFixtures('Uuid');
 		$TestModel = new Uuid();
@@ -188,11 +188,9 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testZeroDefaultFieldValue() {
-		$this->skipIf(
-			$this->db instanceof Sqlite,
-			'%s SQLite uses loose typing, this operation is unsupported'
-		);
+	public function testZeroDefaultFieldValue() {
+		$this->skipIf($this->db instanceof Sqlite, 'SQLite uses loose typing, this operation is unsupported.');
+
 		$this->loadFixtures('DataTest');
 		$TestModel = new DataTest();
 
@@ -209,7 +207,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testAllowSimulatedFields() {
+	public function testAllowSimulatedFields() {
 		$TestModel = new ValidationTest1();
 
 		$TestModel->create(array(
@@ -231,7 +229,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testCacheClearOnSave() {
+	public function testCacheClearOnSave() {
 		$_back = array(
 			'check' => Configure::read('Cache.check'),
 			'disable' => Configure::read('Cache.disable'),
@@ -269,7 +267,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveWithCounterCache() {
+	public function testSaveWithCounterCache() {
 		$this->loadFixtures('Syfile', 'Item', 'Image', 'Portfolio', 'ItemsPortfolio');
 		$TestModel = new Syfile();
 		$TestModel2 = new Item();
@@ -306,7 +304,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCounterCacheIncrease() {
+	public function testCounterCacheIncrease() {
 		$this->loadFixtures('CounterCacheUser', 'CounterCachePost');
 		$User = new CounterCacheUser();
 		$Post = new CounterCachePost();
@@ -333,7 +331,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCounterCacheDecrease() {
+	public function testCounterCacheDecrease() {
 		$this->loadFixtures('CounterCacheUser', 'CounterCachePost');
 		$User = new CounterCacheUser();
 		$Post = new CounterCachePost();
@@ -355,7 +353,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCounterCacheUpdated() {
+	public function testCounterCacheUpdated() {
 		$this->loadFixtures('CounterCacheUser', 'CounterCachePost');
 		$User = new CounterCacheUser();
 		$Post = new CounterCachePost();
@@ -379,7 +377,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCounterCacheWithNonstandardPrimaryKey() {
+	public function testCounterCacheWithNonstandardPrimaryKey() {
 		$this->loadFixtures(
 			'CounterCacheUserNonstandardPrimaryKey',
 			'CounterCachePostNonstandardPrimaryKey'
@@ -406,16 +404,15 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testCounterCacheWithSelfJoin() {
-		$skip = $this->skipIf(
-			($this->db instanceof Sqlite),
-			'SQLite 2.x does not support ALTER TABLE ADD COLUMN'
-		);
-		if ($skip) {
-			return;
-		}
+		$this->skipIf($this->db instanceof Sqlite, 'SQLite 2.x does not support ALTER TABLE ADD COLUMN');
 
 		$this->loadFixtures('CategoryThread');
-		$this->db->query('ALTER TABLE '. $this->db->fullTableName('category_threads') . " ADD COLUMN child_count INTEGER");
+		$column = 'COLUMN ';
+		if ($this->db instanceof Sqlserver) {
+			$column = '';
+		}
+		$column .= $this->db->buildColumn(array('name' => 'child_count', 'type' => 'integer'));
+		$this->db->query('ALTER TABLE '. $this->db->fullTableName('category_threads') . ' ADD ' . $column);
 		$Category = new CategoryThread();
 		$result = $Category->updateAll(array('CategoryThread.name' => "'updated'"), array('CategoryThread.parent_id' => 5));
 		$this->assertFalse(empty($result));
@@ -424,7 +421,7 @@ class ModelWriteTest extends BaseModelTest {
 		$Category->belongsTo['ParentCategory']['counterCache'] = 'child_count';
 		$Category->updateCounterCache(array('parent_id' => 5));
 		$result = Set::extract($Category->find('all', array('conditions' => array('CategoryThread.id' => 5))), '{n}.CategoryThread.child_count');
-		$expected = array_fill(0, 1, 1);
+		$expected = array(1);
 		$this->assertEqual($expected, $result);
 	}
 
@@ -434,7 +431,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveWithCounterCacheScope() {
+	public function testSaveWithCounterCacheScope() {
 		$this->loadFixtures('Syfile', 'Item', 'Image', 'ItemsPortfolio', 'Portfolio');
 		$TestModel = new Syfile();
 		$TestModel2 = new Item();
@@ -474,7 +471,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testBeforeValidateSaveAbortion() {
+	public function testBeforeValidateSaveAbortion() {
 		$this->loadFixtures('Post');
 		$Model = new CallbackPostTestModel();
 		$Model->beforeValidateReturn = false;
@@ -492,7 +489,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testBeforeSaveSaveAbortion() {
+	public function testBeforeSaveSaveAbortion() {
 		$this->loadFixtures('Post');
 		$Model = new CallbackPostTestModel();
 		$Model->beforeSaveReturn = false;
@@ -512,7 +509,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveField() {
+	public function testSaveField() {
 		$this->loadFixtures('Article');
 		$TestModel = new Article();
 
@@ -582,7 +579,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveWithCreate() {
+	public function testSaveWithCreate() {
 		$this->loadFixtures(
 			'User',
 			'Article',
@@ -803,7 +800,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testSaveWithNullId() {
+	public function testSaveWithNullId() {
 		$this->loadFixtures('User');
 		$User = new User();
 		$User->read(null, 1);
@@ -831,7 +828,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveWithSet() {
+	public function testSaveWithSet() {
 		$this->loadFixtures('Article');
 		$TestModel = new Article();
 
@@ -959,7 +956,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveWithNonExistentFields() {
+	public function testSaveWithNonExistentFields() {
 		$this->loadFixtures('Article');
 		$TestModel = new Article();
 		$TestModel->recursive = -1;
@@ -1011,7 +1008,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveFromXml() {
+	public function testSaveFromXml() {
 		$this->markTestSkipped('This feature needs to be fixed or dropped');
 		$this->loadFixtures('Article');
 		App::uses('Xml', 'Utility');
@@ -1039,7 +1036,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveHabtm() {
+	public function testSaveHabtm() {
 		$this->loadFixtures('Article', 'User', 'Comment', 'Tag', 'ArticlesTag');
 		$TestModel = new Article();
 
@@ -1517,7 +1514,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveHabtmCustomKeys() {
+	public function testSaveHabtmCustomKeys() {
 		$this->loadFixtures('Story', 'StoriesTag', 'Tag');
 		$Story = new Story();
 
@@ -1568,7 +1565,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testHabtmSaveWithConditionsInAssociation() {
+	public function testHabtmSaveWithConditionsInAssociation() {
 		$this->loadFixtures('JoinThing', 'Something', 'SomethingElse');
 		$Something = new Something();
 		$Something->unbindModel(array('hasAndBelongsToMany' => array('SomethingElse')), false);
@@ -1616,7 +1613,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmSaveKeyResolution() {
+	public function testHabtmSaveKeyResolution() {
 		$this->loadFixtures('Apple', 'Device', 'ThePaperMonkies');
 		$ThePaper = new ThePaper();
 
@@ -1706,7 +1703,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCreationOfEmptyRecord() {
+	public function testCreationOfEmptyRecord() {
 		$this->loadFixtures('Author');
 		$TestModel = new Author();
 		$this->assertEqual($TestModel->find('count'), 4);
@@ -1726,7 +1723,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCreateWithPKFiltering() {
+	public function testCreateWithPKFiltering() {
 		$TestModel = new Article();
 		$data = array(
 			'id' => 5,
@@ -1823,7 +1820,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCreationWithMultipleData() {
+	public function testCreationWithMultipleData() {
 		$this->loadFixtures('Article', 'Comment');
 		$Article = new Article();
 		$Comment = new Comment();
@@ -1995,7 +1992,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCreationWithMultipleDataSameModel() {
+	public function testCreationWithMultipleDataSameModel() {
 		$this->loadFixtures('Article');
 		$Article = new Article();
 		$SecondaryArticle = new Article();
@@ -2054,7 +2051,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testCreationWithMultipleDataSameModelManualInstances() {
+	public function testCreationWithMultipleDataSameModelManualInstances() {
 		$this->loadFixtures('PrimaryModel');
 		$Primary = new PrimaryModel();
 		$Secondary = new PrimaryModel();
@@ -2093,7 +2090,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testRecordExists() {
+	public function testRecordExists() {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 
@@ -2121,7 +2118,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUpdateExisting() {
+	public function testUpdateExisting() {
 		$this->loadFixtures('User', 'Article', 'Comment');
 		$TestModel = new User();
 		$TestModel->create();
@@ -2168,7 +2165,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testUpdateSavingBlankValues() {
+	public function testUpdateSavingBlankValues() {
 		$this->loadFixtures('Article');
 		$Article = new Article();
 		$Article->validate = array();
@@ -2190,7 +2187,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUpdateMultiple() {
+	public function testUpdateMultiple() {
 		$this->loadFixtures('Comment', 'Article', 'User', 'CategoryThread');
 		$TestModel = new Comment();
 		$result = Set::extract($TestModel->find('all'), '{n}.Comment.user_id');
@@ -2224,7 +2221,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmUuidWithUuidId() {
+	public function testHabtmUuidWithUuidId() {
 		$this->loadFixtures('Uuidportfolio', 'Uuiditem', 'UuiditemsUuidportfolio', 'UuiditemsUuidportfolioNumericid');
 		$TestModel = new Uuidportfolio();
 
@@ -2243,7 +2240,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testHabtmSavingWithNoPrimaryKeyUuidJoinTable() {
+	public function testHabtmSavingWithNoPrimaryKeyUuidJoinTable() {
 		$this->loadFixtures('UuidTag', 'Fruit', 'FruitsUuidTag');
 		$Fruit = new Fruit();
 		$data = array(
@@ -2268,7 +2265,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testHabtmSavingWithNoPrimaryKeyUuidJoinTableNoWith() {
+	public function testHabtmSavingWithNoPrimaryKeyUuidJoinTableNoWith() {
 		$this->loadFixtures('UuidTag', 'Fruit', 'FruitsUuidTag');
 		$Fruit = new FruitNoWith();
 		$data = array(
@@ -2294,7 +2291,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testHabtmUuidWithNumericId() {
+	public function testHabtmUuidWithNumericId() {
 		$this->loadFixtures('Uuidportfolio', 'Uuiditem', 'UuiditemsUuidportfolioNumericid');
 		$TestModel = new Uuiditem();
 
@@ -2313,7 +2310,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveMultipleHabtm() {
+	public function testSaveMultipleHabtm() {
 		$this->loadFixtures('JoinA', 'JoinB', 'JoinC', 'JoinAB', 'JoinAC');
 		$TestModel = new JoinA();
 		$result = $TestModel->findById(1);
@@ -2432,7 +2429,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAll() {
+	public function testSaveAll() {
 		$this->loadFixtures('Post', 'Author', 'Comment', 'Attachment', 'Article', 'User');
 		$TestModel = new Post();
 
@@ -2572,7 +2569,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHabtm() {
+	public function testSaveAllHabtm() {
 		$this->loadFixtures('Article', 'Tag', 'Comment', 'User', 'ArticlesTag');
 		$data = array(
 			'Article' => array(
@@ -2604,7 +2601,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHabtmWithExtraJoinTableFields() {
+	public function testSaveAllHabtmWithExtraJoinTableFields() {
 		$this->loadFixtures('Something', 'SomethingElse', 'JoinThing');
 
 		$data = array(
@@ -2648,7 +2645,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHasOne() {
+	public function testSaveAllHasOne() {
 		$model = new Comment();
 		$model->deleteAll(true);
 		$this->assertEqual($model->find('all'), array());
@@ -2701,7 +2698,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllBelongsTo() {
+	public function testSaveAllBelongsTo() {
 		$model = new Comment();
 		$model->deleteAll(true);
 		$this->assertEqual($model->find('all'), array());
@@ -2741,7 +2738,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHasOneValidation() {
+	public function testSaveAllHasOneValidation() {
 		$model = new Comment();
 		$model->deleteAll(true);
 		$this->assertEqual($model->find('all'), array());
@@ -2788,7 +2785,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllAtomic() {
+	public function testSaveAllAtomic() {
 		$this->loadFixtures('Article', 'User');
 		$TestModel = new Article();
 
@@ -2863,7 +2860,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHasMany() {
+	public function testSaveAllHasMany() {
 		$this->loadFixtures('Article', 'Comment');
 		$TestModel = new Article();
 		$TestModel->belongsTo = $TestModel->hasAndBelongsToMany = array();
@@ -2940,7 +2937,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHasManyValidation() {
+	public function testSaveAllHasManyValidation() {
 		$this->loadFixtures('Article', 'Comment');
 		$TestModel = new Article();
 		$TestModel->belongsTo = $TestModel->hasAndBelongsToMany = array();
@@ -2981,7 +2978,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testSaveAllManyRowsTransactionNoRollback() {
+	public function testSaveAllManyRowsTransactionNoRollback() {
 		$this->loadFixtures('Post');
 
 		$this->getMock('DboSource', array(), array(), 'MockTransactionDboSource');
@@ -3012,7 +3009,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testSaveAllAssociatedTransactionNoRollback() {
+	public function testSaveAllAssociatedTransactionNoRollback() {
 		$testDb = ConnectionManager::getDataSource('test');
 
 		$mock = $this->getMock('DboSource', array(), array(), 'MockTransactionAssociatedDboSource', false);
@@ -3058,7 +3055,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testSaveAllNestedSaveAll() {
+	public function testSaveAllNestedSaveAll() {
 		$this->loadFixtures('Sample');
 		$TransactionTestModel = new TransactionTestModel();
 
@@ -3075,7 +3072,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllTransaction() {
+	public function testSaveAllTransaction() {
 		$this->loadFixtures('Post', 'Author', 'Comment', 'Attachment');
 		$TestModel = new Post();
 
@@ -3272,7 +3269,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllValidation() {
+	public function testSaveAllValidation() {
 		$this->loadFixtures('Post', 'Author', 'Comment', 'Attachment');
 		$TestModel = new Post();
 
@@ -3465,7 +3462,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllValidationOnly() {
+	public function testSaveAllValidationOnly() {
 		$this->loadFixtures('Comment', 'Attachment');
 		$TestModel = new Comment();
 		$TestModel->Attachment->validate = array('attachment' => 'notEmpty');
@@ -3519,7 +3516,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllValidateFirst() {
+	public function testSaveAllValidateFirst() {
 		$this->loadFixtures('Article', 'Comment', 'Attachment');
 		$model = new Article();
 		$model->deleteAll(true);
@@ -3598,7 +3595,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testSaveAllValidateFirstAtomicFalse() {
+	public function testSaveAllValidateFirstAtomicFalse() {
 		$Something = new Something();
 		$invalidData = array(
 			array(
@@ -3658,7 +3655,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUpdateWithCalculation() {
+	public function testUpdateWithCalculation() {
 		$this->loadFixtures('DataTest');
 		$model = new DataTest();
 		$model->deleteAll(true);
@@ -3688,7 +3685,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllHasManyValidationOnly() {
+	public function testSaveAllHasManyValidationOnly() {
 		$this->loadFixtures('Article', 'Comment', 'Attachment');
 		$TestModel = new Article();
 		$TestModel->belongsTo = $TestModel->hasAndBelongsToMany = array();
@@ -3765,7 +3762,7 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindAllForeignKey() {
+	public function testFindAllForeignKey() {
 		$this->loadFixtures('ProductUpdateAll', 'GroupUpdateAll');
 		$ProductUpdateAll = new ProductUpdateAll();
 
@@ -3828,7 +3825,9 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testUpdateAllEmptyValues() {
+	public function testUpdateAllEmptyValues() {
+		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+
 		$this->loadFixtures('Author', 'Post');
 		$model = new Author();
 		$result = $model->updateAll(array('user' => '""'));
@@ -3841,11 +3840,9 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testUpdateAllWithJoins() {
-		$this->skipIf(
-			!$this->db instanceof Mysql,
-			'%s Currently, there is no way of doing joins in an update statement in postgresql or sqlite'
-		);
+	public function testUpdateAllWithJoins() {
+		$this->skipIf(!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql or sqlite');
+
 		$this->loadFixtures('ProductUpdateAll', 'GroupUpdateAll');
 		$ProductUpdateAll = new ProductUpdateAll();
 
@@ -3892,10 +3889,8 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
     function testUpdateAllWithoutForeignKey() {
-		$this->skipIf(
-			!$this->db instanceof Mysql,
-			'%s Currently, there is no way of doing joins in an update statement in postgresql'
-		);
+		$this->skipIf(!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql');
+
 		$this->loadFixtures('ProductUpdateAll', 'GroupUpdateAll');
 		$ProductUpdateAll = new ProductUpdateAll();
 
@@ -3947,7 +3942,9 @@ class ModelWriteTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testSaveAllEmptyData() {
+	public function testSaveAllEmptyData() {
+		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+
 		$this->loadFixtures('Article', 'ProductUpdateAll', 'Comment', 'Attachment');
 		$model = new Article();
 		$result = $model->saveAll(array(), array('validate' => 'first'));
@@ -3963,7 +3960,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	function testWriteFloatAsGerman() {
+	public function testWriteFloatAsGerman() {
 		$restore = setlocale(LC_ALL, null);
 		setlocale(LC_ALL, 'de_DE');
 

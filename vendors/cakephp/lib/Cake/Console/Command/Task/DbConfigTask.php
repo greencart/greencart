@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells.tasks
  * @since         CakePHP(tm) v 1.2
@@ -104,7 +104,7 @@ class DbConfigTask extends Shell {
 				}
 			}
 
-			$driver = $this->in(__d('cake_console', 'Driver:'), array('Mssql', 'Mysql', 'Oracle', 'Postgres', 'Sqlite'), 'Mysql');
+			$driver = $this->in(__d('cake_console', 'Driver:'), array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver'), 'Mysql');
 
 			$persistent = $this->in(__d('cake_console', 'Persistent Connection?'), array('y', 'n'), 'n');
 			if (strtolower($persistent) == 'n') {

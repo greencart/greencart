@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.libs.tasks
  * @since         CakePHP(tm) v 1.2
@@ -50,14 +50,6 @@ class ViewTask extends BakeTask {
  * @access public
  */
 	public $controllerName = null;
-
-/**
- * Path to controller to put views
- *
- * @var string
- * @access public
- */
-	public $controllerPath = null;
 
 /**
  * The template file to use
@@ -109,7 +101,6 @@ class ViewTask extends BakeTask {
 		}
 		$action = null;
 		$this->controllerName = $this->_controllerName($this->args[0]);
-		$this->controllerPath = $this->_controllerPath($this->controllerName);
 
 		$this->Project->interactive = false;
 		if (strtolower($this->args[0]) == 'all') {
@@ -189,7 +180,6 @@ class ViewTask extends BakeTask {
 		foreach ($tables as $table) {
 			$model = $this->_modelName($table);
 			$this->controllerName = $this->_controllerName($model);
-			$this->controllerPath = Inflector::underscore($this->controllerName);
 			App::uses($model, 'Model');
 			if (class_exists($model)) {
 				$vars = $this->__loadController();
@@ -219,8 +209,6 @@ class ViewTask extends BakeTask {
 
 		$this->Controller->connection = $this->connection;
 		$this->controllerName = $this->Controller->getName();
-
-		$this->controllerPath = strtolower(Inflector::underscore($this->controllerName));
 
 		$prompt = __d('cake_console', "Would you like bake to build your views interactively?\nWarning: Choosing no will overwrite %s views if it exist.",  $this->controllerName);
 		$interactive = $this->in($prompt, array('y', 'n'), 'n');
@@ -343,7 +331,7 @@ class ViewTask extends BakeTask {
 		$this->hr();
 		$this->out(__d('cake_console', 'Controller Name: %s', $this->controllerName));
 		$this->out(__d('cake_console', 'Action Name:     %s', $action));
-		$this->out(__d('cake_console', 'Path:            %s', $this->params['app'] . DS . $this->controllerPath . DS . Inflector::underscore($action) . ".ctp"));
+		$this->out(__d('cake_console', 'Path:            %s', $this->params['app'] . DS . $this->controllerName . DS . Inflector::underscore($action) . ".ctp"));
 		$this->hr();
 		$looksGood = $this->in(__d('cake_console', 'Look okay?'), array('y','n'), 'y');
 		if (strtolower($looksGood) == 'y') {
@@ -370,7 +358,7 @@ class ViewTask extends BakeTask {
 		}
 		$this->out("\n" . __d('cake_console', 'Baking `%s` view file...', $action), 1, Shell::QUIET);
 		$path = $this->getPath();
-		$filename = $path . $this->controllerPath . DS . Inflector::underscore($action) . '.ctp';
+		$filename = $path . $this->controllerName . DS . Inflector::underscore($action) . '.ctp';
 		return $this->createFile($filename, $content);
 	}
 

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP(tm) v 1.3
@@ -155,7 +155,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGetNameInvalidIndex() {
+	public function testGetNameInvalidIndex() {
 		$this->Task->interactive = true;
 		$this->Task->expects($this->any())->method('in')
 			->will($this->onConsecutiveCalls(50, 'q'));
@@ -182,7 +182,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDoHelpersTrailingSpace() {
+	public function testDoHelpersTrailingSpace() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Javascript, Ajax, CustomOne  '));
 		$result = $this->Task->doHelpers();
@@ -195,7 +195,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDoHelpersTrailingCommas() {
+	public function testDoHelpersTrailingCommas() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Javascript, Ajax, CustomOne, , '));
 		$result = $this->Task->doHelpers();
@@ -219,7 +219,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDoComponentsTrailingSpaces() {
+	public function testDoComponentsTrailingSpaces() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' RequestHandler, Security  '));
 
@@ -233,7 +233,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDoComponentsTrailingCommas() {
+	public function testDoComponentsTrailingCommas() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' RequestHandler, Security, , '));
 
@@ -329,11 +329,8 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testBakeActionsUsingSessions() {
-		$skip = $this->skipIf(!defined('ARTICLE_MODEL_CREATED'),
-			'Testing bakeActions requires Article, Comment & Tag Model to be undefined. %s');
-		if ($skip) {
-			return;
-		}
+		$this->skipIf(!defined('ARTICLE_MODEL_CREATED'), 'Testing bakeActions requires Article, Comment & Tag Model to be undefined.');
+
 		$result = $this->Task->bakeActions('BakeArticles', null, true);
 
 		$this->assertContains('function index() {', $result);
@@ -371,11 +368,8 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testBakeActionsWithNoSessions() {
-		$skip = $this->skipIf(!defined('ARTICLE_MODEL_CREATED'),
-			'Testing bakeActions requires Article, Tag, Comment Models to be undefined. %s');
-		if ($skip) {
-			return;
-		}
+		$this->skipIf(!defined('ARTICLE_MODEL_CREATED'), 'Testing bakeActions requires Article, Tag, Comment Models to be undefined.');
+
 		$result = $this->Task->bakeActions('BakeArticles', null, false);
 
 		$this->assertContains('function index() {', $result);
@@ -459,7 +453,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testInteractiveAdminMethodsNotInteractive() {
+	public function testInteractiveAdminMethodsNotInteractive() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
 			$this->markTestSkipped('Additional tables detected.');

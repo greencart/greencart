@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases
  * @since         CakePHP(tm) v 2.0
@@ -24,7 +24,7 @@ class PhpReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->path = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
 	}
@@ -33,7 +33,7 @@ class PhpReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRead() {
+	public function testRead() {
 		$reader = new PhpReader($this->path);
 		$values = $reader->read('var_test');
 		$this->assertEquals('value', $values['Read']);
@@ -49,7 +49,7 @@ class PhpReaderTest extends CakeTestCase {
  * @expectedException ConfigureException
  * @return void
  */
-	function testReadWithNonExistantFile() {
+	public function testReadWithNonExistantFile() {
 		$reader = new PhpReader($this->path);
 		$reader->read('fake_values');
 	}
@@ -60,7 +60,7 @@ class PhpReaderTest extends CakeTestCase {
  * @expectedException RuntimeException
  * @return void
  */
-	function testReadEmptyFile() {
+	public function testReadEmptyFile() {
 		$reader = new PhpReader($this->path);
 		$reader->read('empty');
 	}
@@ -71,7 +71,7 @@ class PhpReaderTest extends CakeTestCase {
  * @expectedException ConfigureException
  * @return void
  */
-	function testReadWithDots() {
+	public function testReadWithDots() {
 		$reader = new PhpReader($this->path);
 		$reader->read('../empty');
 	}
@@ -81,7 +81,7 @@ class PhpReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testReadPluginValue() {
+	public function testReadPluginValue() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		), true);

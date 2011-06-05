@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases
  * @since         CakePHP(tm) v 2.0
@@ -32,7 +32,7 @@ class IniReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function setup() {
+	public function setup() {
 		parent::setup();
 		$this->path = CAKE . 'Test' . DS . 'test_app' . DS . 'Config'. DS;
 	}
@@ -42,7 +42,7 @@ class IniReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testConstruct() {
+	public function testConstruct() {
 		$reader = new IniReader($this->path);
 		$config = $reader->read('acl.ini.php');
 
@@ -56,7 +56,7 @@ class IniReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testReadingOnlyOneSection() {
+	public function testReadingOnlyOneSection() {
 		$reader = new IniReader($this->path, 'admin');
 		$config = $reader->read('acl.ini.php');
 
@@ -85,7 +85,7 @@ class IniReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testReadingValuesWithDots() {
+	public function testReadingValuesWithDots() {
 		$reader = new IniReader($this->path);
 		$config = $reader->read('nested.ini');
 
@@ -99,7 +99,7 @@ class IniReaderTest extends CakeTestCase {
  *
  * @return void
  */
-	function testBooleanReading() {
+	public function testBooleanReading() {
 		$reader = new IniReader($this->path);
 		$config = $reader->read('nested.ini');
 

@@ -6,12 +6,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5550
@@ -95,7 +95,7 @@ class MyAppSchema extends CakeSchema {
  * @access public
  * @return void
  */
-	function setup($version) {
+	public function setup($version) {
 	}
 
 /**
@@ -105,7 +105,7 @@ class MyAppSchema extends CakeSchema {
  * @access public
  * @return void
  */
-	function teardown($version) {
+	public function teardown($version) {
 	}
 
 /**
@@ -222,7 +222,7 @@ class TestAppSchema extends CakeSchema {
  * @access public
  * @return void
  */
-	function setup($version) {
+	public function setup($version) {
 	}
 
 /**
@@ -232,7 +232,7 @@ class TestAppSchema extends CakeSchema {
  * @access public
  * @return void
  */
-	function teardown($version) {
+	public function teardown($version) {
 	}
 }
 
@@ -513,7 +513,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		ConnectionManager::getDataSource('test')->cacheSources = false;
 		$this->Schema = new TestAppSchema();
@@ -524,9 +524,11 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
-		@unlink(TMP . 'tests' . DS .'schema.php');
+		if (file_exists(TMP . 'tests' . DS .'schema.php')) {
+			unlink(TMP . 'tests' . DS .'schema.php');
+		}
 		unset($this->Schema);
 		CakePlugin::unload();
 	}
@@ -537,7 +539,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaName() {
+	public function testSchemaName() {
 		$Schema = new CakeSchema();
 		$this->assertEqual(strtolower($Schema->name), strtolower(APP_DIR));
 
@@ -554,7 +556,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaRead() {
+	public function testSchemaRead() {
 		$read = $this->Schema->read(array(
 			'connection' => 'test',
 			'name' => 'TestApp',
@@ -606,9 +608,10 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaReadWithOddTablePrefix() {
+	public function testSchemaReadWithOddTablePrefix() {
 		$config = ConnectionManager::getDataSource('test')->config;
-		$this->skipIf(!empty($config['prefix']), 'This test can not be executed with datasource prefix set');
+		$this->skipIf(!empty($config['prefix']), 'This test can not be executed with datasource prefix set.');
+
 		$SchemaPost = ClassRegistry::init('SchemaPost');
 		$SchemaPost->tablePrefix = 'po';
 		$SchemaPost->useTable = 'sts';
@@ -626,9 +629,9 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSchemaReadWithTablePrefix() {
+	public function testSchemaReadWithTablePrefix() {
 		$config = ConnectionManager::getDataSource('test')->config;
-		$this->skipIf(!empty($config['prefix']), 'This test can not be executed with datasource prefix set');
+		$this->skipIf(!empty($config['prefix']), 'This test can not be executed with datasource prefix set.');
 
 		$model = new SchemaPrefixAuthUser();
 
@@ -648,7 +651,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSchemaReadWithConfigPrefix() {
+	public function testSchemaReadWithConfigPrefix() {
 		$db = ConnectionManager::getDataSource('test');
 		$config = $db->config;
 		$config['prefix'] = 'schema_test_prefix_';
@@ -662,7 +665,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSchemaReadWithPlugins() {
+	public function testSchemaReadWithPlugins() {
 		App::objects('model', null, false);
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
@@ -691,17 +694,13 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSchemaReadWithCrossDatabase() {
+	public function testSchemaReadWithCrossDatabase() {
 		$config = new DATABASE_CONFIG();
-		$skip = $this->skipIf(
+		$this->skipIf(
 			!isset($config->test) || !isset($config->test2),
-			 '%s Primary and secondary test databases not configured, skipping cross-database '
-			.'join tests.'
-			.' To run these tests, you must define $test and $test2 in your database configuration.'
+			'Primary and secondary test databases not configured, skipping cross-database join tests.'
+			. ' To run these tests, you must define $test and $test2 in your database configuration.'
 		);
-		if ($skip) {
-			return;
-		}
 
 		$db2 = ConnectionManager::getDataSource('test2');
 		$fixture = new SchemaCrossDatabaseFixture();
@@ -734,7 +733,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGenerateTable() {
+	public function testGenerateTable() {
 		$posts = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'key' => 'primary'),
 			'author_id' => array('type' => 'integer', 'null' => false),
@@ -754,7 +753,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaWrite() {
+	public function testSchemaWrite() {
 		$write = $this->Schema->write(array('name' => 'MyOtherApp', 'tables' => $this->Schema->tables, 'path' => TMP . 'tests'));
 		$file = file_get_contents(TMP . 'tests' . DS .'schema.php');
 		$this->assertEqual($write, $file);
@@ -770,7 +769,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaComparison() {
+	public function testSchemaComparison() {
 		$New = new MyAppSchema();
 		$compare = $New->compare($this->Schema);
 		$expected = array(
@@ -850,7 +849,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCompareEmptyStringAndNull() {
+	public function testCompareEmptyStringAndNull() {
 		$One = new CakeSchema(array(
 			'posts' => array(
 				'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -879,7 +878,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testTableParametersAndIndexComparison() {
+	public function testTableParametersAndIndexComparison() {
 		$old = array(
 			'posts' => array(
 				'id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'key' => 'primary'),
@@ -971,7 +970,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaLoading() {
+	public function testSchemaLoading() {
 		$Other = $this->Schema->load(array('name' => 'MyOtherApp', 'path' => TMP . 'tests'));
 		$this->assertEqual($Other->name, 'MyOtherApp');
 		$this->assertEqual($Other->tables, $this->Schema->tables);
@@ -982,7 +981,7 @@ class CakeSchemaTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSchemaLoadingFromPlugin() {
+	public function testSchemaLoadingFromPlugin() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
@@ -1000,7 +999,7 @@ class CakeSchemaTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSchemaCreateTable() {
+	public function testSchemaCreateTable() {
 		$db = ConnectionManager::getDataSource('test');
 		$db->cacheSources = false;
 

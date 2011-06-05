@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view
  * @since         CakePHP(tm) v 1.2.0.5714
@@ -38,7 +38,7 @@ App::uses('CakeRequest', 'Network');
  *
  * {{{
  * class ExampleController extends AppController {
- *		function download () {
+ *		public function download () {
  *			$this->viewClass = 'Media';
  *			$params = array(
  *				'id' => 'example.zip',
@@ -74,7 +74,7 @@ class MediaView extends View {
  *
  * @param object $controller The controller with viewVars
  */
-	function __construct($controller = null) {
+	public function __construct($controller = null) {
 		parent::__construct($controller);
 		if (is_object($controller) && isset($controller->response)) {
 			$this->response = $controller->response;
@@ -88,7 +88,7 @@ class MediaView extends View {
  *
  * @return mixed
  */
-	function render() {
+	public function render() {
 		$name = $download = $extension = $id = $modified = $path = $cache = $mimeType = $compress = null;
 		extract($this->viewVars, EXTR_OVERWRITE);
 

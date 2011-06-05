@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells
  * @since         CakePHP(tm) v 1.2.0.5012
@@ -149,7 +149,7 @@ class Shell extends Object {
  */
 	function __construct($stdout = null, $stderr = null, $stdin = null) {
 		if ($this->name == null) {
-			$this->name = Inflector::underscore(str_replace(array('Shell', 'Task'), '', get_class($this)));
+			$this->name = Inflector::camelize(str_replace(array('Shell', 'Task'), '', get_class($this)));
 		}
 		$this->Tasks = new TaskCollection($this);
 
@@ -539,7 +539,7 @@ class Shell extends Object {
  * @access public
  * @return string
  */
-	function nl($multiplier = 1) {
+	public function nl($multiplier = 1) {
 		return str_repeat(ConsoleOutput::LF, $multiplier);
 	}
 

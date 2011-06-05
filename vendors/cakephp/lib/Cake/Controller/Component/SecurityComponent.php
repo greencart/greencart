@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.controller.components
  * @since         CakePHP(tm) v 0.10.8.2156
@@ -284,7 +284,7 @@ class SecurityComponent extends Component {
  * @see SecurityComponent::$blackHoleCallback
  * @link http://book.cakephp.org/view/1307/blackHole-object-controller-string-error
  */
-	function blackHole($controller, $error = '') {
+	public function blackHole($controller, $error = '') {
 		if ($this->blackHoleCallback == null) {
 			$code = 404;
 			if ($error == 'login') {
@@ -494,6 +494,10 @@ class SecurityComponent extends Component {
 		} 
 		if ($this->csrfCheck && ($this->csrfUseOnce || empty($tokenData['csrfTokens'])) ) {
 			$token['csrfTokens'][$authKey] = strtotime($this->csrfExpires);
+		}
+		if ($this->csrfCheck && $this->csrfUseOnce == false) {
+			$csrfTokens = array_keys($token['csrfTokens']);
+			$token['key'] = $csrfTokens[0];
 		}
 		$this->Session->write('_Token', $token);
 		$controller->request->params['_Token'] = array(

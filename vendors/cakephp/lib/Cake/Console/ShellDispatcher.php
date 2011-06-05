@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console
  * @since         CakePHP(tm) v 2.0
@@ -127,13 +127,13 @@ class ShellDispatcher {
 		define('APP_PATH', $this->params['working'] . DS);
 		define('WWW_ROOT', APP_PATH . $this->params['webroot'] . DS);
 		if (!is_dir(ROOT . DS . APP_DIR . DS . 'tmp')) {
-			define('TMP', CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Console' . DS . 'templates' . DS . 'skel' . DS . 'tmp' . DS);
+			define('TMP', CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Console' . DS . 'Templates' . DS . 'skel' . DS . 'tmp' . DS);
 		}
 		$boot = file_exists(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'bootstrap.php');
 		require CORE_PATH . 'Cake' . DS . 'bootstrap.php';
 
 		if (!file_exists(APP_PATH . 'Config' . DS . 'core.php')) {
-			include_once CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Console' . DS . 'templates' . DS . 'skel' . DS . 'Config' . DS . 'core.php';
+			include_once CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Console' . DS . 'Templates' . DS . 'skel' . DS . 'Config' . DS . 'core.php';
 			App::build();
 		}
 		require_once CAKE . 'Console' . DS . 'ConsoleErrorHandler.php';

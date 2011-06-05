@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP v 1.3.0
@@ -70,7 +70,7 @@ class ProjectTaskTest extends CakeTestCase {
  * @return void
  */
 	protected function _setupTestProject() {
-		$skel = CAKE . 'Console' . DS . 'templates' . DS . 'skel';
+		$skel = CAKE . 'Console' . DS . 'Templates' . DS . 'skel';
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
 		$this->Task->bake($this->Task->path . 'bake_test_app', $skel);
 	}
@@ -107,6 +107,20 @@ class ProjectTaskTest extends CakeTestCase {
 		foreach ($dirs as $dir) {
 			$this->assertTrue(is_dir($path . DS . $dir), 'Missing ' . $dir);
 		}
+	}
+
+/**
+ * test bake with an absolute path.
+ *
+ * @return void
+ */
+	public function testExecuteWithAbsolutePath() {
+		$this->Task->args[0] = TMP . 'tests' . DS . 'bake_test_app';
+		$this->Task->params['skel'] = CAKE . 'Console' . DS . 'Templates' . DS . 'skel';
+		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
+		$this->Task->execute();
+
+		$this->assertTrue(is_dir($this->Task->args[0]), 'No project dir');
 	}
 
 /**
@@ -255,7 +269,7 @@ class ProjectTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testExecute() {
-		$this->Task->params['skel'] = CAKE . 'Console' . DS. 'templates' . DS . 'skel';
+		$this->Task->params['skel'] = CAKE . 'Console' . DS. 'Templates' . DS . 'skel';
 		$this->Task->params['working'] = TMP . 'tests' . DS;
 
 		$path = $this->Task->path . 'bake_test_app';
@@ -279,7 +293,7 @@ class ProjectTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testConsolePath() {
+	public function testConsolePath() {
 		$this->_setupTestProject();
 
 		$path = $this->Task->path . 'bake_test_app' . DS;

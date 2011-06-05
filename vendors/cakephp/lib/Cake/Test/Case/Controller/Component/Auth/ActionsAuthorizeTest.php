@@ -2,12 +2,12 @@
 /**
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.tests.cases.libs.controller.components.auth
  * @since         CakePHP(tm) v 2.0
@@ -27,7 +27,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->controller = $this->getMock('Controller', array(), array(), '', false);
 		$this->Acl = $this->getMock('AclComponent', array(), array(), '', false);
@@ -54,7 +54,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAuthorizeFailure() {
+	public function testAuthorizeFailure() {
 		$user = array(
 			'User' => array(
 				'id' => 1,
@@ -75,7 +75,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
 			->with($user, '/controllers/Posts/index')
 			->will($this->returnValue(false));
 	
-		$this->assertFalse($this->auth->authorize($user, $request));
+		$this->assertFalse($this->auth->authorize($user['User'], $request));
 	}
 
 /**
@@ -83,7 +83,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAuthorizeSuccess() {
+	public function testAuthorizeSuccess() {
 		$user = array(
 			'User' => array(
 				'id' => 1,
@@ -104,7 +104,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
 			->with($user, '/controllers/Posts/index')
 			->will($this->returnValue(true));
 	
-		$this->assertTrue($this->auth->authorize($user, $request));
+		$this->assertTrue($this->auth->authorize($user['User'], $request));
 	}
 
 /**
@@ -112,7 +112,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testActionMethod() {
+	public function testActionMethod() {
 		$request = new CakeRequest('/posts/index', false);
 		$request->addParams(array(
 			'plugin' => null,
@@ -130,7 +130,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	function testActionWithPlugin() {
+	public function testActionWithPlugin() {
 		$request = new CakeRequest('/debug_kit/posts/index', false);
 		$request->addParams(array(
 			'plugin' => 'debug_kit',

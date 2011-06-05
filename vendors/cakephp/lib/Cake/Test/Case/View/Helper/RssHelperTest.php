@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.view.helpers
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -33,7 +33,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$controller = null;
 		$this->View = new View($controller);
@@ -46,7 +46,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		unset($this->Rss);
 	}
@@ -57,7 +57,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDocument() {
+	public function testDocument() {
 		$result = $this->Rss->document();
 		$expected = array(
 			'rss' => array(
@@ -92,7 +92,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testChannel() {
+	public function testChannel() {
 		$attrib = array('a' => '1', 'b' => '2');
 		$elements = array('title' => 'title');
 		$content = 'content';
@@ -122,7 +122,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testChannelElements() {
+	public function testChannelElements() {
 		$attrib = array();
 		$elements = array(
 			'title' => 'Title of RSS Feed',
@@ -166,7 +166,7 @@ class RssHelperTest extends CakeTestCase {
 		$this->assertTags($result, $expected);
 	}
 
-	function testChannelElementAttributes() {
+	public function testChannelElementAttributes() {
 		$attrib = array();
 		$elements = array(
 			'title' => 'Title of RSS Feed',
@@ -214,7 +214,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testItems() {
+	public function testItems() {
 		$items = array(
 			array('title' => 'title1', 'guid' => 'http://www.example.com/guid1', 'link' => 'http://www.example.com/link1', 'description' => 'description1'),
 			array('title' => 'title2', 'guid' => 'http://www.example.com/guid2', 'link' => 'http://www.example.com/link2', 'description' => 'description2'),
@@ -255,7 +255,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testItem() {
+	public function testItem() {
 		$item = array(
 			'title' => 'My title',
 			'description' => 'My description',
@@ -361,7 +361,7 @@ class RssHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	function testItemCdata() {
+	public function testItemCdata() {
 		$item = array(
 			'title' => array(
 				'value' => 'My Title & more',
@@ -485,7 +485,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testTime() {
+	public function testTime() {
 	}
 
 /**
@@ -494,7 +494,7 @@ class RssHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testElementAttrNotInParent() {
+	public function testElementAttrNotInParent() {
 		$attributes = array(
 			'title' => 'Some Title',
 			'link' => 'http://link.com',

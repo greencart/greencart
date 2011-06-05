@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
@@ -96,7 +96,7 @@ class XmlTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setup();
 		$this->_appEncoding = Configure::read('App.encoding');
 		Configure::write('App.encoding', 'UTF-8');
@@ -108,7 +108,7 @@ class XmlTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		Configure::write('App.encoding', $this->_appEncoding);
 	}
@@ -799,7 +799,7 @@ class XmlTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCdata() {
+	public function testCdata() {
 		$xml = '<' . '?xml version="1.0" encoding="UTF-8"?>' .
 			'<people><name><![CDATA[ Mark ]]></name></people>';
 

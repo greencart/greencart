@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -53,7 +53,7 @@ class ViewPostsController extends Controller {
  * @access public
  * @return void
  */
-	function index() {
+	public function index() {
 		$this->set('testData', 'Some test data');
 		$test2 = 'more data';
 		$test3 = 'even more data';
@@ -66,7 +66,7 @@ class ViewPostsController extends Controller {
  * @access public
  * @return void
  */
-	function nocache_multiple_element() {
+	public function nocache_multiple_element() {
 		$this->set('foo', 'this is foo var');
 		$this->set('bar', 'this is bar var');
 	}
@@ -86,7 +86,7 @@ class TestView extends View {
  * @access public
  * @return void
  */
-	function getViewFileName($name = null) {
+	public function getViewFileName($name = null) {
 		return $this->_getViewFileName($name);
 	}
 
@@ -97,7 +97,7 @@ class TestView extends View {
  * @access public
  * @return void
  */
-	function getLayoutFileName($name = null) {
+	public function getLayoutFileName($name = null) {
 		return $this->_getLayoutFileName($name);
 	}
 
@@ -109,7 +109,7 @@ class TestView extends View {
  * @access public
  * @return void
  */
-	function paths($plugin = null, $cached = true) {
+	public function paths($plugin = null, $cached = true) {
 		return $this->_paths($plugin, $cached);
 	}
 
@@ -122,7 +122,7 @@ class TestView extends View {
  * @param string $cached
  * @return void
  */
-	function render_($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
+	public function render_($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
 		return $this->_render($___viewFn, $___dataForView, $loadHelpers, $cached);
 	}
 
@@ -131,7 +131,7 @@ class TestView extends View {
  *
  * @return array Scripts
  */
-	function scripts() {
+	public function scripts() {
 		return $this->_scripts;
 	}
 }
@@ -156,7 +156,7 @@ class TestAfterHelper extends Helper {
  * @access public
  * @return void
  */
-	function beforeLayout($viewFile) {
+	public function beforeLayout($viewFile) {
 		$this->property = 'Valuation';
 	}
 
@@ -166,7 +166,7 @@ class TestAfterHelper extends Helper {
  * @access public
  * @return void
  */
-	function afterLayout($layoutFile) {
+	public function afterLayout($layoutFile) {
 		$this->_View->output .= 'modified in the afterlife';
 	}
 }
@@ -185,7 +185,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 
 		$request = $this->getMock('CakeRequest');
@@ -210,7 +210,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		CakePlugin::unload();
 		unset($this->View);
@@ -224,7 +224,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPluginGetTemplate() {
+	public function testPluginGetTemplate() {
 		$this->Controller->plugin = 'TestPlugin';
 		$this->Controller->name = 'TestPlugin';
 		$this->Controller->viewPath = 'Tests';
@@ -246,7 +246,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testPluginPathGeneration() {
+	public function testPluginPathGeneration() {
 		$this->Controller->plugin = 'TestPlugin';
 		$this->Controller->name = 'TestPlugin';
 		$this->Controller->viewPath = 'Tests';
@@ -275,7 +275,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCamelCasePluginGetTemplate() {
+	public function testCamelCasePluginGetTemplate() {
 		$this->Controller->plugin = 'TestPlugin';
 		$this->Controller->name = 'TestPlugin';
 		$this->Controller->viewPath = 'Tests';
@@ -303,7 +303,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetTemplate() {
+	public function testGetTemplate() {
 		$this->Controller->plugin = null;
 		$this->Controller->name = 'Pages';
 		$this->Controller->viewPath = 'Pages';
@@ -347,7 +347,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMissingView() {
+	public function testMissingView() {
 		$this->Controller->plugin = null;
 		$this->Controller->name = 'Pages';
 		$this->Controller->viewPath = 'Pages';
@@ -366,7 +366,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMissingLayout() {
+	public function testMissingLayout() {
 		$this->Controller->plugin = null;
 		$this->Controller->name = 'Posts';
 		$this->Controller->viewPath = 'Posts';
@@ -384,7 +384,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testViewVars() {
+	public function testViewVars() {
 		$this->assertEqual($this->View->viewVars, array('testData' => 'Some test data', 'test2' => 'more data', 'test3' => 'even more data'));
 	}
 
@@ -394,7 +394,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testUUIDGeneration() {
+	public function testUUIDGeneration() {
 		$result = $this->View->uuid('form', array('controller' => 'posts', 'action' => 'index'));
 		$this->assertEqual($result, 'form5988016017');
 		$result = $this->View->uuid('form', array('controller' => 'posts', 'action' => 'index'));
@@ -409,7 +409,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testAddInlineScripts() {
+	public function testAddInlineScripts() {
 		$View = new TestView($this->Controller);
 		$View->addScript('prototype.js');
 		$View->addScript('prototype.js');
@@ -425,7 +425,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testElement() {
+	public function testElement() {
 		$result = $this->View->element('test_element');
 		$this->assertEqual($result, 'this is the test element');
 
@@ -445,7 +445,7 @@ class ViewTest extends CakeTestCase {
  * test that elements can have callbacks
  *
  */
-	function testElementCallbacks() {
+	public function testElementCallbacks() {
 		$this->getMock('HtmlHelper', array(), array($this->View), 'ElementCallbackMockHtmlHelper');
 		$this->View->helpers = array('ElementCallbackMockHtml');
 		$this->View->loadHelpers();
@@ -461,7 +461,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testElementParamsDontOverwriteHelpers() {
+	public function testElementParamsDontOverwriteHelpers() {
 		$Controller = new ViewPostsController();
 		$Controller->helpers = array('Form');
 
@@ -480,7 +480,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testElementCacheHelperNoCache() {
+	public function testElementCacheHelperNoCache() {
 		$Controller = new ViewPostsController();
 		$View = new TestView($Controller);
 		$helpers = $View->loadHelpers();
@@ -494,7 +494,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testElementCache() {
+	public function testElementCache() {
 		Cache::drop('test_view');
 		Cache::config('test_view', array(
 			'engine' => 'File',
@@ -547,7 +547,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function test__get() {
+	public function test__get() {
 		$View = new View($this->PostsController);
 		$View->loadHelper('Html');
 		$this->assertInstanceOf('HtmlHelper', $View->Html);
@@ -558,7 +558,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testElementCtpFallback() {
+	public function testElementCtpFallback() {
 		$View = new TestView($this->PostsController);
 		$View->ext = '.missing';
 		$element = 'test_element';
@@ -574,7 +574,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testLoadHelpers() {
+	public function testLoadHelpers() {
 		$View = new View($this->PostsController);
 
 		$View->helpers = array('Html', 'Form');
@@ -589,7 +589,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHelperCallbackTriggering() {
+	public function testHelperCallbackTriggering() {
 		$View = new View($this->PostsController);
 		$View->helpers = array('Html', 'Session');
 		$View->Helpers = $this->getMock('HelperCollection', array('trigger'), array($View));
@@ -613,7 +613,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testBeforeLayout() {
+	public function testBeforeLayout() {
 		$this->PostsController->helpers = array('Session', 'TestAfter', 'Html');
 		$View = new View($this->PostsController);
 		$View->render('index');
@@ -626,7 +626,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testAfterLayout() {
+	public function testAfterLayout() {
 		$this->PostsController->helpers = array('Session', 'TestAfter', 'Html');
 		$this->PostsController->set('variable', 'values');
 
@@ -645,7 +645,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testRenderLoadHelper() {
+	public function testRenderLoadHelper() {
 		$this->PostsController->helpers = array('Session', 'Html', 'Form', 'Number');
 		$View = new TestView($this->PostsController);
 
@@ -672,7 +672,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testRender() {
+	public function testRender() {
 		$View = new TestView($this->PostsController);
 		$result = str_replace(array("\t", "\r\n", "\n"), "", $View->render('index'));
 
@@ -715,7 +715,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRenderUsingViewProperty() {
+	public function testRenderUsingViewProperty() {
 		$this->PostsController->view = 'cache_form';
 		$View = new TestView($this->PostsController);
 
@@ -730,7 +730,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testViewVarOverwritingLocalHelperVar() {
+	public function testViewVarOverwritingLocalHelperVar() {
 		$Controller = new ViewPostsController();
 		$Controller->helpers = array('Session', 'Html');
 		$Controller->set('html', 'I am some test html');
@@ -747,7 +747,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testViewFileName() {
+	public function testViewFileName() {
 		$View = new TestView($this->PostsController);
 
 		$result = $View->getViewFileName('index');
@@ -774,11 +774,9 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testRenderCache() {
-		$writable = is_writable(CACHE . 'views' . DS);
-		if ($this->skipIf(!$writable, 'CACHE/views dir is not writable, cannot test renderCache. %s')) {
-			return;
-		}
+	public function testRenderCache() {
+		$this->skipIf(!is_writable(CACHE . 'views' . DS), 'CACHE/views dir is not writable, cannot test renderCache.');
+
 		$view = 'test_view';
 		$View = new View($this->PostsController);
 		$path = CACHE . 'views' . DS . 'view_cache_' . $view;
@@ -790,7 +788,9 @@ class ViewTest extends CakeTestCase {
 
 		$result = $View->renderCache($path, '+1 second');
 		$this->assertFalse($result);
-		@unlink($path);
+		if (file_exists($path)) {
+			unlink($path);
+		}
 
 		$cacheText = '<!--cachetime:' . (time() + 10) . '-->some cacheText';
 		$f = fopen($path, 'w+');
@@ -811,7 +811,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRenderStrippingNoCacheTagsOnlyCacheHelper() {
+	public function testRenderStrippingNoCacheTagsOnlyCacheHelper() {
 		Configure::write('Cache.check', false);
 		$View = new View($this->PostsController);
 		$View->set(array('superman' => 'clark', 'variable' => 'var'));
@@ -826,7 +826,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRenderStrippingNoCacheTagsOnlyCacheCheck() {
+	public function testRenderStrippingNoCacheTagsOnlyCacheCheck() {
 		Configure::write('Cache.check', true);
 		$View = new View($this->PostsController);
 		$View->set(array('superman' => 'clark', 'variable' => 'var'));
@@ -844,7 +844,7 @@ class ViewTest extends CakeTestCase {
  */
 
 /* This is a new test case for a pending enhancement
-	function testRenderNocache() {
+	public function testRenderNocache() {
 		$this->PostsController->helpers = array('Cache', 'Html');
 		$this->PostsController->constructClasses();
 		$this->PostsController->cacheAction = 21600;
@@ -881,7 +881,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSet() {
+	public function testSet() {
 		$View = new TestView($this->PostsController);
 		$View->viewVars = array();
 		$View->set('somekey', 'someValue');
@@ -913,7 +913,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testEntityReference() {
+	public function testEntityReference() {
 		$View = new TestView($this->PostsController);
 		$View->model = 'Post';
 		$View->field = 'title';
@@ -948,7 +948,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testBadExt() {
+	public function testBadExt() {
 		$this->PostsController->action = 'something';
 		$this->PostsController->ext = '.whatever';
 
@@ -963,7 +963,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testAltExt() {
+	public function testAltExt() {
 		$this->PostsController->ext = '.alt';
 		$View = new TestView($this->PostsController);
 		$result = $View->render('alt_ext', false);
@@ -977,7 +977,7 @@ class ViewTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testAltBadExt() {
+	public function testAltBadExt() {
 		$View = new TestView($this->PostsController);
 		$View->render('alt_ext');
 		$result = str_replace(array("\t", "\r\n", "\n"), "", ob_get_clean());

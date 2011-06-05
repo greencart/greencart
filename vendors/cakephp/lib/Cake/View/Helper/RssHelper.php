@@ -5,12 +5,12 @@
  * Simplifies the output of RSS feeds.
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view.helpers
  * @since         CakePHP(tm) v 1.2
@@ -278,7 +278,7 @@ class RssHelper extends AppHelper {
  * @return string An RSS-formatted timestamp
  * @see TimeHelper::toRSS
  */
-	function time($time) {
+	public function time($time) {
 		return $this->Time->toRSS($time);
 	}
 
@@ -291,7 +291,7 @@ class RssHelper extends AppHelper {
  * @param boolean $endTag Whether the end tag of the element should be printed
  * @return string XML
  */
-	function elem($name, $attrib = array(), $content = null, $endTag = true) {
+	public function elem($name, $attrib = array(), $content = null, $endTag = true) {
 		$namespace = null;
 		if (isset($attrib['namespace'])) {
 			$namespace = $attrib['namespace'];

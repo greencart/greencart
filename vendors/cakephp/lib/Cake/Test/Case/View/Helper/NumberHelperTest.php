@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.view.helpers
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -39,7 +39,7 @@ class NumberHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$view = $this->getMock('View', array(), array(), '', false);
 		$this->Number = new NumberHelper($view);
@@ -51,7 +51,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		parent::tearDown();
 		unset($this->Number);
 	}
@@ -62,7 +62,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFormat() {
+	public function testFormat() {
 		$value = '100100100';
 
 		$result = $this->Number->format($value, '#');
@@ -88,7 +88,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrency() {
+	public function testCurrency() {
 		$value = '100100100';
 
 		$result = $this->Number->currency($value);
@@ -174,7 +174,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyAddFormat() {
+	public function testCurrencyAddFormat() {
 		$this->Number->addFormat('NOK', array('before' => 'Kr. '));
 		$result = $this->Number->currency(1000, 'NOK');
 		$expected = 'Kr. 1,000.00';
@@ -196,7 +196,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyPositive() {
+	public function testCurrencyPositive() {
 		$value = '100100100';
 
 		$result = $this->Number->currency($value);
@@ -230,7 +230,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyNegative() {
+	public function testCurrencyNegative() {
 		$value = '-100100100';
 
 		$result = $this->Number->currency($value);
@@ -265,7 +265,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyCentsPositive() {
+	public function testCurrencyCentsPositive() {
 		$value = '0.99';
 
 		$result = $this->Number->currency($value, 'USD');
@@ -287,7 +287,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyCentsNegative() {
+	public function testCurrencyCentsNegative() {
 		$value = '-0.99';
 
 		$result = $this->Number->currency($value, 'USD');
@@ -321,7 +321,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyZero() {
+	public function testCurrencyZero() {
 		$value = '0';
 
 		$result = $this->Number->currency($value, 'USD');
@@ -347,7 +347,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCurrencyOptions() {
+	public function testCurrencyOptions() {
 		$value = '1234567.89';
 
 		$result = $this->Number->currency($value, null, array('before' => 'GBP'));
@@ -393,7 +393,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testToReadableSize() {
+	public function testToReadableSize() {
 		$result = $this->Number->toReadableSize(0);
 		$expected = '0 Bytes';
 		$this->assertEqual($expected, $result);
@@ -457,7 +457,7 @@ class NumberHelperTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testToPercentage() {
+	public function testToPercentage() {
 		$result = $this->Number->toPercentage(45, 0);
 		$expected = '45%';
 		$this->assertEqual($expected, $result);

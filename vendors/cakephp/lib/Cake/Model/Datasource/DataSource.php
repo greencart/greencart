@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.model.datasources
  * @since         CakePHP(tm) v 0.10.5.1790
@@ -87,7 +87,7 @@ class DataSource extends Object {
  * @param array $config Array of configuration information for the datasource.
  * @return void.
  */
-	function __construct($config = array()) {
+	public function __construct($config = array()) {
 		parent::__construct();
 		$this->setConfig($config);
 	}
@@ -329,7 +329,7 @@ class DataSource extends Object {
  * @access public
  * @todo Remove and refactor $assocData, ensure uses of the method have the param removed too.
  */
-	function insertQueryData($query, $data, $association, $assocData, Model $model, Model $linkModel, $stack) {
+	public function insertQueryData($query, $data, $association, $assocData, Model $model, Model $linkModel, $stack) {
 		$keys = array('{$__cakeID__$}', '{$__cakeForeignKey__$}');
 
 		foreach ($keys as $key) {

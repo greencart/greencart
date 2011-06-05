@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs
  * @since         CakePHP(tm) v 1.2.0.6001
@@ -92,7 +92,7 @@ class App {
 		'class' => array('extends' => null, 'core' => true),
 		'file' => array('extends' => null, 'core' => true),
 		'model' => array('extends' => 'AppModel', 'core' => false),
-		'behavior' => array( 'suffix' => 'Behavior', 'extends' => 'Model/ModelBehavior', 'core' => true),
+		'behavior' => array('suffix' => 'Behavior', 'extends' => 'Model/ModelBehavior', 'core' => true),
 		'controller' => array('suffix' => 'Controller', 'extends' => 'AppController', 'core' => true),
 		'component' => array('suffix' => 'Component', 'extends' => null, 'core' => true),
 		'lib' => array('extends' => null, 'core' => true),
@@ -187,13 +187,13 @@ class App {
 	);
 
 /**
- * Inicates whether the class cache should be stored again because of an addition to it
+ * Indicates whether the class cache should be stored again because of an addition to it
  *
  */
 	private static $_cacheChange = false;
 
 /**
- * Inicates whether the object cache should be stored again because of an addition to it
+ * Indicates whether the object cache should be stored again because of an addition to it
  *
  */
 	private static $_objectCacheChange = false;
@@ -309,13 +309,14 @@ class App {
 					'%s' . 'libs' . DS
 				),
 				'locales' => array(
+					'%s' . 'Locale' . DS,
 					'%s' . 'locale' . DS
 				),
 				'vendors' => array('%s' . 'Vendor' . DS, VENDORS),
 				'plugins' => array(
 					APP . 'Plugin' . DS,
-					APP . 'plugin' . DS,
-					dirname(dirname(CAKE)) . DS . 'Plugin' . DS,
+					APP . 'plugins' . DS,
+					dirname(dirname(CAKE)) . DS . 'plugins' . DS,
 				)
 			);
 		}
@@ -326,6 +327,7 @@ class App {
 					$type = self::$legacy[$type];
 				}
 				self::$__packages[$type] = (array)$new;
+				self::objects($type, null, false);
 			}
 			return $paths;
 		}
@@ -498,6 +500,7 @@ class App {
 			if ($cache === true) {
 				self::$__cache = true;
 			}
+			sort($objects);
 			if ($plugin) {
 				return $objects;
 			}
@@ -506,20 +509,6 @@ class App {
 		}
 
 		return self::$__objects[$cacheLocation][$name];
-	}
-
-/**
- * Allows you to modify the object listings that App maintains inside of it
- * Useful for testing
- *
- * @param string $type Type of object listing you are changing
- * @param array $values The values $type should be set to.
- * @return void
- */
-	public static function setObjects($type, $values) {
-		list($plugin, $type) = pluginSplit($type);
-		$cacheLocation = empty($plugin) ? 'app' : $plugin;
-		self::$__objects[$cacheLocation][$type] = $values;
 	}
 
 /**
@@ -643,7 +632,6 @@ class App {
 		}
 		list($plugin, $name) = pluginSplit($name);
 		if (!empty($plugin)) {
-			$plugin = Inflector::camelize($plugin);
 			if (!CakePlugin::loaded($plugin)) {
 				return false;
 			}

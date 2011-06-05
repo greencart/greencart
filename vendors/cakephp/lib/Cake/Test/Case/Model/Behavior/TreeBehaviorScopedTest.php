@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.model.behaviors
  * @since         CakePHP(tm) v 1.2.0.5330
@@ -65,7 +65,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testStringScope() {
+	public function testStringScope() {
 		$this->Tree = new FlagTree();
 		$this->Tree->initialize(2, 3);
 
@@ -102,7 +102,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testArrayScope() {
+	public function testArrayScope() {
 		$this->Tree = new FlagTree();
 		$this->Tree->initialize(2, 3);
 
@@ -139,7 +139,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoveUpWithScope() {
+	public function testMoveUpWithScope() {
 		$this->Ad = new Ad();
 		$this->Ad->Behaviors->attach('Tree', array('scope'=>'Campaign'));
 		$this->Ad->moveUp(6);
@@ -156,7 +156,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoveDownWithScope() {
+	public function testMoveDownWithScope() {
 		$this->Ad = new Ad();
 		$this->Ad->Behaviors->attach('Tree', array('scope' => 'Campaign'));
 		$this->Ad->moveDown(6);
@@ -174,7 +174,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testTranslatingTree() {
+	public function testTranslatingTree() {
 		$this->Tree = new FlagTree();
 		$this->Tree->cacheQueries = false;
 		$this->Tree->Behaviors->attach('Translate', array('name'));

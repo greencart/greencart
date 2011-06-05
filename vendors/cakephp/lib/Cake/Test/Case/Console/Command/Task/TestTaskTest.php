@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP v 1.2.0.7726
@@ -293,7 +293,7 @@ class TestTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMethodIntrospection() {
+	public function testMethodIntrospection() {
 		$result = $this->Task->getTestableMethods('TestTaskArticle');
 		$expected = array('dosomething', 'dosomethingelse');
 		$this->assertEqual(array_map('strtolower', $result), $expected);
@@ -374,10 +374,8 @@ class TestTaskTest extends CakeTestCase {
  */
 	public function testGetClassName() {
 		$objects = App::objects('model');
-		$skip = $this->skipIf(empty($objects), 'No models in app, this test will fail.');
-		if ($skip) {
-			return;
-		}
+		$this->skipIf(empty($objects), 'No models in app.');
+
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('MyCustomClass'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(1));
 
@@ -528,7 +526,7 @@ class TestTaskTest extends CakeTestCase {
 
 		//fake plugin path
 		CakePlugin::load('TestTest', array('path' =>  APP . 'Plugin' . DS . 'TestTest' . DS));
-		$path =  APP . 'Plugin' . DS . 'TestTest' . DS . 'tests' . DS . 'Case' . DS . 'View' . DS . 'Helper' . DS  .'FormHelperTest.php';
+		$path =  APP . 'Plugin' . DS . 'TestTest' . DS . 'Test' . DS . 'Case' . DS . 'View' . DS . 'Helper' . DS  .'FormHelperTest.php';
 		$this->Task->expects($this->once())->method('createFile')
 			->with($path, new PHPUnit_Framework_Constraint_IsAnything());
 
@@ -541,7 +539,7 @@ class TestTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	function testInteractiveWithPlugin() {
+	public function testInteractiveWithPlugin() {
 		$testApp = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS;
 		App::build(array(
 			'plugins' => array($testApp)
@@ -549,7 +547,7 @@ class TestTaskTest extends CakeTestCase {
 		CakePlugin::load('TestPlugin');
 
 		$this->Task->plugin = 'TestPlugin';
-		$path = $testApp . 'TestPlugin' . DS . 'tests' . DS . 'Case' . DS . 'View' . DS . 'Helper' . DS . 'OtherHelperHelperTest.php';
+		$path = $testApp . 'TestPlugin' . DS . 'Test' . DS . 'Case' . DS . 'View' . DS . 'Helper' . DS . 'OtherHelperHelperTest.php';
 		$this->Task->expects($this->any())
 			->method('in')
 			->will($this->onConsecutiveCalls(
@@ -599,7 +597,7 @@ class TestTaskTest extends CakeTestCase {
 		CakePlugin::load('TestTest', array('path' =>  APP . 'Plugin' . DS . 'TestTest' . DS ));
 		$this->Task->plugin = 'TestTest';
 		$result = $this->Task->testCaseFileName('Model', 'Post');
-		$expected =  APP . 'Plugin' . DS . 'TestTest' . DS . 'tests' . DS . 'Case' . DS . 'Model' . DS . 'PostTest.php';
+		$expected =  APP . 'Plugin' . DS . 'TestTest' . DS . 'Test' . DS . 'Case' . DS . 'Model' . DS . 'PostTest.php';
 		$this->assertEqual($expected, $result);
 	}
 

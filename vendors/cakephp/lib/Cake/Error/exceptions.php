@@ -6,12 +6,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.libs.error
  * @since         CakePHP(tm) v 2.0
@@ -418,12 +418,12 @@ class MissingTestLoaderException extends CakeException {
 }
 
 /**
- * Exception Raised when a test loader could not be found
+ * Exception Raised when a plugin could not be found
  *
  * @package cake.libs
  */
 class MissingPluginException extends CakeException {
-	protected $_messageTemplate = 'Test plugin %s could not be found.';
+	protected $_messageTemplate = 'Plugin %s could not be found.';
 }
 
 /**

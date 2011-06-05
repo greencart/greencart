@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs
  * @since         CakePHP(tm) v 2.0
@@ -24,12 +24,12 @@
 class DatabaseSession implements CakeSessionHandlerInterface {
 
 /**
- * Constructor.  Looks at Session configuration information and 
+ * Constructor.  Looks at Session configuration information and
  * sets up the session model.
  *
  * @return void
  */
-	function __construct() {
+	public function __construct() {
 		$modelName = Configure::read('Session.handler.model');
 		$database = Configure::read('Session.handler.database');
 		$table = Configure::read('Session.handler.table');

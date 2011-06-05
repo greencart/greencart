@@ -4,12 +4,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view.templates.pages
  * @since         CakePHP(tm) v 0.10.0.1076
@@ -27,6 +27,11 @@ if (Configure::read('debug') > 0):
 	Debugger::checkSecurityKeys();
 endif;
 ?>
+<p id="url-rewriting-warning" style="background-color:#e32; color:#fff;">
+	<?php echo __d('cake_dev', 'URL rewriting is not properly configured on your server.'); ?>
+	1) <a target="_blank" href="http://book.cakephp.org/view/917/Apache-and-mod_rewrite-and-htaccess" style="color:#fff;">Help me configure it</a>
+	2) <a target="_blank" href="http://book.cakephp.org/view/931/CakePHP-Core-Configuration-Variables" style="color:#fff;">I don't / can't use URL rewriting</a>
+</p>
 <p>
 	<?php
 		if (is_writable(TMP)):
@@ -162,8 +167,6 @@ You can also add some CSS styles for your pages at: APP/webroot/css.');
 	<ul><li><?php echo __d('cake_dev', 'For the Development of CakePHP Git repository, Downloads'); ?></li></ul></li>
 	<li><a href="http://cakephp.lighthouseapp.com/"><?php echo __d('cake_dev', 'CakePHP Lighthouse'); ?> </a>
 	<ul><li><?php echo __d('cake_dev', 'CakePHP Tickets, Wiki pages, Roadmap'); ?></li></ul></li>
-	<li><a href="http://www.cakeforge.org"><?php echo __d('cake_dev', 'CakeForge'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Open Development for CakePHP'); ?></li></ul></li>
 	<li><a href="http://astore.amazon.com/cakesoftwaref-20/"><?php echo __d('cake_dev', 'Book Store'); ?> </a>
 	<ul><li><?php echo __d('cake_dev', 'Recommended Software Books'); ?></li></ul></li>
 	<li><a href="http://www.cafepress.com/cakefoundation"><?php echo __d('cake_dev', 'CakePHP gear'); ?> </a>

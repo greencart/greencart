@@ -6,12 +6,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.tests.cases.console.libs.tasks
  * @since         CakePHP(tm) v 1.3
@@ -77,9 +77,8 @@ class BakeShellTest extends CakeTestCase {
 	public function testAllWithModelName() {
 		App::uses('User', 'Model');
 		$userExists = class_exists('User');
-		if ($this->skipIf($userExists, 'User class exists, cannot test `bake all [param]`. %s')) {
-			return;
-		}
+		$this->skipIf($userExists, 'User class exists, cannot test `bake all [param]`.');
+
 		$this->Shell->Model = $this->getMock('ModelTask', array(), array(&$this->Dispatcher));
 		$this->Shell->Controller = $this->getMock('ControllerTask', array(), array(&$this->Dispatcher));
 		$this->Shell->View = $this->getMock('ModelTask', array(), array(&$this->Dispatcher));

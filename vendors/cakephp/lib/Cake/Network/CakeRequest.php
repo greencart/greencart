@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -38,9 +38,9 @@ class CakeRequest implements ArrayAccess {
 
 /**
  * Array of POST data.  Will contain form data as well as uploaded files.
- * Will only contain data from inputs that start with 'data'.  So
- * `<input name="some_input" />` will not end up in data. However,
- * `<input name="data[something]" />`
+ * Inputs prefixed with 'data' will have the data prefix removed.  If there is
+ * overlap between an input prefixed with data and one without, the 'data' prefixed
+ * value will take precedence.
  *
  * @var array
  */

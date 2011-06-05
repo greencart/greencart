@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.controller
  * @since         Cake v 0.10.0.1076
@@ -106,7 +106,7 @@ class Scaffold {
  * @param Controller $controller Controller to scaffold
  * @param CakeRequest $request Request parameters.
  */
-	function __construct(Controller $controller, CakeRequest $request) {
+	public function __construct(Controller $controller, CakeRequest $request) {
 		$this->controller = $controller;
 
 		$count = count($this->__passedVars);
@@ -254,7 +254,7 @@ class Scaffold {
 
 				if ($this->ScaffoldModel->save($request->data)) {
 					if ($this->controller->_afterScaffoldSave($action)) {
-						$message = __d('cake', 
+						$message = __d('cake',
 							'The %1$s has been %2$s',
 							Inflector::humanize($this->modelKey),
 							$success
@@ -318,9 +318,9 @@ class Scaffold {
 				$message = __d('cake', 'The %1$s with id: %2$d has been deleted.', Inflector::humanize($this->modelClass), $id);
 				return $this->_sendMessage($message);
 			} else {
-				$message = __d('cake', 
-					'There was an error deleting the %1$s with id: %2$d', 
-					Inflector::humanize($this->modelClass), 
+				$message = __d('cake',
+					'There was an error deleting the %1$s with id: %2$d',
+					Inflector::humanize($this->modelClass),
 					$id
 				);
 				return $this->_sendMessage($message);
@@ -331,7 +331,7 @@ class Scaffold {
 	}
 
 /**
- * Sends a message to the user.  Either uses Sessions or flash messages depending 
+ * Sends a message to the user.  Either uses Sessions or flash messages depending
  * on the availability of a session
  *
  * @param string $message Message to display

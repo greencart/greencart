@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright   Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright   Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link        http://cakephp.org CakePHP(tm) Project
  * @package     cake.libs.view.helpers
  * @since       CakePHP(tm) v 0.10.0.1076
@@ -186,7 +186,7 @@ class FormHelper extends AppHelper {
  * @return string An formatted opening FORM tag.
  * @link http://book.cakephp.org/view/1384/Creating-Forms
  */
-	function create($model = null, $options = array()) {
+	public function create($model = null, $options = array()) {
 		$created = $id = false;
 		$append = '';
 
@@ -261,8 +261,12 @@ class FormHelper extends AppHelper {
 				$options['action'] = $this->request->params['action'];
 			}
 
+			$plugin = null;
+			if ($this->plugin) {
+				$plugin = Inflector::underscore($this->plugin);
+			}
 			$actionDefaults = array(
-				'plugin' => $this->plugin,
+				'plugin' => $plugin,
 				'controller' => $this->_View->viewPath,
 				'action' => $options['action'],
 			);
@@ -561,7 +565,7 @@ class FormHelper extends AppHelper {
  * @return string The formatted LABEL element
  * @link http://book.cakephp.org/view/1427/label
  */
-	function label($fieldName = null, $text = null, $options = array()) {
+	public function label($fieldName = null, $text = null, $options = array()) {
 		if (empty($fieldName)) {
 			$fieldName = implode('.', $this->_View->entity());
 		}

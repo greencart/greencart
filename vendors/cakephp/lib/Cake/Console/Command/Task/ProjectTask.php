@@ -6,12 +6,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells.tasks
  * @since         CakePHP(tm) v 1.2
@@ -49,23 +49,21 @@ class ProjectTask extends Shell {
 			$project = $this->args[0];
 		}
 
-		if ($project && isset($_SERVER['PWD'])) {
-			$project = $_SERVER['PWD'] . DS . $project;
-		}
-
 		while (!$project) {
 			$prompt = __d('cake_console', "What is the path to the project you want to bake?");
 			$project = $this->in($prompt, null, APP_PATH . 'myapp');
 		}
 
-		if ($project) {
-			$response = false;
-			while ($response == false && is_dir($project) === true && file_exists($project . 'Config' . 'core.php')) {
-				$prompt = __d('cake_console', '<warning>A project already exists in this location:</warning> %s Overwrite?', $project);
-				$response = $this->in($prompt, array('y','n'), 'n');
-				if (strtolower($response) === 'n') {
-					$response = $project = false;
-				}
+		if ($project && !Folder::isAbsolute($project) && isset($_SERVER['PWD'])) {
+			$project = $_SERVER['PWD'] . DS . $project;
+		}
+
+		$response = false;
+		while ($response == false && is_dir($project) === true && file_exists($project . 'Config' . 'core.php')) {
+			$prompt = __d('cake_console', '<warning>A project already exists in this location:</warning> %s Overwrite?', $project);
+			$response = $this->in($prompt, array('y','n'), 'n');
+			if (strtolower($response) === 'n') {
+				$response = $project = false;
 			}
 		}
 
@@ -134,7 +132,7 @@ class ProjectTask extends Shell {
  * @param string $skip array of directories to skip when copying
  * @access private
  */
-	function bake($path, $skel = null, $skip = array('empty')) {
+	public function bake($path, $skel = null, $skip = array('empty')) {
 		if (!$skel && !empty($this->params['skel'])) {
 			$skel = $this->params['skel'];
 		}
@@ -142,7 +140,7 @@ class ProjectTask extends Shell {
 			$skel = $this->in(
 				__d('cake_console', "What is the path to the directory layout you wish to copy?"),
 				null,
-				CAKE . 'Console' . DS . 'templates' . DS . 'skel'
+				CAKE . 'Console' . DS . 'Templates' . DS . 'skel'
 			);
 			if (!$skel) {
 				$this->err(__d('cake_console', 'The directory path you supplied was empty. Please try again.'));
@@ -151,7 +149,7 @@ class ProjectTask extends Shell {
 					$skel = $this->in(
 						__d('cake_console', 'Directory path does not exist please choose another:'),
 						null,
-						CAKE . 'Console' . DS . 'templates' . DS . 'skel'
+						CAKE . 'Console' . DS . 'Templates' . DS . 'skel'
 					);
 				}
 			}
@@ -165,31 +163,34 @@ class ProjectTask extends Shell {
 
 		$looksGood = $this->in(__d('cake_console', 'Look okay?'), array('y', 'n', 'q'), 'y');
 
-		if (strtolower($looksGood) == 'y') {
-			$Folder = new Folder($skel);
-			if (!empty($this->params['empty'])) {
-				$skip = array();
-			}
+		switch (strtolower($looksGood)) {
+			case 'y':
+				$Folder = new Folder($skel);
+				if (!empty($this->params['empty'])) {
+					$skip = array();
+				}
 
-			if ($Folder->copy(array('to' => $path, 'skip' => $skip))) {
-				$this->hr();
-				$this->out(__d('cake_console', '<success>Created:</success> %s in %s', $app, $path));
-				$this->hr();
-			} else {
-				$this->err(__d('cake_console', "<error>Could not create</error> '%s' properly.", $app));
+				if ($Folder->copy(array('to' => $path, 'skip' => $skip))) {
+					$this->hr();
+					$this->out(__d('cake_console', '<success>Created:</success> %s in %s', $app, $path));
+					$this->hr();
+				} else {
+					$this->err(__d('cake_console', "<error>Could not create</error> '%s' properly.", $app));
+					return false;
+				}
+
+				foreach ($Folder->messages() as $message) {
+					$this->out(String::wrap(' * ' . $message), 1, Shell::VERBOSE);
+				}
+
+				return true;
+			case 'n':
+				unset($this->args[0]);
+				$this->execute();
 				return false;
-			}
-
-			foreach ($Folder->messages() as $message) {
-				$this->out(String::wrap(' * ' . $message), 1, Shell::VERBOSE);
-			}
-
-			return true;
-		} elseif (strtolower($looksGood) == 'q') {
-			$this->out(__d('cake_console', 'Bake Aborted.'));
-		} else {
-			$this->execute(false);
-			return false;
+			case 'q':
+				$this->out(__d('cake_console', '<error>Bake Aborted.</error>'));
+				return false;
 		}
 	}
 
@@ -202,7 +203,7 @@ class ProjectTask extends Shell {
 	public function createHome($dir) {
 		$app = basename($dir);
 		$path = $dir . 'View' . DS . 'Pages' . DS;
-		$source = CAKE . 'Console' . DS . 'templates' . DS .'default' . DS . 'views' . DS . 'home.ctp';
+		$source = CAKE . 'Console' . DS . 'Templates' . DS .'default' . DS . 'views' . DS . 'home.ctp';
 		include($source);
 		return $this->createFile($path.'home.ctp', $output);
 	}
@@ -387,8 +388,8 @@ class ProjectTask extends Shell {
 			))->addOption('empty', array(
 				'help' => __d('cake_console', 'Create empty files in each of the directories. Good if you are using git')
 			))->addOption('skel', array(
-				'default' => current(App::core('Console')) . DS . 'templates' . DS . 'skel',
-				'help' => __d('cake_console', 'The directory layout to use for the new application skeleton. Defaults to cake/console/templates/skel of CakePHP used to create the project.')
+				'default' => current(App::core('Console')) . 'Templates' . DS . 'skel',
+				'help' => __d('cake_console', 'The directory layout to use for the new application skeleton. Defaults to cake/Console/Templates/skel of CakePHP used to create the project.')
 			));
 	}
 

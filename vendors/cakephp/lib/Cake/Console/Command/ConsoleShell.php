@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells
  * @since         CakePHP(tm) v 1.2.0.5012
@@ -53,10 +53,10 @@ class ConsoleShell extends Shell {
 	public function initialize() {
 		App::uses('Dispatcher', 'Routing');
 		$this->Dispatcher = new Dispatcher();
-		$this->models = App::objects('model');
+		$this->models = App::objects('Model');
 
 		foreach ($this->models as $model) {
-			$class = Inflector::camelize(str_replace('.php', '', $model));
+			$class = $model;
 			$this->models[$model] = $class;
 			App::uses($class, 'Model');
 			$this->{$class} = new $class();
@@ -123,7 +123,7 @@ class ConsoleShell extends Shell {
 		$out .= "\t)";
 		$out .= "\n";
 		$out .= 'Alternatively, you can use simple array syntax to test reverse';
-		$out .= 'To reload your routes config (config/routes.php), do the following:';
+		$out .= 'To reload your routes config (Config/routes.php), do the following:';
 		$out .= "\n";
 		$out .= "\tRoutes reload";
 		$out .= "\n";
@@ -342,6 +342,8 @@ class ConsoleShell extends Shell {
 		if (!@include(APP . 'Config' . DS . 'routes.php')) {
 			return false;
 		}
+		CakePlugin::routes();
+
 		Router::parse('/');
 
 		foreach (array_keys(Router::getNamedExpressions()) as $var) {

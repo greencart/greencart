@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.test_app.plugins.test_plugin.views.helpers
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -21,7 +21,7 @@ class TestsAppsPostsController extends AppController {
 	public $uses = array('Post');
 	public $viewPath = 'TestsApps';
 
-	function add() {
+	public function add() {
 		$data = array(
 			'Post' => array(
 				'title' => 'Test article',
@@ -39,7 +39,7 @@ class TestsAppsPostsController extends AppController {
  * check url params
  *
  */
-	function url_var() {
+	public function url_var() {
 		$this->set('params', $this->request->params);
 		$this->render('index');
 	}
@@ -48,7 +48,7 @@ class TestsAppsPostsController extends AppController {
  * post var testing
  *
  */
-	function post_var() {
+	public function post_var() {
 		$this->set('data', $this->request->data);
 		$this->render('index');
 	}
@@ -57,7 +57,7 @@ class TestsAppsPostsController extends AppController {
  * Fixturized action for testAction()
  *
  */
-	function fixtured() {
+	public function fixtured() {
 		$this->set('posts', $this->Post->find('all'));
 		$this->render('index');
 	}

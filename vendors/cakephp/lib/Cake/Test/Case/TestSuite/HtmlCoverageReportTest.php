@@ -5,12 +5,12 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @since         CakePHP(tm) v 2.0
@@ -42,7 +42,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGetPathFilter() {
+	public function testGetPathFilter() {
 		$this->Coverage->appTest = false;
 		$result = $this->Coverage->getPathFilter();
 		$this->assertEquals(CAKE, $result);
@@ -62,7 +62,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	function testFilterCoverageDataByPathRemovingElements() {
+	public function testFilterCoverageDataByPathRemovingElements() {
 		$data = array(
 			CAKE . 'dispatcher.php' => array(
 				10 => -1,
@@ -84,7 +84,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	function testGenerateDiff() {
+	public function testGenerateDiff() {
 		$file = array(
 			'line 1',
 			'line 2',
@@ -131,7 +131,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCoveredLinesTitleAttributes() {
+	public function testCoveredLinesTitleAttributes() {
 		$file = array(
 			'line 1',
 			'line 2',
@@ -174,7 +174,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		CakePlugin::unload();
 		unset($this->Coverage);
 	}

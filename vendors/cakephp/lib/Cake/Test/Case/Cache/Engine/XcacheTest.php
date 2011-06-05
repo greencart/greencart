@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.cache
  * @since         CakePHP(tm) v 1.2.0.5434
@@ -32,7 +32,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		$this->skipUnless(function_exists('xcache_set'), 'Xcache is not installed or configured properly');
 		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', false);
@@ -45,7 +45,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		Configure::write('Cache.disable', $this->_cacheDisable);
 		Cache::config('default');
 	}
@@ -56,7 +56,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSettings() {
+	public function testSettings() {
 		$settings = Cache::settings();
 		$expecting = array(
 			'prefix' => 'cake_',
@@ -77,7 +77,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testReadAndWriteCache() {
+	public function testReadAndWriteCache() {
 		Cache::set(array('duration' => 1));
 
 		$result = Cache::read('test');
@@ -101,7 +101,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testExpiry() {
+	public function testExpiry() {
 		Cache::set(array('duration' => 1));
 		$result = Cache::read('test');
 		$this->assertFalse($result);
@@ -131,7 +131,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDeleteCache() {
+	public function testDeleteCache() {
 		$data = 'this is a test of the emergency broadcasting system';
 		$result = Cache::write('delete_test', $data);
 		$this->assertTrue($result);
@@ -146,7 +146,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testClearCache() {
+	public function testClearCache() {
 		$data = 'this is a test of the emergency broadcasting system';
 		$result = Cache::write('clear_test_1', $data);
 		$this->assertTrue($result);
@@ -164,7 +164,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDecrement() {
+	public function testDecrement() {
 		$result = Cache::write('test_decrement', 5);
 		$this->assertTrue($result);
 
@@ -187,7 +187,7 @@ class XcacheEngineTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testIncrement() {
+	public function testIncrement() {
 		$result = Cache::write('test_increment', 5);
 		$this->assertTrue($result);
 

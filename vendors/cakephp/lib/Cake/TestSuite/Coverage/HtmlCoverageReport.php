@@ -5,12 +5,12 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @since         CakePHP(tm) v 2.0
@@ -56,7 +56,7 @@ HTML;
  * @return string HTML diff.
  */
 	public function generateDiff($filename, $fileLines, $coverageData) {
-		$output = ''; 
+		$output = '';
 		$diff = array();
 
 		list($covered, $total) = $this->_calculateCoveredLines($fileLines, $coverageData);
@@ -72,8 +72,7 @@ HTML;
 				$coveringTests = array();
 				foreach ($coverageData[$lineno] as $test) {
 					$testReflection = new ReflectionClass(current(explode('::', $test['id'])));
-					list($fileBasename,) = explode('.', basename($testReflection->getFileName()), 2);
-					$this->_testNames[] = $fileBasename;
+					$this->_testNames[] = $this->_guessSubjectName($testReflection);
 					$coveringTests[] = $test['id'];
 				}
 				$class = 'covered';
@@ -86,11 +85,26 @@ HTML;
 		}
 
 		$percentCovered = round(100 * $covered / $total, 2);
-
 		$output .= $this->coverageHeader($filename, $percentCovered);
 		$output .= implode("", $diff);
 		$output .= $this->coverageFooter();
 		return $output;
+	}
+
+/**
+ * Guess the classname the test was for based on the test case filename.
+ *
+ * @param ReflectionClass $testReflection.
+ * @return string Possible test subject name.
+ */
+	protected function _guessSubjectName($testReflection) {
+		$basename = basename($testReflection->getFilename());
+		if (strpos($basename, '.test') !== false) {
+			list($subject, ) = explode('.', $basename, 2);
+			return $subject;
+		}
+		$subject = str_replace('Test.php', '', $basename);
+		return $subject;
 	}
 
 /**

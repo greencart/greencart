@@ -11,12 +11,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright       Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright       Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link            http://cakephp.org CakePHP Project
  * @package         cake.libs.view.helpers
  * @license         MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -122,7 +122,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @param string $callbacks Array of callback / special options.
  * @return string Composed method string
  */
-	public function _methodTemplate($method, $template, $options, $extraSafeKeys = array()) {
+	protected function _methodTemplate($method, $template, $options, $extraSafeKeys = array()) {
 		$options = $this->_mapOptions($method, $options);
 		$options = $this->_prepareCallbacks($method, $options);
 		$callbacks = array_keys($this->_callbackArguments[$method]);
@@ -210,7 +210,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::effect()
  */
-	function effect($name, $options = array()) {
+	public function effect($name, $options = array()) {
 		$speed = null;
 		if (isset($options['speed']) && in_array($options['speed'], array('fast', 'slow'))) {
 			$speed = $this->value($options['speed']);
@@ -243,7 +243,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::request() for options list.
  */
-	function request($url, $options = array()) {
+	public function request($url, $options = array()) {
 		$url = $this->url($url);
 		$options = $this->_mapOptions('request', $options);
 		if (isset($options['data']) && is_array($options['data'])) {
@@ -284,7 +284,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::sortable() for options list.
  */
-	function sortable($options = array()) {
+	public function sortable($options = array()) {
 		$template = '%s.sortable({%s});';
 		return $this->_methodTemplate('sortable', $template, $options);
 	}
@@ -299,7 +299,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::drag() for options list.
  */
-	function drag($options = array()) {
+	public function drag($options = array()) {
 		$template = '%s.draggable({%s});';
 		return $this->_methodTemplate('drag', $template, $options);
 	}
@@ -314,7 +314,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::drop() for options list.
  */
-	function drop($options = array()) {
+	public function drop($options = array()) {
 		$template = '%s.droppable({%s});';
 		return $this->_methodTemplate('drop', $template, $options);
 	}
@@ -329,7 +329,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::slider() for options list.
  */
-	function slider($options = array()) {
+	public function slider($options = array()) {
 		$callbacks = array('start', 'change', 'slide', 'stop');
 		$template = '%s.slider({%s});';
 		return $this->_methodTemplate('slider', $template, $options, $callbacks);
@@ -344,7 +344,7 @@ class JqueryEngineHelper extends JsBaseEngineHelper {
  * @access public
  * @see JsBaseEngineHelper::serializeForm() for option list.
  */
-	function serializeForm($options = array()) {
+	public function serializeForm($options = array()) {
 		$options = array_merge(array('isForm' => false, 'inline' => false), $options);
 		$selector = $this->selection;
 		if (!$options['isForm']) {

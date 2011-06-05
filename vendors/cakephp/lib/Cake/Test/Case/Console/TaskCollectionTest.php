@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 2.0
@@ -26,7 +26,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function setup() {
+	public function setup() {
 		$shell = $this->getMock('Shell', array(), array(), '', false);
 		$dispatcher = $this->getMock('ShellDispatcher', array(), array(), '', false);
 		$this->Tasks = new TaskCollection($shell, $dispatcher);
@@ -37,7 +37,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function teardown() {
+	public function teardown() {
 		unset($this->Tasks);
 	}
 
@@ -46,7 +46,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function testLoad() {
+	public function testLoad() {
 		$result = $this->Tasks->load('DbConfig');
 		$this->assertInstanceOf('DbConfigTask', $result);
 		$this->assertInstanceOf('DbConfigTask', $this->Tasks->DbConfig);
@@ -62,7 +62,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function testLoadWithEnableFalse() {
+	public function testLoadWithEnableFalse() {
 		$result = $this->Tasks->load('DbConfig', array('enabled' => false));
 		$this->assertInstanceOf('DbConfigTask', $result);
 		$this->assertInstanceOf('DbConfigTask', $this->Tasks->DbConfig);
@@ -75,7 +75,7 @@ class TaskCollectionTest extends CakeTestCase {
  * @expectedException MissingTaskClassException
  * @return void
  */
-	function testLoadMissingTaskFile() {
+	public function testLoadMissingTaskFile() {
 		$result = $this->Tasks->load('ThisTaskShouldAlwaysBeMissing');
 	}
 
@@ -84,7 +84,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function testLoadPluginTask() {
+	public function testLoadPluginTask() {
 		$dispatcher = $this->getMock('ShellDispatcher', array(), array(), '', false);
 		$shell = $this->getMock('Shell', array(), array(), '', false);
 		App::build(array(
@@ -104,7 +104,7 @@ class TaskCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	function testUnload() {
+	public function testUnload() {
 		$this->Tasks->load('Extract');
 		$this->Tasks->load('DbConfig');
 

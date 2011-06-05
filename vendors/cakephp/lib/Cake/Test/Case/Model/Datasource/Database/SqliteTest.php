@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs
  * @since         CakePHP(tm) v 1.2.0
@@ -53,7 +53,7 @@ class DboSqliteTestDb extends Sqlite {
  * @access public
  * @return void
  */
-	function getLastQuery() {
+	public function getLastQuery() {
 		return $this->simulated[count($this->simulated) - 1];
 	}
 }
@@ -130,7 +130,7 @@ class DboSqliteTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testIndex() {
+	public function testIndex() {
 		$name = $this->Dbo->fullTableName('with_a_key');
 		$this->Dbo->query('CREATE TABLE ' . $name . ' ("id" int(11) PRIMARY KEY, "bool" int(1), "small_char" varchar(50), "description" varchar(40) );');
 		$this->Dbo->query('CREATE INDEX pointless_bool ON ' . $name . '("bool")');
@@ -190,7 +190,7 @@ class DboSqliteTest extends CakeTestCase {
  *
  * @return void
  */
-	function testBuildColumn() {
+	public function testBuildColumn() {
 		$data = array(
 			'name' => 'int_field',
 			'type' => 'integer',
@@ -262,7 +262,7 @@ class DboSqliteTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDescribe() {
+	public function testDescribe() {
 		$this->loadFixtures('User');
 		$Model = new Model(array('name' => 'User', 'ds' => 'test', 'table' => 'users'));
 		$result = $this->Dbo->describe($Model);
@@ -307,7 +307,7 @@ class DboSqliteTest extends CakeTestCase {
  *
  * @return void
  */
-	function testDescribeWithUuidPrimaryKey() {
+	public function testDescribeWithUuidPrimaryKey() {
 		$tableName = 'uuid_tests';
 		$this->Dbo->query("CREATE TABLE {$tableName} (id VARCHAR(36) PRIMARY KEY, name VARCHAR, created DATETIME, modified DATETIME)");
 		$Model = new Model(array('name' => 'UuidTest', 'ds' => 'test', 'table' => 'uuid_tests'));

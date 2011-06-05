@@ -5,17 +5,18 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells
  * @since         CakePHP(tm) v 1.2.0.5012
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('ComponentCollection', 'Controller');
 App::uses('AclComponent', 'Controller/Component');
 App::uses('DbAcl', 'Model');
 
@@ -522,7 +523,7 @@ class AclShell extends Shell {
  * @param string $identifier Identifier to parse
  * @return mixed a string for aliases, and an array for model.foreignKey
  */
-	function parseIdentifier($identifier) {
+	public function parseIdentifier($identifier) {
 		if (preg_match('/^([\w]+)\.(.*)$/', $identifier, $matches)) {
 			return array(
 				'model' => $matches[1],

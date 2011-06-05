@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.model
  * @since         CakePHP(tm) v 1.2.0.0
@@ -59,7 +59,7 @@ class BehaviorCollection extends ObjectCollection {
  * @access public
  * @return void
  */
-	function init($modelName, $behaviors = array()) {
+	public function init($modelName, $behaviors = array()) {
 		$this->modelName = $modelName;
 
 		if (!empty($behaviors)) {
@@ -148,7 +148,7 @@ class BehaviorCollection extends ObjectCollection {
 		$parentMethods = array_flip(get_class_methods('ModelBehavior'));
 		$callbacks = array(
 			'setup', 'cleanup', 'beforeFind', 'afterFind', 'beforeSave', 'afterSave',
-			'beforeDelete', 'afterDelete', 'afterError'
+			'beforeDelete', 'afterDelete', 'onError'
 		);
 
 		foreach ($methods as $m) {
@@ -206,7 +206,7 @@ class BehaviorCollection extends ObjectCollection {
 /**
  * Dispatches a behavior method.  Will call either normal methods or mapped methods.
  *
- * If a method is not handeled by the BehaviorCollection, and $strict is false, a 
+ * If a method is not handeled by the BehaviorCollection, and $strict is false, a
  * special return of `array('unhandled')` will be returned to signal the method was not found.
  *
  * @param Model $model The model the method was originally called on.
@@ -217,7 +217,7 @@ class BehaviorCollection extends ObjectCollection {
  */
 	public function dispatchMethod($model, $method, $params = array(), $strict = false) {
 		$method = $this->hasMethod($method, true);
-		
+
 		if ($strict && empty($method)) {
 			trigger_error(__d('cake_dev', "BehaviorCollection::dispatchMethod() - Method %s not found in any attached behavior", $method), E_USER_WARNING);
 			return null;
@@ -236,7 +236,7 @@ class BehaviorCollection extends ObjectCollection {
 	}
 
 /**
- * Gets the method list for attached behaviors, i.e. all public, non-callback methods. 
+ * Gets the method list for attached behaviors, i.e. all public, non-callback methods.
  * This does not include mappedMethods.
  *
  * @return array All public methods for all behaviors attached to this collection

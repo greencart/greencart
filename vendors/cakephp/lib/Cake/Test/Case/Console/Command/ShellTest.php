@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.tests.cases.console.libs
  * @since         CakePHP v 1.2.0.7726
@@ -60,7 +60,7 @@ class ShellTestShell extends Shell {
 
 	}
 
-	public function _secret() {
+	protected function _secret() {
 
 	}
 
@@ -148,7 +148,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMergeVars() {
+	public function testMergeVars() {
 		$this->Shell->tasks = array('DbConfig' => array('one', 'two'));
 		$this->Shell->uses = array('Posts');
 		$this->Shell->mergeVars(array('tasks'), 'TestMergeShell');
@@ -173,19 +173,21 @@ class ShellTest extends CakeTestCase {
 			'models' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Model' . DS)
 		), true);
 
+		CakePlugin::load('TestPlugin');
 		$this->Shell->uses = array('TestPlugin.TestPluginPost');
 		$this->Shell->initialize();
 
 		$this->assertTrue(isset($this->Shell->TestPluginPost));
 		$this->assertInstanceOf('TestPluginPost', $this->Shell->TestPluginPost);
 		$this->assertEqual($this->Shell->modelClass, 'TestPluginPost');
+		CakePlugin::unload('TestPlugin');
 
 		$this->Shell->uses = array('Comment');
 		$this->Shell->initialize();
 		$this->assertTrue(isset($this->Shell->Comment));
 		$this->assertInstanceOf('Comment', $this->Shell->Comment);
 		$this->assertEqual($this->Shell->modelClass, 'Comment');
-
+		
 		App::build();
 	}
 
@@ -272,7 +274,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testVerboseOutput() {
+	public function testVerboseOutput() {
 		$this->Shell->stdout->expects($this->at(0))->method('write')
 			->with('Verbose', 1);
 		$this->Shell->stdout->expects($this->at(1))->method('write')
@@ -293,7 +295,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testQuietOutput() {
+	public function testQuietOutput() {
 		$this->Shell->stdout->expects($this->once())->method('write')
 			->with('Quiet', 1);
 
@@ -445,7 +447,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function test__getArgAndParamReferences() {
+	public function test__getArgAndParamReferences() {
 		$this->Shell->tasks = array('TestApple');
 		$this->Shell->args = array('one');
 		$this->Shell->params = array('help' => false);
@@ -505,7 +507,7 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testCreateFileNonInteractive() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '\\', '%s Not supported on Windows');
+		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'Not supported on Windows.');
 
 		$path = TMP . 'shell_test';
 		$file = $path . DS . 'file1.php';
@@ -534,8 +536,8 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCreateFileInteractive() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '\\', '%s Not supported on Windows');
+	public function testCreateFileInteractive() {
+		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'Not supported on Windows.');
 
 		$path = TMP . 'shell_test';
 		$file = $path . DS . 'file1.php';
@@ -581,7 +583,7 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testCreateFileWindowsNonInteractive() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '/', 'testCreateFileWindows supported on Windows only');
+		$this->skipIf(DIRECTORY_SEPARATOR === '/', 'testCreateFileWindowsNonInteractive supported on Windows only.');
 
 		$path = TMP . 'shell_test';
 		$file = $path . DS . 'file1.php';
@@ -611,8 +613,8 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testCreateFileWindowsInteractive() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '/', 'testCreateFileWindowsInteractive supported on Windows only');
+	public function testCreateFileWindowsInteractive() {
+		$this->skipIf(DIRECTORY_SEPARATOR === '/', 'testCreateFileWindowsInteractive supported on Windows only.');
 
 		$path = TMP . 'shell_test';
 		$file = $path . DS . 'file1.php';
@@ -648,7 +650,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHasTask() {
+	public function testHasTask() {
 		$this->Shell->tasks = array('Extract', 'DbConfig');
 		$this->Shell->loadTasks();
 
@@ -665,7 +667,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHasMethod() {
+	public function testHasMethod() {
 		$this->assertTrue($this->Shell->hasMethod('do_something'));
 		$this->assertFalse($this->Shell->hasMethod('hr'), 'hr is callable');
 		$this->assertFalse($this->Shell->hasMethod('_secret'), '_secret is callable');
@@ -677,7 +679,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandMain() {
+	public function testRunCommandMain() {
 		$methods = get_class_methods('Shell');
 		$Mock = $this->getMock('Shell', array('main', 'startup'), array(), '', false);
 
@@ -691,7 +693,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandWithMethod() {
+	public function testRunCommandWithMethod() {
 		$methods = get_class_methods('Shell');
 		$Mock = $this->getMock('Shell', array('hit_me', 'startup'), array(), '', false);
 
@@ -705,7 +707,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandBaseclassMethod() {
+	public function testRunCommandBaseclassMethod() {
 		$Mock = $this->getMock('Shell', array('startup', 'getOptionParser', 'out'), array(), '', false);
 		$Parser = $this->getMock('ConsoleOptionParser', array(), array(), '', false);
 
@@ -723,7 +725,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandMissingMethod() {
+	public function testRunCommandMissingMethod() {
 		$methods = get_class_methods('Shell');
 		$Mock = $this->getMock('Shell', array('startup', 'getOptionParser', 'out'), array(), '', false);
 		$Parser = $this->getMock('ConsoleOptionParser', array(), array(), '', false);
@@ -743,7 +745,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandTriggeringHelp() {
+	public function testRunCommandTriggeringHelp() {
 		$Parser = $this->getMock('ConsoleOptionParser', array(), array(), '', false);
 		$Parser->expects($this->once())->method('parse')
 			->with(array('--help'))
@@ -763,7 +765,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testRunCommandHittingTask() {
+	public function testRunCommandHittingTask() {
 		$Shell = $this->getMock('Shell', array('hasTask', 'startup'), array(), '', false);
 		$task = $this->getMock('Shell', array('execute', 'runCommand'), array(), '', false);
 		$task->expects($this->any())->method('runCommand')
@@ -781,7 +783,7 @@ class ShellTest extends CakeTestCase {
  *
  * @return void
  */
-	function testWrapText() {
+	public function testWrapText() {
 		$text = 'This is the song that never ends. This is the song that never ends. This is the song that never ends.';
 		$result = $this->Shell->wrapText($text, 33);
 		$expected = <<<TEXT
@@ -798,5 +800,18 @@ TEXT;
   This is the song that never ends.
 TEXT;
 		$this->assertEquals($expected, $result, 'Text not wrapped.');
+	}
+
+/**
+ * Testing camel cased naming of tasks
+ * 
+ * @access public
+ * @return void
+ */
+	public function testShellNaming() {
+		$this->Shell->tasks = array('TestApple');
+		$this->Shell->loadTasks();
+		$expected = 'TestApple';
+		$this->assertEqual($expected, $this->Shell->TestApple->name);
 	}
 }

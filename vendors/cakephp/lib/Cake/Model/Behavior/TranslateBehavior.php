@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.model.behaviors
  * @since         CakePHP(tm) v 1.2.0.4525
@@ -29,7 +29,7 @@ class TranslateBehavior extends ModelBehavior {
 
 /**
  * Used for runtime configuration of model
- * 
+ *
  * @var array
  */
 	public $runtime = array();
@@ -381,7 +381,7 @@ class TranslateBehavior extends ModelBehavior {
  * @param boolean $reset
  * @return bool
  */
-	function bindTranslation($model, $fields, $reset = true) {
+	public function bindTranslation($model, $fields, $reset = true) {
 		if (is_string($fields)) {
 			$fields = array($fields);
 		}
@@ -450,11 +450,11 @@ class TranslateBehavior extends ModelBehavior {
  * fake field
  *
  * @param object $model instance of model
- * @param mixed $fields string with field, or array(field1, field2=>AssocName, field3), or null for 
+ * @param mixed $fields string with field, or array(field1, field2=>AssocName, field3), or null for
  *    unbind all original translations
  * @return bool
  */
-	function unbindTranslation($model, $fields = null) {
+	public function unbindTranslation($model, $fields = null) {
 		if (empty($fields) && empty($this->settings[$model->alias])) {
 			return false;
 		}

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.console.shells.tasks
  * @since         CakePHP(tm) v 1.3
@@ -456,19 +456,5 @@ class TestTask extends BakeTask {
 				'short' => 'p',
 				'help' => __d('cake_console', 'CamelCased name of the plugin to bake tests for.')
 			))->epilog(__d('cake_console', 'Omitting all arguments and options will enter into an interactive mode.'));
-	}
-
-/**
- * Gets the path for output.  Checks the plugin property
- * and returns the correct path.
- *
- * @return string Path to output.
- */
-	public function getPath() {
-		$path = $this->path;
-		if (isset($this->plugin)) {
-			$path = $this->_pluginPath($this->plugin) . 'tests' . DS;
-		}
-		return $path;
 	}
 }

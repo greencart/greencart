@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.console
  * @since         CakePHP(tm) v 1.2.0.5432
@@ -392,8 +392,8 @@ class ShellDispatcherTest extends CakeTestCase {
  * @return void
  */
 	public function testGetShell() {
-		$this->skipIf(class_exists('SampleShell'), '%s SampleShell Class already loaded');
-		$this->skipIf(class_exists('ExampleShell'), '%s ExampleShell Class already loaded');
+		$this->skipIf(class_exists('SampleShell'), 'SampleShell Class already loaded.');
+		$this->skipIf(class_exists('ExampleShell'), 'ExampleShell Class already loaded.');
 
 		$Dispatcher = new TestShellDispatcher();
 

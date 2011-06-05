@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.controller
  * @since         CakePHP(tm) v 1.2.3
@@ -145,7 +145,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testComponentParamMergingNoDuplication() {
+	public function testComponentParamMergingNoDuplication() {
 		$Controller = new MergeVariablesController();
 		$Controller->constructClasses();
 
@@ -158,7 +158,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testComponentMergingWithRedeclarations() {
+	public function testComponentMergingWithRedeclarations() {
 		$Controller = new MergeVariablesController();
 		$Controller->components['MergeVar'] = array('remote', 'redirect' => true);
 		$Controller->constructClasses();
@@ -172,7 +172,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHelperSettingMergingNoDuplication() {
+	public function testHelperSettingMergingNoDuplication() {
 		$Controller = new MergeVariablesController();
 		$Controller->constructClasses();
 
@@ -186,7 +186,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHelperOrderPrecedence() {
+	public function testHelperOrderPrecedence() {
 		$Controller = new MergeVariablesController();
 		$Controller->helpers = array('Custom', 'Foo' => array('something'));
 		$Controller->constructClasses();
@@ -204,7 +204,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMergeVarsWithPlugin() {
+	public function testMergeVarsWithPlugin() {
 		$Controller = new MergePostsController();
 		$Controller->components = array('Email' => array('ports' => 'open'));
 		$Controller->plugin = 'MergeVarPlugin';
@@ -241,7 +241,7 @@ class ControllerMergeVarsTest extends CakeTestCase {
  *
  * @return void
  */
-	function testMergeVarsNotGreedy() {
+	public function testMergeVarsNotGreedy() {
 		$Controller = new Controller();
 		$Controller->components = array();
 		$Controller->uses = array();

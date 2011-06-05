@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.controller.components
  * @since         CakePHP(tm) v 1.2.0.5347
@@ -35,7 +35,7 @@ class EmailTestComponent extends EmailComponent {
  * @access public
  * @return string
  */
-	function strip($content, $message = false) {
+	public function strip($content, $message = false) {
 		return parent::_strip($content, $message);
 	}
 
@@ -146,7 +146,7 @@ class EmailComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		$this->_appEncoding = Configure::read('App.encoding');
 		Configure::write('App.encoding', 'UTF-8');
 
@@ -167,7 +167,7 @@ class EmailComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		Configure::write('App.encoding', $this->_appEncoding);
 		App::build();
 		ClassRegistry::flush();
@@ -190,7 +190,7 @@ class EmailComponentTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSendFormats() {
+	public function testSendFormats() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->subject = 'Cake SMTP test';
@@ -242,7 +242,7 @@ MSGBLOC;
  * @access public
  * @return void
  */
-	function testTemplates() {
+	public function testTemplates() {
 		ClassRegistry::flush();
 
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
@@ -343,7 +343,7 @@ HTMLBLOC;
  *
  * @return void
  */
-	function testTemplateNestedElements() {
+	public function testTemplateNestedElements() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->subject = 'Cake SMTP test';
@@ -368,7 +368,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testSendDebug() {
+	public function testSendDebug() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->cc = 'cc@example.com';
@@ -399,7 +399,7 @@ HTMLBLOC;
  *
  * @return void
  */
-	function testSendDebugWithNoSessions() {
+	public function testSendDebugWithNoSessions() {
 		$session = $this->Controller->Session;
 		unset($this->Controller->Session);
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
@@ -430,7 +430,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testMessageRetrievalWithoutTemplate() {
+	public function testMessageRetrievalWithoutTemplate() {
 		App::build(array(
 			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
@@ -468,7 +468,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testMessageRetrievalWithTemplate() {
+	public function testMessageRetrievalWithTemplate() {
 		App::build(array(
 			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
 		));
@@ -528,7 +528,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testSendContentArray() {
+	public function testSendContentArray() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->subject = 'Cake Debug Test';
@@ -557,7 +557,7 @@ HTMLBLOC;
  *
  * @return void
  */
-	function testDateProperty() {
+	public function testDateProperty() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->subject = 'Cake Debug Test';
@@ -576,7 +576,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testContentStripping() {
+	public function testContentStripping() {
 		$content = "Previous content\n--alt-\nContent-TypeContent-Type:: text/html; charsetcharset==utf-8\nContent-Transfer-Encoding: 7bit";
 		$content .= "\n\n<p>My own html content</p>";
 
@@ -601,11 +601,9 @@ HTMLBLOC;
  *
  * @return void
  */
-	function test_encodeSettingInternalCharset() {
-		$skip = !function_exists('mb_internal_encoding');
-		if ($this->skipIf($skip, 'Missing mb_* functions, cannot run test.')) {
-			return;
-		}
+	public function test_encodeSettingInternalCharset() {
+		$this->skipIf(!function_exists('mb_internal_encoding'), 'Missing mb_* functions, cannot run test.');
+
 		$restore = mb_internal_encoding();
 		mb_internal_encoding('ISO-8859-1');
 
@@ -637,7 +635,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testMultibyte() {
+	public function testMultibyte() {
 		$this->Controller->charset = 'UTF-8';
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
@@ -753,7 +751,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testReset() {
+	public function testReset() {
 		$this->Controller->EmailTest->template = 'default';
 		$this->Controller->EmailTest->to = 'test.recipient@example.com';
 		$this->Controller->EmailTest->from = 'test.sender@example.com';
@@ -797,7 +795,7 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->messageId);
 	}
 
-	function testPluginCustomViewClass() {
+	public function testPluginCustomViewClass() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS)
@@ -824,7 +822,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testStartup() {
+	public function testStartup() {
 		$this->assertNull($this->Controller->EmailTest->startup($this->Controller));
 	}
 
@@ -834,7 +832,7 @@ HTMLBLOC;
  * @access public
  * @return void
  */
-	function testMessageId() {
+	public function testMessageId() {
 		$this->Controller->EmailTest->to = 'postmaster@example.com';
 		$this->Controller->EmailTest->from = 'noreply@example.com';
 		$this->Controller->EmailTest->subject = 'Cake Debug Test';

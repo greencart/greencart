@@ -6,12 +6,12 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @since         CakePHP(tm) v 2.0
@@ -74,7 +74,7 @@ abstract class BaseCoverageReport {
 			$this->appTest = true;
 		}
 		if ($reporter->params['plugin']) {
-			$this->pluginTest = Inflector::underscore($reporter->params['plugin']);
+			$this->pluginTest = Inflector::camelize($reporter->params['plugin']);
 		}
 	}
 
@@ -90,7 +90,6 @@ abstract class BaseCoverageReport {
 
 /**
  * Gets the base path that the files we are interested in live in.
- * If appTest ist
  *
  * @return void
  */

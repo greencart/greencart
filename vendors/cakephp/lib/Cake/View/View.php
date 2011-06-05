@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view
  * @since         CakePHP(tm) v 0.10.0.1076
@@ -271,7 +271,7 @@ class View extends Object {
  *
  * @param Controller $controller A controller object to pull View::__passedArgs from.
  */
-	function __construct($controller) {
+	public function __construct($controller) {
 		if (is_object($controller)) {
 			$count = count($this->__passedVars);
 			for ($j = 0; $j < $count; $j++) {
@@ -316,7 +316,11 @@ class View extends Object {
 		}
 
 		if (isset($options['cache'])) {
-			$keys = array_merge(array($plugin, $name), array_keys($options), array_keys($data));
+			$underscored = null;
+			if ($plugin) {
+				$underscored = Inflector::underscore($plugin);
+			}
+			$keys = array_merge(array($underscored, $name), array_keys($options), array_keys($data));
 			$caching = array(
 				'config' => $this->elementCache,
 				'key' => implode('_', $keys)
@@ -760,7 +764,7 @@ class View extends Object {
  * @return array Array of extensions view files use.
  * @access protected
  */
-	function _getExtensions() {
+	protected function _getExtensions() {
 		$exts = array($this->ext);
 		if ($this->ext !== '.ctp') {
 			array_push($exts, '.ctp');
@@ -803,7 +807,6 @@ class View extends Object {
 		$viewPaths = App::path('View');
 		$corePaths = array_flip(App::core('View'));
 		if (!empty($plugin)) {
-			$plugin = Inflector::camelize($plugin);
 			$count = count($viewPaths);
 			for ($i = 0; $i < $count; $i++) {
 				if (!isset($corePaths[$viewPaths[$i]])) {

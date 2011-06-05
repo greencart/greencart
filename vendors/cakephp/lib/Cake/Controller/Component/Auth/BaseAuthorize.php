@@ -3,12 +3,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -41,6 +41,7 @@ abstract class BaseAuthorize {
  * - `actionPath` - The path to ACO nodes that contains the nodes for controllers.  Used as a prefix
  *    when calling $this->action();
  * - `actionMap` - Action -> crud mappings. Used by authorization objects that want to map actions to CRUD roles.
+ * - `userModel` - Model name that ARO records can be found under.  Defaults to 'User'.
  *
  * @var array
  */
@@ -53,7 +54,8 @@ abstract class BaseAuthorize {
 			'view' => 'read',
 			'delete' => 'delete',
 			'remove' => 'delete'
-		)
+		),
+		'userModel' => 'User'
 	);
 
 /**

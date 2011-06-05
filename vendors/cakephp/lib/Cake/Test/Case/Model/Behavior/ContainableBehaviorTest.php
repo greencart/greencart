@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs.model.behaviors
  * @since         CakePHP(tm) v 1.2.0.5669
@@ -82,7 +82,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testContainments() {
+	public function testContainments() {
 		$r = $this->__containments($this->Article, array('Comment' => array('conditions' => array('Comment.user_id' => 2))));
 		$this->assertTrue(Set::matches('/Article/keep/Comment/conditions[Comment.user_id=2]', $r));
 
@@ -152,7 +152,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testInvalidContainments() {
+	public function testInvalidContainments() {
 		$this->expectError();
 		$r = $this->__containments($this->Article, array('Comment', 'InvalidBinding'));
 
@@ -166,7 +166,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testBeforeFind() {
+	public function testBeforeFind() {
 		$r = $this->Article->find('all', array('contain' => array('Comment')));
 		$this->assertFalse(Set::matches('/User', $r));
 		$this->assertTrue(Set::matches('/Comment', $r));
@@ -241,7 +241,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testContain() {
+	public function testContain() {
 		$this->Article->contain('Comment.User');
 		$r = $this->Article->find('all');
 		$this->assertTrue(Set::matches('/Comment/User', $r));
@@ -257,7 +257,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindEmbeddedNoBindings() {
+	public function testFindEmbeddedNoBindings() {
 		$result = $this->Article->find('all', array('contain' => false));
 		$expected = array(
 			array('Article' => array(
@@ -282,7 +282,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindFirstLevel() {
+	public function testFindFirstLevel() {
 		$this->Article->contain('User');
 		$result = $this->Article->find('all', array('recursive' => 1));
 		$expected = array(
@@ -391,7 +391,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindEmbeddedFirstLevel() {
+	public function testFindEmbeddedFirstLevel() {
 		$result = $this->Article->find('all', array('contain' => array('User')));
 		$expected = array(
 			array(
@@ -498,7 +498,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindSecondLevel() {
+	public function testFindSecondLevel() {
 		$this->Article->contain(array('Comment' => 'User'));
 		$result = $this->Article->find('all', array('recursive' => 2));
 		$expected = array(
@@ -845,7 +845,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindEmbeddedSecondLevel() {
+	public function testFindEmbeddedSecondLevel() {
 		$result = $this->Article->find('all', array('contain' => array('Comment' => 'User')));
 		$expected = array(
 			array(
@@ -1188,7 +1188,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindThirdLevel() {
+	public function testFindThirdLevel() {
 		$this->User->contain(array('ArticleFeatured' => array('Featured' => 'Category')));
 		$result = $this->User->find('all', array('recursive' => 3));
 		$expected = array(
@@ -1509,7 +1509,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindEmbeddedThirdLevel() {
+	public function testFindEmbeddedThirdLevel() {
 		$result = $this->User->find('all', array('contain' => array('ArticleFeatured' => array('Featured' => 'Category'))));
 		$expected = array(
 			array(
@@ -1827,7 +1827,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSettingsThirdLevel() {
+	public function testSettingsThirdLevel() {
 		$result = $this->User->find('all', array('contain' => array('ArticleFeatured' => array('Featured' => array('Category' => array('id', 'name'))))));
 		$expected = array(
 			array(
@@ -2074,7 +2074,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindThirdLevelNonReset() {
+	public function testFindThirdLevelNonReset() {
 		$this->User->contain(false, array('ArticleFeatured' => array('Featured' => 'Category')));
 		$result = $this->User->find('all', array('recursive' => 3));
 		$expected = array(
@@ -2399,7 +2399,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindEmbeddedThirdLevelNonReset() {
+	public function testFindEmbeddedThirdLevelNonReset() {
 		$result = $this->User->find('all', array('reset' => false, 'contain' => array('ArticleFeatured' => array('Featured' => 'Category'))));
 		$expected = array(
 			array(
@@ -2889,7 +2889,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testEmbeddedFindFields() {
+	public function testEmbeddedFindFields() {
 		$result = $this->Article->find('all', array(
 			'contain' => array('User(user)'),
 			'fields' => array('title')
@@ -2960,7 +2960,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	function testHasOneFieldsInContain() {
+	public function testHasOneFieldsInContain() {
 		$this->Article->unbindModel(array(
 			'hasMany' => array('Comment')
 		), true);
@@ -2993,7 +2993,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFindConditionalBinding() {
+	public function testFindConditionalBinding() {
 		$this->Article->contain(array(
 			'User(user)',
 			'Tag' => array(
@@ -3133,7 +3133,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testOtherFinds() {
+	public function testOtherFinds() {
 		$result = $this->Article->find('count');
 		$expected = 3;
 		$this->assertEqual($expected, $result);
@@ -3197,7 +3197,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testOriginalAssociations() {
+	public function testOriginalAssociations() {
 		$this->Article->Comment->Behaviors->attach('Containable');
 
 		$options = array(
@@ -3420,7 +3420,7 @@ class ContainableBehaviorTest extends CakeTestCase {
 					'foreignKey'			=> 'article_id',
 					'associationForeignKey' => 'tag_id',
 					// LENGHT function mysql-only, using LIKE does almost the same
-					'conditions' 			=> 'ShortTag.tag LIKE "???"'
+					'conditions' 			=> "ShortTag.tag LIKE '???'"
 				)
 			)
 		);
@@ -3497,22 +3497,17 @@ class ContainableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	function testAutoFieldsWithMultipleDatabases() {
+	public function testAutoFieldsWithMultipleDatabases() {
 		$config = new DATABASE_CONFIG();
 
-		$skip = $this->skipIf(
+		$this->skipIf(
 			!isset($config->test) || !isset($config->test2),
-			 '%s Primary and secondary test databases not configured, skipping cross-database '
-			.'join tests.'
-			.' To run these tests, you must define $test and $test2 in your database configuration.'
+			'Primary and secondary test databases not configured, skipping cross-database join tests.'
+			. ' To run these tests, you must define $test and $test2 in your database configuration.'
 		);
-		if ($skip) {
-			return;
-		}
 
 		$db = ConnectionManager::getDataSource('test2');
-		$this->_fixtures[$this->_fixtureClassMap['User']]->create($db);
-		$this->_fixtures[$this->_fixtureClassMap['User']]->insert($db);
+		$this->fixtureManager->loadSingle('User', $db);
 
 		$this->Article->User->setDataSource('test2');
 
@@ -3522,15 +3517,13 @@ class ContainableBehaviorTest extends CakeTestCase {
 		));
 		$this->assertTrue(isset($result[0]['Article']));
 		$this->assertTrue(isset($result[0]['User']));
-
-		$this->_fixtures[$this->_fixtureClassMap['User']]->drop($db);
 	}
 /**
  * test that autoFields doesn't splice in columns that aren't part of the join.
  *
  * @return void
  */
-	function testAutoFieldsWithRecursiveNegativeOne() {
+	public function testAutoFieldsWithRecursiveNegativeOne() {
 		$this->Article->recursive = -1;
 		$result = $this->Article->field('title', array('Article.title' => 'First Article'));
 		$this->assertNoErrors();
@@ -3542,7 +3535,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	function testFindAllReturn() {
+	public function testFindAllReturn() {
 		$result = $this->Article->find('all', array(
 			'conditions' => array('Article.id' => 999999999)
 		));

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
@@ -31,7 +31,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		Cache::delete('object_map', '_cake_core_');
 		App::build(array(
 			'locales' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Locale' . DS),
@@ -46,14 +46,14 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		Cache::delete('object_map', '_cake_core_');
 		App::build();
 		CakePlugin::unload();
 	}
 
 
-	function testTranslationCaching() {
+	public function testTranslationCaching() {
 		Configure::write('Config.language', 'cache_test_po');
 		$i18n = i18n::getInstance();
 
@@ -66,33 +66,33 @@ class I18nTest extends CakeTestCase {
 		Cache::config('_cake_core_', Cache::config('default'));
 
 		// make some calls to translate using different domains
-		$this->assertEqual(I18n::translate('dom1.foo', false, 'dom1'), 'Dom 1 Foo');
-		$this->assertEqual(I18n::translate('dom1.bar', false, 'dom1'), 'Dom 1 Bar');
+		$this->assertEqual('Dom 1 Foo', I18n::translate('dom1.foo', false, 'dom1'));
+		$this->assertEqual('Dom 1 Bar', I18n::translate('dom1.bar', false, 'dom1'));
 		$domains = I18n::domains();
-		$this->assertEqual($domains['dom1']['cache_test_po']['LC_MESSAGES']['dom1.foo'], 'Dom 1 Foo');
+		$this->assertEqual('Dom 1 Foo', $domains['dom1']['cache_test_po']['LC_MESSAGES']['dom1.foo']);
 
 		// reset internally stored entries
 		I18n::clear();
 
 		// now only dom1 should be in cache
 		$cachedDom1 = Cache::read('dom1_' . $lang, '_cake_core_');
-		$this->assertEqual($cachedDom1['LC_MESSAGES']['dom1.foo'], 'Dom 1 Foo');
-		$this->assertEqual($cachedDom1['LC_MESSAGES']['dom1.bar'], 'Dom 1 Bar');
+		$this->assertEqual('Dom 1 Foo', $cachedDom1['LC_MESSAGES']['dom1.foo']);
+		$this->assertEqual('Dom 1 Bar', $cachedDom1['LC_MESSAGES']['dom1.bar']);
 		// dom2 not in cache
 		$this->assertFalse(Cache::read('dom2_' . $lang, '_cake_core_'));
 
 		// translate a item of dom2 (adds dom2 to cache)
-		$this->assertEqual(I18n::translate('dom2.foo', false, 'dom2'), 'Dom 2 Foo');
+		$this->assertEqual('Dom 2 Foo', I18n::translate('dom2.foo', false, 'dom2'));
 
 		// verify dom2 was cached through manual read from cache
 		$cachedDom2 = Cache::read('dom2_' . $lang, '_cake_core_');
-		$this->assertEqual($cachedDom2['LC_MESSAGES']['dom2.foo'], 'Dom 2 Foo');
-		$this->assertEqual($cachedDom2['LC_MESSAGES']['dom2.bar'], 'Dom 2 Bar');
+		$this->assertEqual('Dom 2 Foo', $cachedDom2['LC_MESSAGES']['dom2.foo']);
+		$this->assertEqual('Dom 2 Bar', $cachedDom2['LC_MESSAGES']['dom2.bar']);
 
 		// modify cache entry manually to verify that dom1 entries now will be read from cache
 		$cachedDom1['LC_MESSAGES']['dom1.foo'] = 'FOO';
 		Cache::write('dom1_' . $lang, $cachedDom1, '_cake_core_');
-		$this->assertEqual(I18n::translate('dom1.foo', false, 'dom1'), 'FOO');
+		$this->assertEqual('FOO', I18n::translate('dom1.foo', false, 'dom1'));
 	}
 
 
@@ -102,7 +102,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testDefaultStrings() {
+	public function testDefaultStrings() {
 		$singular = $this->__singular();
 		$this->assertEqual('Plural Rule 1', $singular);
 
@@ -172,7 +172,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesZero() {
+	public function testPoRulesZero() {
 		Configure::write('Config.language', 'rule_0_po');
 
 		$singular = $this->__singular();
@@ -244,7 +244,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesZero() {
+	public function testMoRulesZero() {
 		Configure::write('Config.language', 'rule_0_mo');
 
 		$singular = $this->__singular();
@@ -316,7 +316,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesOne() {
+	public function testPoRulesOne() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$singular = $this->__singular();
@@ -388,7 +388,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesOne() {
+	public function testMoRulesOne() {
 		Configure::write('Config.language', 'rule_1_mo');
 
 		$singular = $this->__singular();
@@ -460,7 +460,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesTwo() {
+	public function testPoRulesTwo() {
 		Configure::write('Config.language', 'rule_2_po');
 
 		$singular = $this->__singular();
@@ -532,7 +532,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesTwo() {
+	public function testMoRulesTwo() {
 		Configure::write('Config.language', 'rule_2_mo');
 
 		$singular = $this->__singular();
@@ -604,7 +604,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesThree() {
+	public function testPoRulesThree() {
 		Configure::write('Config.language', 'rule_3_po');
 
 		$singular = $this->__singular();
@@ -676,7 +676,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesThree() {
+	public function testMoRulesThree() {
 		Configure::write('Config.language', 'rule_3_mo');
 
 		$singular = $this->__singular();
@@ -748,7 +748,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesFour() {
+	public function testPoRulesFour() {
 		Configure::write('Config.language', 'rule_4_po');
 
 		$singular = $this->__singular();
@@ -820,7 +820,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesFour() {
+	public function testMoRulesFour() {
 		Configure::write('Config.language', 'rule_4_mo');
 
 		$singular = $this->__singular();
@@ -892,7 +892,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesFive() {
+	public function testPoRulesFive() {
 		Configure::write('Config.language', 'rule_5_po');
 
 		$singular = $this->__singular();
@@ -966,7 +966,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesFive() {
+	public function testMoRulesFive() {
 		Configure::write('Config.language', 'rule_5_mo');
 
 		$singular = $this->__singular();
@@ -1040,7 +1040,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesSix() {
+	public function testPoRulesSix() {
 		Configure::write('Config.language', 'rule_6_po');
 
 		$singular = $this->__singular();
@@ -1112,7 +1112,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesSix() {
+	public function testMoRulesSix() {
 		Configure::write('Config.language', 'rule_6_mo');
 
 		$singular = $this->__singular();
@@ -1184,7 +1184,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesSeven() {
+	public function testPoRulesSeven() {
 		Configure::write('Config.language', 'rule_7_po');
 
 		$singular = $this->__singular();
@@ -1256,7 +1256,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesSeven() {
+	public function testMoRulesSeven() {
 		Configure::write('Config.language', 'rule_7_mo');
 
 		$singular = $this->__singular();
@@ -1328,7 +1328,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesEight() {
+	public function testPoRulesEight() {
 		Configure::write('Config.language', 'rule_8_po');
 
 		$singular = $this->__singular();
@@ -1400,7 +1400,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesEight() {
+	public function testMoRulesEight() {
 		Configure::write('Config.language', 'rule_8_mo');
 
 		$singular = $this->__singular();
@@ -1472,7 +1472,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesNine() {
+	public function testPoRulesNine() {
 		Configure::write('Config.language', 'rule_9_po');
 
 		$singular = $this->__singular();
@@ -1547,7 +1547,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesNine() {
+	public function testMoRulesNine() {
 		Configure::write('Config.language', 'rule_9_po');
 
 		$singular = $this->__singular();
@@ -1622,7 +1622,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesTen() {
+	public function testPoRulesTen() {
 		Configure::write('Config.language', 'rule_10_po');
 
 		$singular = $this->__singular();
@@ -1696,7 +1696,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesTen() {
+	public function testMoRulesTen() {
 		Configure::write('Config.language', 'rule_10_mo');
 
 		$singular = $this->__singular();
@@ -1770,7 +1770,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesEleven() {
+	public function testPoRulesEleven() {
 		Configure::write('Config.language', 'rule_11_po');
 
 		$singular = $this->__singular();
@@ -1842,7 +1842,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesEleven() {
+	public function testMoRulesEleven() {
 		Configure::write('Config.language', 'rule_11_mo');
 
 		$singular = $this->__singular();
@@ -1914,7 +1914,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesTwelve() {
+	public function testPoRulesTwelve() {
 		Configure::write('Config.language', 'rule_12_po');
 
 		$singular = $this->__singular();
@@ -1986,7 +1986,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesTwelve() {
+	public function testMoRulesTwelve() {
 		Configure::write('Config.language', 'rule_12_mo');
 
 		$singular = $this->__singular();
@@ -2058,7 +2058,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesThirteen() {
+	public function testPoRulesThirteen() {
 		Configure::write('Config.language', 'rule_13_po');
 
 		$singular = $this->__singular();
@@ -2130,7 +2130,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesThirteen() {
+	public function testMoRulesThirteen() {
 		Configure::write('Config.language', 'rule_13_mo');
 
 		$singular = $this->__singular();
@@ -2202,7 +2202,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoRulesFourteen() {
+	public function testPoRulesFourteen() {
 		Configure::write('Config.language', 'rule_14_po');
 
 		$singular = $this->__singular();
@@ -2274,7 +2274,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testMoRulesFourteen() {
+	public function testMoRulesFourteen() {
 		Configure::write('Config.language', 'rule_14_mo');
 
 		$singular = $this->__singular();
@@ -2346,7 +2346,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSetLanguageWithSession () {
+	public function testSetLanguageWithSession () {
 		$_SESSION['Config']['language'] = 'po';
 		$singular = $this->__singular();
 		$this->assertEqual('Po (translated)', $singular);
@@ -2387,7 +2387,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testNoCoreTranslation () {
+	public function testNoCoreTranslation () {
 		Configure::write('Config.language', 'po');
 		$singular = $this->__singular();
 		$this->assertEqual('Po (translated)', $singular);
@@ -2430,7 +2430,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPluginTranslation() {
+	public function testPluginTranslation() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
@@ -2474,7 +2474,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoMultipleLineTranslation () {
+	public function testPoMultipleLineTranslation () {
 		Configure::write('Config.language', 'po');
 
 		$string = "This is a multiline translation\n";
@@ -2548,10 +2548,10 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoNoTranslationNeeded () {
+	public function testPoNoTranslationNeeded () {
 		Configure::write('Config.language', 'po');
 		$result = __('No Translation needed');
-		$this->assertEqual($result, 'No Translation needed');
+		$this->assertEqual('No Translation needed', $result);
 	}
 
 /**
@@ -2560,9 +2560,9 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPoQuotedString () {
+	public function testPoQuotedString () {
 		$expected = 'this is a "quoted string" (translated)';
-		$this->assertEqual(__('this is a "quoted string"'), $expected);
+		$this->assertEqual($expected, __('this is a "quoted string"'));
 	}
 
 /**
@@ -2571,7 +2571,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testFloatValue() {
+	public function testFloatValue() {
 		Configure::write('Config.language', 'rule_9_po');
 
 		$result = __n('%d = 1', '%d = 0 or > 1', (float)1);
@@ -2593,7 +2593,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCategory() {
+	public function testCategory() {
 		Configure::write('Config.language', 'po');
 		$category = $this->__category();
 		$this->assertEqual('Monetary Po (translated)', $category);
@@ -2605,7 +2605,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testPluginCategory() {
+	public function testPluginCategory() {
 		Configure::write('Config.language', 'po');
 
 		$singular = $this->__domainCategorySingular();
@@ -2622,7 +2622,7 @@ class I18nTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCategoryThenSingular() {
+	public function testCategoryThenSingular() {
 		Configure::write('Config.language', 'po');
 		$category = $this->__category();
 		$this->assertEqual('Monetary Po (translated)', $category);
@@ -2631,7 +2631,7 @@ class I18nTest extends CakeTestCase {
 		$this->assertEqual('Po (translated)', $singular);
 	}
 
-	function testTimeDefinition() {
+	public function testTimeDefinition() {
 		Configure::write('Config.language', 'po');
 		$result = __c('d_fmt', 5);
 		$expected = '%m/%d/%Y';
@@ -2646,7 +2646,7 @@ class I18nTest extends CakeTestCase {
 		$this->assertEqual($expected, $result);
 	}
 
-	function testTimeDefinitionJapanese(){
+	public function testTimeDefinitionJapanese(){
 		Configure::write('Config.language', 'ja_jp');
 		$result = __c('d_fmt', 5);
 

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake.libs.view
  * @since         CakePHP(tm) v 0.10.0.1076
@@ -36,7 +36,7 @@ class ThemeView extends View {
  *
  * @param Controller $controller Controller object to be rendered.
  */
-	function __construct($controller) {
+	public function __construct($controller) {
 		parent::__construct($controller);
 		$this->theme = $controller->theme;
 	}
@@ -50,7 +50,7 @@ class ThemeView extends View {
  * @access protected
  * @todo Make theme path building respect $cached parameter.
  */
-	function _paths($plugin = null, $cached = true) {
+	protected function _paths($plugin = null, $cached = true) {
 		$paths = parent::_paths($plugin, $cached);
 		$themePaths = array();
 

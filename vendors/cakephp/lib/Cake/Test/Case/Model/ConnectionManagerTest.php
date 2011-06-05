@@ -5,12 +5,12 @@
  *
  * PHP 5
  *
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5550
@@ -40,7 +40,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testEnumConnectionObjects() {
+	public function testEnumConnectionObjects() {
 		$sources = ConnectionManager::enumConnectionObjects();
 		$this->assertTrue(count($sources) >= 1);
 
@@ -54,7 +54,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetDataSource() {
+	public function testGetDataSource() {
 		$connections = ConnectionManager::enumConnectionObjects();
 		$this->assertTrue((bool)(count(array_keys($connections) >= 1)));
 
@@ -78,7 +78,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetPluginDataSource() {
+	public function testGetPluginDataSource() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
@@ -100,7 +100,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetPluginDataSourceAndPluginDriver() {
+	public function testGetPluginDataSourceAndPluginDriver() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
@@ -124,7 +124,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetLocalDataSourceAndPluginDriver() {
+	public function testGetLocalDataSourceAndPluginDriver() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
@@ -147,7 +147,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetPluginDataSourceAndLocalDriver() {
+	public function testGetPluginDataSourceAndLocalDriver() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 			'Model/Datasource/Database' => array(
@@ -173,7 +173,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testSourceList() {
+	public function testSourceList() {
 		$sources = ConnectionManager::sourceList();
 		$this->assertTrue(count($sources) >= 1);
 
@@ -187,7 +187,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testGetSourceName() {
+	public function testGetSourceName() {
 		$connections = ConnectionManager::enumConnectionObjects();
 		$name = key($connections);
 		$source = ConnectionManager::getDataSource($name);
@@ -206,7 +206,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testLoadDataSource() {
+	public function testLoadDataSource() {
 		$connections = array(
 			array('classname' => 'Mysql', 'filename' =>  'Mysql', 'package' => 'Database'),
 			array('classname' => 'Postgres', 'filename' =>  'Postgres', 'package' => 'Database'),
@@ -237,7 +237,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testCreateDataSourceWithIntegrationTests() {
+	public function testCreateDataSourceWithIntegrationTests() {
 		$name = 'test_created_connection';
 
 		$connections = ConnectionManager::enumConnectionObjects();
@@ -270,7 +270,7 @@ class ConnectionManagerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testConnectionData() {
+	public function testConnectionData() {
 		App::build(array(
 			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 			'Model/Datasource' => array(

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2006-2010, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2006-2010, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       cake.libs.view.helpers
  * @since         CakePHP v 1.2
@@ -165,7 +165,7 @@ class JsHelper extends AppHelper {
  * @return string a JavaScript-safe/JSON representation of $val
  * @access public
  **/
-	function value($val, $quoteString = true) {
+	public function value($val, $quoteString = true) {
 		return $this->{$this->__engineName}->value($val, $quoteString);
 	}
 
