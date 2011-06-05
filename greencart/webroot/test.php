@@ -48,6 +48,6 @@ if (!Configure::read('debug')) {
 	exit;
 }
 
-require_once CAKE_TESTS_LIB . 'CakeTestSuiteDispatcher.php';
+require_once CAKE . 'TestSuite' . DS . 'CakeTestSuiteDispatcher.php';
 
 CakeTestSuiteDispatcher::run();

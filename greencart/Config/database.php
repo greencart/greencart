@@ -17,7 +17,7 @@
  *		Datasabe/Mysql 		- MySQL 4 & 5,
  *		Datasabe/Sqlite		- SQLite (PHP5 only),
  *		Datasabe/Postgres	- PostgreSQL 7 and higher,
- *		Datasabe/Mssql		- Microsoft SQL Server 2000 and higher,
+ *		Database/Sqlserver	- Microsoft SQL Server 2005 and higher,
  *		Datasabe/Oracle		- Oracle 8 and higher
  *
  * persistent => true / false

@@ -14,8 +14,8 @@
  * development and testing.
  *
  * transport => The name of a supported transport; valid options are as follows:
- *		mail 		- Send using PHP mail function
- *		smtp		- Send using SMTP
+ *		Mail 		- Send using PHP mail function
+ *		Smtp		- Send using SMTP
  *
  * You can add custom transports (or override existing transports) by adding the
  * appropriate file to app/Network/Email.  Transports should be named 'YourTransport.php',
@@ -29,12 +29,12 @@
 class EmailConfig
 {
 	public $default = array(
-		'transport' => 'mail',
+		'transport' => 'Mail',
 		'from'      => 'you@localhost'
 	);
 
 	public $smtp = array(
-		'transport' => 'smtp',
+		'transport' => 'Smtp',
 		'from'      => array('My Site', 'site@localhost'),
 		'host'      => 'localhost',
 		'port'      => 25,
@@ -63,7 +63,7 @@ class EmailConfig
 		'viewVars'    => null,
 		'attachments' => null,
 		'emailFormat' => null,
-		'transport'   => 'smtp',
+		'transport'   => 'Smtp',
 		'host'        => 'localhost',
 		'port'        => 25,
 		'timeout'     => 30,
