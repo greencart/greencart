@@ -13,29 +13,25 @@
  * Database configuration class. You can specify multiple configurations for production,
  * development and testing.
  *
- * driver => The name of a supported driver; valid options are as follows:
- *		Datasabe/Mysql 		- MySQL 4 & 5,
- *		Datasabe/Sqlite		- SQLite (PHP5 only),
- *		Datasabe/Postgres	- PostgreSQL 7 and higher,
- *		Database/Sqlserver	- Microsoft SQL Server 2005 and higher,
- *		Datasabe/Oracle		- Oracle 8 and higher
+ * Options:
  *
- * persistent => true / false
- * Determines whether or not the database should use a persistent connection
+ * - `driver` - The name of a supported driver, as follows:
+ *         Datasabe/Mysql     - MySQL 4 & 5,
+ *         Datasabe/Sqlite    - SQLite (PHP5 only),
+ *         Datasabe/Postgres  - PostgreSQL 7 and higher,
+ *         Database/Sqlserver - Microsoft SQL Server 2005 and higher,
+ *         Datasabe/Oracle    - Oracle 8 and higher
  *
- * host =>
- * the host you connect to the database. To add a socket or port number, use 'port' => #
+ * - `persistent` - Determines whether or not the database should use a persistent connection.
  *
- * prefix =>
- * Uses the given prefix for all the tables in this database.  This setting can be overridden
- * on a per-table basis with the Model::$tablePrefix property.
+ * - `host` -The host you connect to the database. To add a socket or port number, use 'port' => #
  *
- * schema =>
- * For Postgres specifies which schema you would like to use the tables in. Postgres defaults to 'public'.
+ * - `prefix` - Uses the given prefix for all the tables in this database.
  *
- * encoding =>
- * For MySQL, Postgres specifies the character encoding to use when connecting to the
- * database. Uses database default not specified.
+ * - `schema` - For Postgres specifies which schema you would like to use the tables in.
+ *
+ * - `encoding` - For MySQL, Postgres specifies the character encoding to use when connecting to the
+ *   database. Uses database default if not specified.
  *
  * @author CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  */

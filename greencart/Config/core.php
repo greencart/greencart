@@ -90,7 +90,7 @@ define('LOG_ERROR', 2);
  *
  * Contains an array of settings to use for session configuration.
  *
- * ## Options
+ * Options:
  *
  * - `Session.name` - The name of the cookie to use.
  * - `Session.timeout` - The number of minutes you want sessions to live for (this timeout is

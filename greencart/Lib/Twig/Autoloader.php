@@ -44,7 +44,7 @@ class Twig_Autoloader
 			dirname(__FILE__).'/../../../vendors/twig/lib/',
 		);
 		foreach ($paths as $path) {
-			if (file_exists($file = $path.str_replace('_', '/', $class).'.php')) {
+			if (file_exists($file = $path.str_replace(array('_', "\0"), array('/', ''), $class).'.php')) {
 				require $file;
 				break;
 			}

@@ -32,6 +32,15 @@ App::import('Lib', 'functions');
 Cache::config('default', array('engine' => 'File', 'prefix' => 'gc_'));
 
 /**
+ * Plugins need to be loaded manually, you can either load them one by one or all of them
+ * in a single call.
+ *
+ * CakePlugin::loadAll();
+ * CakePlugin::load('DebugKit');
+ */
+CakePlugin::loadAll();
+
+/**
  * Twig Template Engine configuration
  *
  * @link http://www.twig-project.org/doc/api.html#environment-options
