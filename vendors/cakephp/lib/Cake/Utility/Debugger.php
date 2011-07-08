@@ -464,6 +464,16 @@ class Debugger {
 			case 'object':
 				return get_class($var) . "\n" . self::_object($var);
 			case 'array':
+				$var = array_merge($var,  array_intersect_key(array(
+					'password' => '*****',
+					'login'  => '*****',
+					'host' => '*****',
+					'database' => '*****',
+					'port' => '*****',
+					'prefix' => '*****',
+					'schema' => '*****'
+				), $var));
+
 				$out = "array(";
 				$vars = array();
 				foreach ($var as $key => $val) {
@@ -644,11 +654,11 @@ class Debugger {
  */
 	public static function checkSecurityKeys() {
 		if (Configure::read('Security.salt') == 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi') {
-			trigger_error(__d('cake_dev', 'Please change the value of \'Security.salt\' in app/config/core.php to a salt value specific to your application'), E_USER_NOTICE);
+			trigger_error(__d('cake_dev', 'Please change the value of \'Security.salt\' in app/Config/core.php to a salt value specific to your application'), E_USER_NOTICE);
 		}
 
 		if (Configure::read('Security.cipherSeed') === '76859309657453542496749683645') {
-			trigger_error(__d('cake_dev', 'Please change the value of \'Security.cipherSeed\' in app/config/core.php to a numeric (digits only) seed value specific to your application'), E_USER_NOTICE);
+			trigger_error(__d('cake_dev', 'Please change the value of \'Security.cipherSeed\' in app/Config/core.php to a numeric (digits only) seed value specific to your application'), E_USER_NOTICE);
 		}
 	}
 

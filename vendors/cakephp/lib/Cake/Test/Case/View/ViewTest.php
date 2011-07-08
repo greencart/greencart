@@ -431,6 +431,9 @@ class ViewTest extends CakeTestCase {
 
 		$result = $this->View->element('plugin_element', array(), array('plugin' => 'TestPlugin'));
 		$this->assertEqual($result, 'this is the plugin element using params[plugin]');
+		
+		$result = $this->View->element('plugin_element', array(), array('plugin' => 'test_plugin'));
+		$this->assertEqual($result, 'this is the plugin element using params[plugin]');
 
 		$this->View->plugin = 'TestPlugin';
 		$result = $this->View->element('test_plugin_element');
@@ -905,40 +908,6 @@ class ViewTest extends CakeTestCase {
 		$View->set(array(1 => 'one', 2 => 'two'));
 		$expected = array(3 => 'three', 4 => 'four', 1 => 'one', 2 => 'two');
 		$this->assertEqual($View->viewVars, $expected);
-	}
-
-/**
- * testEntityReference method
- *
- * @access public
- * @return void
- */
-	public function testEntityReference() {
-		$View = new TestView($this->PostsController);
-		$View->model = 'Post';
-		$View->field = 'title';
-		$this->assertEqual($View->entity(), array('Post', 'title'));
-
-		$View->association = 'Comment';
-		$View->field = 'user_id';
-		$this->assertEqual($View->entity(), array('Comment', 'user_id'));
-
-		$View->model = 0;
-		$View->association = null;
-		$View->field = 'Node';
-		$View->fieldSuffix = 'title';
-		$View->entityPath = '0.Node.title';
-		$expected = array(0, 'Node', 'title');
-		$this->assertEqual($View->entity(), $expected);
-
-		$View->model = 'HelperTestTag';
-		$View->field = 'HelperTestTag';
-		$View->modelId = null;
-		$View->association = null;
-		$View->fieldSuffix = null;
-		$View->entityPath = 'HelperTestTag';
-		$expected = array('HelperTestTag', 'HelperTestTag');
-		$this->assertEqual($View->entity(), $expected);
 	}
 
 /**

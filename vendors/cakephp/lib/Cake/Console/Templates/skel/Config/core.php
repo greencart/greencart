@@ -65,7 +65,7 @@
  * - `handler` - callback - The callback to handle exceptions. You can set this to any callback type,
  *   including anonymous functions.
  * - `renderer` - string - The class responsible for rendering uncaught exceptions.  If you choose a custom class you
- *   should place the file for that class in app/libs. This class needs to implement a render method.
+ *   should place the file for that class in app/Error. This class needs to implement a render method.
  * - `log` - boolean - Should Exceptions be logged?
  *
  * @see ErrorHandler for more information on exception handling and configuration.
@@ -165,10 +165,10 @@
  * - 'database' - Uses CakePHP's database sessions.
  * - 'cache' - Use the Cache class to save sessions.
  *
- * To define a custom session handler, save it at /app/libs/session/<name>.php.
+ * To define a custom session handler, save it at /app/Model/Datasource/Session/<name>.php.
  * Make sure the class implements `CakeSessionHandlerInterface` and set Session.handler to <name>
  *
- * To use database sessions, run the app/config/schema/sessions.php schema using
+ * To use database sessions, run the app/Config/Schema/sessions.php schema using
  * the cake shell command: cake schema create Sessions
  *
  */
@@ -281,13 +281,14 @@
  * 		), //[optional]
  * 		'persistent' => true, // [optional] set this to false for non-persistent connections
  * 		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
+ * 		'persistent' => true, // [optional] set this to false for non-persistent connections
  *	));
  *
  */
 
 /**
  * Pick the caching engine to use.  If APC is enabled use it.
- * If running via cli - apc is disabled by default. ensure it's avaiable and enabled in this case
+ * If running via cli - apc is disabled by default. ensure it's available and enabled in this case
  *
  */
 $engine = 'File';
@@ -324,4 +325,3 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
-

@@ -357,4 +357,29 @@ class MediaViewTest extends CakeTestCase {
 		$result = $this->MediaView->render();
 		$this->assertFalse($result);
 	}
+
+/**
+ * Test downloading files with UPPERCASE extensions.
+ *
+ * @return void
+ */
+	function testRenderUpperExtesnion() {
+		$this->MediaView->viewVars = array(
+			'path' =>  CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS .'img' . DS,
+			'id' => 'test_2.JPG',
+			'extension' => 'JPG',
+		);
+
+		$this->MediaView->response->expects($this->any())
+			->method('type')
+			->with('jpg')
+			->will($this->returnArgument(0));
+
+		$this->MediaView->expects($this->at(0))
+			->method('_isActive')
+			->will($this->returnValue(true));
+
+		$this->MediaView->render();
+	}
+
 }

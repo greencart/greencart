@@ -237,12 +237,6 @@ class DebuggerTest extends CakeTestCase {
 		View::$cacheAction = false
 		View::$validationErrors = array
 		View::$hasRendered = false
-		View::$modelScope = false
-		View::$model = NULL
-		View::$association = NULL
-		View::$field = NULL
-		View::$fieldSuffix = NULL
-		View::$modelId = NULL
 		View::$uuids = array
 		View::$output = false
 		View::$request = NULL
@@ -325,5 +319,41 @@ class DebuggerTest extends CakeTestCase {
 
 		$result = Debugger::getInstance('Debugger');
 		$this->assertIsA($result, 'Debugger');
+	}
+
+/**
+ * testNoDbCredentials
+ *
+ * If a connection error occurs, the config variable is passed through exportVar
+ * *** our database login credentials such that they are never visible
+ *
+ * @access public
+ * @return void
+ */
+	function testNoDbCredentials() {
+		$config = array(
+			'driver' => 'mysql',
+			'persistent' => false,
+			'host' => 'void.cakephp.org',
+			'login' => 'cakephp-user',
+			'password' => 'cakephp-password',
+			'database' => 'cakephp-database',
+			'prefix' => ''
+		);
+
+		$output = Debugger::exportVar($config);
+
+		$expectedArray = array(
+			'driver' => 'mysql',
+			'persistent' => false,
+			'host' => '*****',
+			'login' => '*****',
+			'password' => '*****',
+			'database' => '*****',
+			'prefix' => ''
+		);
+		$expected = Debugger::exportVar($expectedArray);
+
+		$this->assertEqual($expected, $output);
 	}
 }

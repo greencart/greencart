@@ -36,7 +36,7 @@
  *
  * For instance if you'd like to use your own HttpSocket class, put it under
  *
- *		app/libs/Network/Http/HttpSocket.php
+ *		app/Network/Http/HttpSocket.php
  *
  * ### Inspecting loaded paths
  *
@@ -283,6 +283,10 @@ class App {
 				'Controller/Component' => array(
 					'%s' . 'Controller' . DS . 'Component' . DS,
 					'%s' . 'controllers' . DS . 'components' . DS
+				),
+				'Controller/Component/Auth' => array(
+					'%s' . 'Controller' . DS . 'Component' . DS . 'Auth' . DS,
+					'%s' . 'controllers' . DS . 'components' . DS . 'auth' . DS
 				),
 				'View' => array(
 					'%s' . 'View' . DS,

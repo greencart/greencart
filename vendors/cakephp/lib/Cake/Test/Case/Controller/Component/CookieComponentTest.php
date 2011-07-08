@@ -514,6 +514,16 @@ class CookieComponentTest extends CakeTestCase {
 		$this->Cookie->destroy();
 	}
 /**
+ * Test deleting recursively with keys that don't exist.
+ *
+ * @return void
+ */
+	function testDeleteChildrenNotExist() {
+		$this->assertNull($this->Cookie->delete('NotFound'));
+		$this->assertNull($this->Cookie->delete('Not.Found'));
+	}
+
+/**
  * Helper method for generating old style encoded cookie values.
  *
  * @return string.

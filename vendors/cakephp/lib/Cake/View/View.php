@@ -161,48 +161,6 @@ class View extends Object {
 	public $hasRendered = false;
 
 /**
- * True if in scope of model-specific region
- *
- * @var boolean
- */
-	public $modelScope = false;
-
-/**
- * Name of current model this view context is attached to
- *
- * @var string
- */
-	public $model = null;
-
-/**
- * Name of association model this view context is attached to
- *
- * @var string
- */
-	public $association = null;
-
-/**
- * Name of current model field this view context is attached to
- *
- * @var string
- */
-	public $field = null;
-
-/**
- * Suffix of current field this view context is attached to
- *
- * @var string
- */
-	public $fieldSuffix = null;
-
-/**
- * The current model ID this view context is attached to
- *
- * @var mixed
- */
-	public $modelId = null;
-
-/**
  * List of generated DOM UUIDs
  *
  * @var array
@@ -289,7 +247,7 @@ class View extends Object {
  * This realizes the concept of Elements, (or "partial layouts") and the $params array is used to send
  * data to be used in the element. Elements can be cached improving performance by using the `cache` option.
  *
- * @param string $name Name of template file in the/app/views/elements/ folder
+ * @param string $name Name of template file in the/app/View/Elements/ folder
  * @param array $data Array of data to be made available to the rendered view (i.e. the Element)
  * @param array $options Array of options. Possible keys are:
  * - `cache` - Can either be `true`, to enable caching using the config in View::$elementCache. Or an array
@@ -306,7 +264,7 @@ class View extends Object {
 		$callbacks = false;
 
 		if (isset($options['plugin'])) {
-			$plugin = $options['plugin'];
+			$plugin = Inflector::camelize($options['plugin']);
 		}
 		if (isset($this->plugin) && !$plugin) {
 			$plugin = $this->plugin;
@@ -543,32 +501,6 @@ class View extends Object {
 		}
 		$this->uuids[] = $hash;
 		return $hash;
-	}
-
-/**
- * Returns the entity reference of the current context as an array of identity parts
- *
- * @return array An array containing the identity elements of an entity
- */
-	public function entity() {
-		$assoc = ($this->association) ? $this->association : $this->model;
-		if (!empty($this->entityPath)) {
-			$path = explode('.', $this->entityPath);
-			$count = count($path);
-			if (
-				($count == 1 && !empty($this->association)) ||
-				($count == 1 && $this->model != $this->entityPath) ||
-				($count == 1 && empty($this->association) && !empty($this->field)) ||
-				($count  == 2 && !empty($this->fieldSuffix)) ||
-				is_numeric($path[0]) && !empty($assoc)
-			) {
-				array_unshift($path, $assoc);
-			}
-			return Set::filter($path);
-		}
-		return array_values(Set::filter(
-			array($assoc, $this->modelId, $this->field, $this->fieldSuffix)
-		));
 	}
 
 /**
