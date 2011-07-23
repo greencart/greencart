@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the GreenCart package.
+ * This file is part of the TwigTemplates plugin package.
  *
  * Copyright (c) 2011 Sebastian Ionescu
  *
@@ -10,11 +10,11 @@
  */
 
 /**
- * GreenCart extension for Twig Template Engine
+ * CakePHP extension for Twig Template Engine
  *
  * @author Sebastian Ionescu <sebastian.c.ionescu@gmail.com>
  */
-class Twig_Extension_GreenCart extends Twig_Extension
+class Twig_Extension_Cake extends Twig_Extension
 {
 	/**
 	 * Returns a list of functions to add to the existing list.
@@ -51,6 +51,6 @@ class Twig_Extension_GreenCart extends Twig_Extension
 	 */
 	public function getName()
 	{
-		return 'greencart';
+		return 'cake';
 	}
 }

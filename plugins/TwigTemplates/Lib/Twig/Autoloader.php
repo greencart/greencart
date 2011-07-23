@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the GreenCart package.
+ * This file is part of the TwigTemplates plugin package.
  *
  * Copyright (c) 2011 Sebastian Ionescu
  *
@@ -39,12 +39,23 @@ class Twig_Autoloader
 		if (0 !== strpos($class, 'Twig')) {
 			return;
 		}
-		$paths = array(
-			dirname(__FILE__).'/../',
-			dirname(__FILE__).'/../../../vendors/twig/lib/',
-		);
+
+		static $paths;
+
+		if (is_null($paths)) {
+			$vendorPaths = App::path('vendors');
+			$paths       = array(
+				reset(App::path('Lib')),
+				dirname(dirname(__FILE__)).DS
+			);
+			foreach ($vendorPaths as $path) {
+				$paths[] = $path.'twig'.DS.'lib'.DS;
+			}
+		}
+
 		foreach ($paths as $path) {
-			if (file_exists($file = $path.str_replace(array('_', "\0"), array('/', ''), $class).'.php')) {
+			$file = $path.str_replace(array('_', "\0"), array('/', ''), $class).'.php';
+			if (file_exists($file)) {
 				require $file;
 				break;
 			}

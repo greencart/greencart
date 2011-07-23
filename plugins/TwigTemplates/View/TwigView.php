@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the GreenCart package.
+ * This file is part of the TwigTemplates plugin package.
  *
  * Copyright (c) 2011 Sebastian Ionescu
  *
@@ -10,7 +10,7 @@
  */
 
 App::uses('ThemeView', 'View');
-App::import('Lib', 'Twig/Autoloader');
+App::import('Lib', 'TwigTemplates.Twig/Autoloader');
 
 /**
  * TwigView offers support for Twig Template Egine
@@ -44,11 +44,19 @@ class TwigView extends ThemeView
 
 		Twig_Autoloader::register();
 
+		$options = (array) Configure::read('Twig') + array(
+			'debug'            => (bool) Configure::read('debug'),
+			'charset'          => strtolower(Configure::read('App.encoding')),
+			'cache'            => CACHE.'views'.DS.'twig',
+			'strict_variables' => (bool) Configure::read('debug'),
+			'autoescape'       => false
+		);
+
 		$loader     = new Twig_Loader_Filesystem(current(App::path('View')));
-		$this->Twig = new Twig_Environment($loader, Configure::read('Twig'));
+		$this->Twig = new Twig_Environment($loader, $options);
 
 		$this->Twig->addGlobal('view', $this);
-		$this->Twig->addExtension(new Twig_Extension_GreenCart());
+		$this->Twig->addExtension(new Twig_Extension_Cake());
 	}
 
 	/**

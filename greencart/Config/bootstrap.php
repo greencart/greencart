@@ -46,10 +46,4 @@ CakePlugin::loadAll();
  *
  * @link http://www.twig-project.org/doc/api.html#environment-options
  */
-Configure::write('Twig', array(
-	'debug'            => (bool) Configure::read('debug'),
-	'charset'          => strtolower(Configure::read('App.encoding')),
-	'cache'            => CACHE.'views'.DS.'twig',
-	'strict_variables' => (bool) Configure::read('debug'),
-	'autoescape'       => false
-));
+Configure::write('Twig', array());

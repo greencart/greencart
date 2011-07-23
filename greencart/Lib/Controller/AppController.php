@@ -51,7 +51,7 @@ class AppController extends Controller
 	 *
 	 * @var string
 	 */
-	public $viewClass = 'Twig';
+	public $viewClass = 'TwigTemplates.Twig';
 
 	/**
 	 * The name of the View theme this controller uses.
