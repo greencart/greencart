@@ -10,11 +10,11 @@
  */
 
 /**
- * Web Access Frontend for TestSuite
+ * The Front Controller for handling every request
  */
 
-set_time_limit(0);
-ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors',  true);
 
 /**
  * Use the DS to separate the directories in other defines.
@@ -24,7 +24,7 @@ define('DS', DIRECTORY_SEPARATOR);
 /**
  * The full path to the directory which holds "greencart", WITHOUT a trailing DS.
  */
-define('ROOT', dirname(dirname(dirname(__FILE__))));
+define('ROOT', dirname(dirname(__FILE__)));
 
 /**
  * The actual directory name for the "greencart".
@@ -44,11 +44,11 @@ define('CORE_PATH',   CAKE_CORE_INCLUDE_PATH.DS);
 
 include(CORE_PATH.'Cake'.DS.'bootstrap.php');
 
-if (!Configure::read('debug')) {
-	header('HTTP/1.1 404 Not Found');
-	exit;
+if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] == '/favicon.ico') {
+	return;
 }
 
-require_once CAKE.'TestSuite'.DS.'CakeTestSuiteDispatcher.php';
+App::uses('Dispatcher', 'Routing');
 
-CakeTestSuiteDispatcher::run();
+$Dispatcher = new Dispatcher();
+$Dispatcher->dispatch(new CakeRequest());
