@@ -19,6 +19,7 @@
 
 App::build(array(
 	'locales'   => array(ROOT.DS.'languages'.DS),
+	'plugins'   => array(ROOT.DS.'plugins'.DS),
 	'GreenCart' => array(APP.'Lib'.DS.'GreenCart'.DS)
 ));
 

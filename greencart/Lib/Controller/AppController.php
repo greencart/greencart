@@ -33,7 +33,8 @@ class AppController extends Controller
 	 * @var array
 	 */
 	public $components = array(
-		'Session', 'Cookie', 'Security', 'Auth', 'RequestHandler', 'Acl', 'Users'
+		'Session', 'Cookie', 'Security', 'Auth', 'RequestHandler', 'Acl', 'Users',
+		'DebugKit.Toolbar'
 	);
 
 	/**
