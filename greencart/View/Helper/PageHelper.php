@@ -36,15 +36,15 @@ class PageHelper extends AppHelper
 		if (is_null($title)) {
 			$title    = $this->_View->viewVars['title_for_layout'];
 			$options += array(
-				'shopTitle' => GreenCart::conf('SHOP_TITLE')
+				'shopTitle' => Config::get('SHOP_TITLE')
 			);
 			if ($options['shopTitle']) {
-				$title .= GreenCart::conf('SHOP_TITLE_SEPARATOR').$options['shopTitle'];
+				$title .= Config::get('SHOP_TITLE_SEPARATOR').$options['shopTitle'];
 			}
 			return $title;
 		}
 		if (is_array($title)) {
-			$title = implode(GreenCart::conf('SHOP_TITLE_SEPARATOR'), $title);
+			$title = implode(Config::get('SHOP_TITLE_SEPARATOR'), $title);
 		}
 		$this->_View->set('title_for_layout', $title);
 	}
@@ -61,7 +61,7 @@ class PageHelper extends AppHelper
 			if (isset($this->_View->viewVars['description_for_layout'])) {
 				return $this->_View->viewVars['description_for_layout'];
 			}
-			return GreenCart::conf('SHOP_DESCRIPTION');
+			return Config::get('SHOP_DESCRIPTION');
 		}
 		$this->_View->set('description_for_layout', $description);
 	}
@@ -84,8 +84,8 @@ class PageHelper extends AppHelper
 			} else {
 				$keywords = (array) $keywords;
 			}
-			$options += array('count' => GreenCart::conf('SEO_KEYWORDS_MAX'), 'minLength' => 2);
-			$keywords = array_merge($keywords, explode(',', GreenCart::conf('SEO_KEYWORDS')));
+			$options += array('count' => Config::get('SEO_KEYWORDS_MAX'), 'minLength' => 2);
+			$keywords = array_merge($keywords, explode(',', Config::get('SEO_KEYWORDS')));
 			$keywords = array_unique(array_map('strtolower', array_map('trim', $keywords)));
 			foreach ($keywords as $key => $value) {
 				if (strlen($value) < $options['minLength']) {

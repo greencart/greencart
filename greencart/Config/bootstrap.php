@@ -24,6 +24,7 @@ App::build(array(
 ));
 
 App::uses('GreenCart', 'GreenCart');
+App::uses('Config', 'Utility');
 
 App::import('Lib', 'functions');
 

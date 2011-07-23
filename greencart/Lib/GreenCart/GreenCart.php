@@ -20,14 +20,4 @@ class GreenCart
 	 * Used to determine the current version of GreenCart.
 	 */
 	const VERSION = '0.1.0';
-
-	/**
-	 * Used to read configurations keys for GreenCart.
-	 *
-	 * @return mixed
-	 */
-	public static function conf($key)
-	{
-		return Configure::read(Configuration::CONFIG_KEY.'.'.$key);
-	}
 }
