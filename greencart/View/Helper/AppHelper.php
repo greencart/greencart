@@ -28,24 +28,33 @@ class AppHelper extends Helper
 	 */
 	public function url($url = null, $full = false)
 	{
+		// Shortcut notation
+
 		if (is_string($url) && $url[0] === ':') {
 			$url = $this->__parseShortUrl($url);
 		} else if (isset($url[0][0]) && $url[0][0] === ':') {
-			$url = array_merge($url, $this->__parseShortUrl($url[0]));
-			unset($url[0]);
+			$url = $this->__parseShortUrl(array_shift($url)) + $url;
+		}
+
+		// Multilanguage support
+
+		$lang = Configure::read('Config.language');
+
+		if (is_array($url)) {
+			if ($lang != Configure::read('I18n.default')) {
+				$url['lang'] = $lang;
+			}
+		} else if (is_string($url) && $url[0] === '/') {
+			$split = explode('/', $url);
+			$langs = Configure::read('I18n.languages');
+			if (!in_array($split[1], $langs)) {
+				if ($lang != Configure::read('I18n.default')) {
+					$url = rtrim('/'.$lang.$url, '/');
+				}
+			}
 		}
 
 		return parent::url($url, $full);
-	}
-
-	/**
-	 * Returns the current language.
-	 *
-	 * @return string
-	 */
-	public function lang()
-	{
-		return Configure::read('Config.language');
 	}
 
 	/**
@@ -66,5 +75,4 @@ class AppHelper extends Helper
 
 		return $url;
 	}
-
 }

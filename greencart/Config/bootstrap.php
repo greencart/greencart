@@ -17,12 +17,18 @@
  * that your application uses.
  */
 
+/**
+ * Defining additional search paths. All paths should be terminated with a Directory separator.
+ */
 App::build(array(
 	'locales'   => array(ROOT.DS.'languages'.DS),
 	'plugins'   => array(ROOT.DS.'plugins'.DS),
 	'GreenCart' => array(APP.'Lib'.DS.'GreenCart'.DS)
 ));
 
+/**
+ * Resolving imports
+ */
 App::uses('GreenCart', 'GreenCart');
 App::uses('Config', 'Utility');
 
@@ -32,6 +38,18 @@ App::import('Lib', 'functions');
  * Setup a 'default' cache configuration for use in the application.
  */
 Cache::config('default', array('engine' => 'File', 'prefix' => 'gc_'));
+
+/**
+ * Multilanguage support settings.
+ */
+Configure::write('I18n', array(
+	'languages' => array('en', 'ro'),
+	'default'   => 'en',
+	'fallback'  => 'en'
+));
+
+Configure::write('Config.language', Configure::read('I18n.default'));
+define('DEFAULT_LANGUAGE', Configure::read('I18n.fallback'));
 
 /**
  * Plugins need to be loaded manually, you can either load them one by one or all of them

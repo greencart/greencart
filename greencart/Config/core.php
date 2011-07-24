@@ -105,7 +105,7 @@ define('LOG_ERROR', 2);
  *
  * The built in defaults are:
  *
- * - 'php' -Uses settings defined in your php.ini.
+ * - 'php' - Uses settings defined in your php.ini.
  * - 'cake' - Saves session files in CakePHP's /tmp directory.
  * - 'database' - Uses CakePHP's database sessions.
  * - 'cache' - Use the Cache class to save sessions.
@@ -117,7 +117,7 @@ Configure::write('Session', array(
 	'checkAgent'     => true,
 	'autoRegenerate' => true,
 	'defaults'       => 'database',
-	'handler'        => array('database' => 'default', 'model' => 'Session', 'table' => 'sessions')
+	'handler'        => array('model' => 'Session')
 ));
 
 /**

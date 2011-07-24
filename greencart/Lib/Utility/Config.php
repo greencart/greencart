@@ -9,6 +9,9 @@
  * file that was distributed with this source code.
  */
 
+App::uses('I18n', 'I18n');
+App::uses('Configuration', 'Model');
+
 /**
  * Config Class
  *
@@ -24,7 +27,14 @@ class Config
 	 */
 	public static function init(Controller $controller)
 	{
-		App::uses('Configuration', 'Model');
+		// Multilanguage configuration
+
+		if (!empty($controller->request->params['lang'])) {
+			Configure::write('Config.language', $controller->request->params['lang']);
+		}
+		I18n::getInstance()->l10n->get(Configure::read('Config.language'));
+
+		// General configuration
 
 		if (Configure::read('debug') || !($data = Cache::read(Configuration::CACHE_KEY))) {
 			$data = $controller->Configuration->getParams();
