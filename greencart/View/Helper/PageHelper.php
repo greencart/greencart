@@ -12,7 +12,7 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Administrators Controller
+ * PageHelper
  *
  * @author Sebastian Ionescu <sebastian.c.ionescu@gmail.com>
  */

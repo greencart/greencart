@@ -24,6 +24,8 @@ class Config
 	 */
 	public static function init(Controller $controller)
 	{
+		App::uses('Configuration', 'Model');
+
 		if (Configure::read('debug') || !($data = Cache::read(Configuration::CACHE_KEY))) {
 			$data = $controller->Configuration->getParams();
 			Cache::write(Configuration::CACHE_KEY, $data);
