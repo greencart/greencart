@@ -45,4 +45,6 @@ function i18n_url($url)
 			}
 		}
 	}
+
+	return $url;
 }
