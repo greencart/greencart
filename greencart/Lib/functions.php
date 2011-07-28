@@ -104,16 +104,3 @@ function hex2bin($str)
 	}
 	return implode('', array_map('chr', array_map('hexdec', str_split($str, 2))));
 }
-
-/**
- * Returns a string with all spaces converted to hyphens (by default), accented
- * characters converted to non-accented characters, and non word characters removed.
- *
- * @param string $string
- * @param string $replacement
- * @return string
- */
-function slugize($string, $replacement = '-')
-{
-	return strtolower(Inflector::slug($string, $replacement));
-}

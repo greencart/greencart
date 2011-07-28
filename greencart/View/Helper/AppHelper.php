@@ -38,21 +38,7 @@ class AppHelper extends Helper
 
 		// Multilanguage support
 
-		$lang = Configure::read('Config.language');
-
-		if (is_array($url)) {
-			if ($lang != Configure::read('I18n.default')) {
-				$url['lang'] = $lang;
-			}
-		} else if (is_string($url) && $url[0] === '/') {
-			$split = explode('/', $url);
-			$langs = Configure::read('I18n.languages');
-			if (!in_array($split[1], $langs)) {
-				if ($lang != Configure::read('I18n.default')) {
-					$url = rtrim('/'.$lang.$url, '/');
-				}
-			}
-		}
+		$url = i18n_url($url);
 
 		return parent::url($url, $full);
 	}

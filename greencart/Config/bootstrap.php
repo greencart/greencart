@@ -33,6 +33,7 @@ App::uses('GreenCart', 'GreenCart');
 App::uses('Config', 'Utility');
 
 App::import('Lib', 'functions');
+App::import('Lib', 'basics');
 
 /**
  * Setup a 'default' cache configuration for use in the application.
