@@ -12,7 +12,7 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake.libs
+ * @package       Cake.Utility
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -21,7 +21,7 @@
  * Folder structure browser, lists folders and files.
  * Provides an Object interface for Common directory related tasks.
  *
- * @package       cake.libs
+ * @package       Cake.Utility
  */
 class Folder {
 
@@ -568,7 +568,7 @@ class Folder {
  *
  * - `to` The directory to copy to.
  * - `from` The directory to copy from, this will cause a cd() to occur, changing the results of pwd().
- * - `chmod` The mode to copy the files/directories with.
+ * - `mode` The mode to copy the files/directories with.
  * - `skip` Files/directories to skip.
  *
  * @param mixed $options Either an array of options (see above) or a string of the destination directory.

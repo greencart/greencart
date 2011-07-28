@@ -12,7 +12,7 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake.tests.libs
+ * @package       Cake.TestSuite.Fixture
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -206,7 +206,7 @@ class CakeFixtureManager {
  */
 	public function unload(CakeTestCase $test) {
 		$fixtures = !empty($test->fixtures) ? $test->fixtures : array();
-		foreach ($fixtures as $f) {
+		foreach (array_reverse($fixtures) as $f) {
 			if (isset($this->_loaded[$f])) {
 				$fixture = $this->_loaded[$f];
 				if (!empty($fixture->created)) {
