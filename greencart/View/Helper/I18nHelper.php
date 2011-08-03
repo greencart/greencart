@@ -93,7 +93,7 @@ class I18nHelper extends AppHelper
 		$links   = array();
 		$I18n    = Configure::read('I18n');
 		$pattern = '/^('.implode('|', array_map('preg_quote', $I18n['languages'])).')\/*/i';
-		$url     = preg_replace($pattern, '', $this->request->url);
+		$url     = preg_replace($pattern, '', substr($this->request->here(false), 1));
 
 		foreach ($I18n['languages'] as $lang) {
 			if ($lang !== $I18n['default']) {
