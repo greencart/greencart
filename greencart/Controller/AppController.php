@@ -94,8 +94,14 @@ class AppController extends Controller
 			);
 			AuthComponent::$sessionKey = 'Auth.Administrator';
 		} else {
-			$properties = array();
-			$this->Auth->allow();
+			$properties = array(
+				'authenticate'   => array('Form' => array('userModel' => 'Customer')),
+				'loginAction'    => i18n_url(array('controller' => 'customers', 'action' => 'login')),
+				'loginRedirect'  => '/',
+				'logoutRedirect' => '/',
+				'authError'      => __('customers_login_error_forbidden')
+			);
+			AuthComponent::$sessionKey = 'Auth.Customer';
 		}
 		foreach ($properties as $property => $value) {
 			$this->Auth->{$property} = $value;
@@ -104,7 +110,6 @@ class AppController extends Controller
 		// Security component settings
 
 		$this->Security->requireAuth();
-
 	}
 
 	/**

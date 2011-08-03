@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ i18n.lang }}" lang="{{ i18n.lang }}" dir="{{ i18n.dir }}">
+<head>
+	{{ html.charset(i18n.charset) }}
+	<meta name="description" content="GreenCart" />
+	<meta name="author" content="Sebastian Ionescu (Design and PHP Programming)" />
+	<meta name="robots" content="index,follow" />
+	{{ html.meta('icon') }}
+	{{ html.css(['cake.generic']) }}
+	{{ html.script([]) }}
+	{{ page.scripts }}
+	{# html.script('https://getfirebug.com/firebug-lite.js') #}
+	<title>{{ page.title }}</title>
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<h1>{{ html.link('GreenCart: Open Source eCommerce Platform', '/') }}</h1>
+		</div>
+		<div id="content">
+			{{ view.element('main_menu') }}
+			{{ session.flash }}
+			{{ page.content }}
+		</div>
+		<div id="footer">
+			{{ html.link(html.image("cake.power.gif"), 'http://www.cakephp.org/', {'target': '_blank', 'escape': false}) }}
+		</div>
+	</div>
+</body>
+</html>

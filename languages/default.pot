@@ -10,3 +10,62 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
+# Customers Login ----------------------------------------------------------------------------------
+
+
+msgid "customers_login_error_forbidden"
+msgstr "You are not authorized to access the requested location!"
+
+msgid "customers_login_error_bad_credentials"
+msgstr "Invalid username or password!"
+
+msgid "customers_login_error_blocked"
+msgstr "Your account has been blocked!"
+
+msgid "customers_login_error_disabled"
+msgstr "Your account has been disabled!"
+
+msgid "customers_login_form_label_email"
+msgstr "E-mail:"
+
+msgid "customers_login_form_label_password"
+msgstr "Password:"
+
+msgid "customers_login_form_label_remember"
+msgstr "Keep me logged in!"
+
+msgid "customers_login_form_label_submit"
+msgstr "Login"
+
+msgid "customers_login_page_title"
+msgstr "Login"
+
+msgid "customers_login_text_1"
+msgstr "Please enter your login credentials to continue."
+
+
+# Customers Registration ---------------------------------------------------------------------------
+
+
+msgid "customers_registration_form_label_name"
+msgstr "Your name:"
+
+msgid "customers_registration_form_label_email"
+msgstr "E-mail address:"
+
+msgid "customers_registration_form_label_password"
+msgstr "Choose a password:"
+
+msgid "customers_registration_form_label_password_confirm"
+msgstr "Re-enter password:"
+
+msgid "customers_registration_form_label_submit"
+msgstr "Create my account"
+
+msgid "customers_registration_page_title"
+msgstr "Customer Registration"
+
+msgid "customers_registration_text_1"
+msgstr "Please fill the form below to become a registered customer."
+

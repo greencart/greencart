@@ -1,0 +1,27 @@
+{{ page.title(__('customers_login_page_title')) }}
+
+{{ form.create('Customer') }}
+	<fieldset>
+		<div>{{ __('customers_login_text_1') }}</div>
+		<div>{{ session.flash('auth') }}</div>
+		{{
+			form.input('email', {
+				'label': __('customers_login_form_label_email')
+			})
+		}}
+		{{
+			form.input('password', {
+				'label': __('customers_login_form_label_password')
+			})
+		}}
+		{{
+			form.input('Auth.remember', {
+				'type' : 'checkbox',
+				'label': __('customers_login_form_label_remember')
+			})
+		}}
+		{{
+			form.submit(__('customers_login_form_label_submit'))
+		}}
+	</fieldset>
+{{ form.end() }}

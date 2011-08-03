@@ -26,6 +26,20 @@ class PagesController extends AppController
 	public $uses = array();
 
 	/**
+	 * Called before the controller action.
+	 *
+	 * @return void
+	 */
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+
+		// Auth component settings
+
+		$this->Auth->allow();
+	}
+
+	/**
 	 * Displays a view
 	 *
 	 * @param mixed What page to display
