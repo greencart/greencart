@@ -3,23 +3,29 @@ msgstr ""
 "Project-Id-Version: GreenCart 1.0.0\n"
 "Report-Msgid-Bugs-To: sebastian@greencart-project.org\n"
 "POT-Creation-Date: 2011-05-10 20:30+0200\n"
-"PO-Revision-Date: 2011-05-11 11:37+0200\n"
-"Last-Translator: Sebastian Ionescu <sebi.ionescu@yahoo.com>\n"
+"PO-Revision-Date: 2011-08-03 12:14+0200\n"
+"Last-Translator: Sebastian Ionescu <sebastian.c.ionescu@gmail.com>\n"
 "Language-Team: GreenCart <contact@greencart-project.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
 "X-Poedit-Language: Romanian\n"
 "X-Poedit-Country: ROMANIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+msgid "admin_panel_title"
+msgstr "%1$s (Administrare)"
+
 msgid "error_auth_forbidden"
-msgstr "Nu sunteţi autorizat să accesaţi acea locaţie!"
+msgstr "Nu sunteţi autorizat să accesaţi locaţia solicitată!"
 
 msgid "error_auth_login"
 msgstr "Numele de utilizator sau parola incorectă!"
 
 msgid "error_auth_login_disabled"
 msgstr "Contul dvs. a fost dezactivat!"
+
+msgid "page_title_administrators_login"
+msgstr "Autentificare"
 

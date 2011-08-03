@@ -10,12 +10,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "admin_panel_title"
+msgstr "%1$s (Administration)"
+
 msgid "error_auth_forbidden"
-msgstr "You are not authorized to access that location!"
+msgstr "You are not authorized to access the requested location!"
 
 msgid "error_auth_login"
 msgstr "Invalid username or password!"
 
 msgid "error_auth_login_disabled"
 msgstr "Your account has been disabled!"
+
+msgid "page_title_administrators_login"
+msgstr "Login"
 
