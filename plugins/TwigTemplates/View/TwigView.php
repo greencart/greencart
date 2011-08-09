@@ -52,7 +52,7 @@ class TwigView extends ThemeView
 			'autoescape'       => false
 		);
 
-		$loader     = new Twig_Loader_Filesystem(current(App::path('View')));
+		$loader     = new Twig_Loader_Filesystem(reset(App::path('View')));
 		$this->Twig = new Twig_Environment($loader, $options);
 
 		$this->Twig->addGlobal('view', $this);
