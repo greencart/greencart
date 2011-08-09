@@ -10,65 +10,47 @@
  */
 
 /**
- * Email configuration class. You can specify multiple configurations for production,
- * development and testing.
+ * Email configuration class.
  *
- * transport => The name of a supported transport; valid options are as follows:
- *		Mail 		- Send using PHP mail function
- *		Smtp		- Send using SMTP
- *
- * You can add custom transports (or override existing transports) by adding the
- * appropriate file to app/Network/Email.  Transports should be named 'YourTransport.php',
- * where 'Your' is the name of the transport.
- *
- * from =>
- * The origin email. See CakeEmail::from() about the valid values
- *
- * @author CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * @see SwiftMailerComponent
+ * @author Sebastian Ionescu <sebastian.c.ionescu@gmail.com>
  */
 class EmailConfig
 {
-	public $default = array(
-		'transport' => 'Mail',
-		'from'      => 'you@localhost'
-	);
-
-	public $smtp = array(
-		'transport' => 'Smtp',
-		'from'      => array('My Site', 'site@localhost'),
-		'host'      => 'localhost',
-		'port'      => 25,
-		'timeout'   => 30,
-		'username'  => 'user',
-		'password'  => 'secret',
-		'client'    => null
-	);
-
-	public $fast = array(
-		'from'        => 'you@localhost',
-		'sender'      => null,
-		'to'          => null,
-		'cc'          => null,
-		'bcc'         => null,
-		'replyTo'     => null,
-		'readReceipt' => null,
-		'returnPath'  => null,
-		'messageId'   => true,
-		'subject'     => null,
-		'message'     => null,
-		'headers'     => null,
-		'viewRender'  => null,
-		'template'    => false,
-		'layout'      => false,
-		'viewVars'    => null,
-		'attachments' => null,
-		'emailFormat' => null,
-		'transport'   => 'Smtp',
-		'host'        => 'localhost',
-		'port'        => 25,
-		'timeout'     => 30,
-		'username'    => 'user',
-		'password'    => 'secret',
-		'client'      => null
+	/**
+	 * Default email options.
+	 *
+	 * @var array
+	 */
+	public static $defaults = array(
+		'from'          => array('root@localhost' => 'Root User'),
+		'sender'        => array(),
+		'to'            => array(),
+		'cc'            => array(),
+		'bcc'           => array(),
+		'subject'       => null,
+		'body'          => null,
+		'date'          => null,
+		'returnPath'    => null,
+		'replyTo'       => array(),
+		'readReceiptTo' => array(),
+		'contentType'   => 'text/plain',
+		'charset'       => 'utf-8',
+		'priority'      => 3,
+		'headers'       => array(),
+		'template'      => null,
+		'layout'        => 'default',
+		'viewVars'      => array(),
+		'transport'     => 'smtp',
+		'sendmail'      => '/usr/sbin/sendmail -bs',
+		'smtp'           => array(
+			'host'       => 'localhost',
+			'port'       => 25,
+			'auth'       => false,
+			'username'   => '',
+			'password'   => '',
+			'encryption' => '',
+			'timeout'    => 15
+		)
 	);
 }
