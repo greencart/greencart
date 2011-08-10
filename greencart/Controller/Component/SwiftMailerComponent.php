@@ -76,8 +76,10 @@ class SwiftMailerComponent extends Component
 				);
 			}
 		}
-		$options['charset'] = I18n::getInstance()->l10n->charset;
-		$this->_options     = $options;
+		$params              = $controller->request->params;
+		$options['template'] = Inflector::underscore($params['controller'].ucfirst($params['action']));
+		$options['charset']  = I18n::getInstance()->l10n->charset;
+		$this->_options      = $options;
 	}
 
 	/**
