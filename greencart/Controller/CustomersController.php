@@ -23,7 +23,7 @@ class CustomersController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array();
+	public $components = array('SwiftMailer');
 
 	/**
 	 * Called before the controller action.

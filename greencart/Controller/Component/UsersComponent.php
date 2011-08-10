@@ -81,9 +81,13 @@ class UsersComponent extends Component
 			return;
 		}
 		if ($model = $this->__getUserModel()) {
-			$IPs       = array_values(array_unique(array_merge(
-				(array) $this->controller->request->clientIp(false), $this->Auth->user('ip')
-			)));
+			if ($this->controller->request->isAdmin()) {
+				$IPs = array();
+			} else {
+				$IPs = array_values(array_unique(array_merge(
+					(array) $this->controller->request->clientIp(false), $this->Auth->user('ip')
+				)));
+			}
 			$date      = AppModel::date();
 			$model->id = $this->Auth->user('id');
 			$model->save(array(

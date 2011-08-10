@@ -86,20 +86,29 @@ class AppController extends Controller
 
 		if ($this->request->isAdmin()) {
 			$properties = array(
-				'authenticate'   => array('Form' => array('userModel' => 'Administrator')),
 				'loginAction'    => array('controller' => 'administrators', 'action' => 'login'),
 				'loginRedirect'  => array('controller' => 'administrators', 'action' => 'dashboard'),
 				'logoutRedirect' => array('controller' => 'administrators', 'action' => 'login'),
-				'authError'      => __d('admin', 'error_auth_forbidden')
+				'authError'      => __d('admin', 'error_auth_forbidden'),
+				'authenticate'   => array(
+					'Form' => array(
+						'userModel' => 'Administrator'
+					)
+				)
 			);
 			AuthComponent::$sessionKey = 'Auth.Administrator';
 		} else {
 			$properties = array(
-				'authenticate'   => array('Form' => array('userModel' => 'Customer')),
 				'loginAction'    => i18n_url(array('controller' => 'customers', 'action' => 'login')),
 				'loginRedirect'  => '/',
 				'logoutRedirect' => '/',
-				'authError'      => __('customers_login_error_forbidden')
+				'authError'      => __('customers_login_error_forbidden'),
+				'authenticate'   => array(
+					'Form' => array(
+						'userModel' => 'Customer',
+						'fields'    => array('username' => 'email', 'password' => 'password')
+					)
+				)
 			);
 			AuthComponent::$sessionKey = 'Auth.Customer';
 		}
