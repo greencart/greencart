@@ -23,6 +23,39 @@ function slugize($string, $replacement = '-')
 }
 
 /**
+ * Encrypts a text using the given key.
+ *
+ * @param string $str Normal string to encrypt.
+ * @param string $key Key to use.
+ * @return string Encrypted string in hexadecimal representation.
+ */
+function cipher($str, $key = null)
+{
+	if (!$key) {
+		$key = Configure::read('Security.cipherKey');
+	}
+	return bin2hex(Security::cipher($str, $key));
+}
+
+/**
+ * Decrypts a text using the given key.
+ *
+ * @param string $str Encrypted string to decrypt.
+ * @param string $key Key to use.
+ * @return string Decrypted string.
+ */
+function decipher($str, $key = null)
+{
+	if (!$key) {
+		$key = Configure::read('Security.cipherKey');
+	}
+	if ($str = hex2bin($str)) {
+		return Security::cipher($str, $key);
+	}
+	return false;
+}
+
+/**
  * Adds i18n support to specified URL.
  *
  * @param midex $url
