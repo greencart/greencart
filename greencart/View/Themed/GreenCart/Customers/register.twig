@@ -1,0 +1,31 @@
+{{ _page.title(__('customers_register_page_title')) }}
+
+{{ _form.create('Customer') }}
+	<fieldset>
+		<div>{{ __('customers_register_text_1') }}</div>
+		{{
+			_form.input('name', {
+				'label': __('customers_register_form_label_name')
+			})
+		}}
+		{{
+			_form.input('email', {
+				'label': __('customers_register_form_label_email')
+			})
+		}}
+		{{
+			_form.input('password', {
+				'label': __('customers_register_form_label_password')
+			})
+		}}
+		{{
+			_form.input('password_confirm', {
+				'type' : 'password',
+				'label': __('customers_register_form_label_password_confirm')
+			})
+		}}
+		{{
+			_form.submit(__('customers_register_form_label_submit'))
+		}}
+	</fieldset>
+{{ _form.end() }}

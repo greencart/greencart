@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: GreenCart 1.0.0\n"
 "Report-Msgid-Bugs-To: sebastian@greencart-project.org\n"
 "POT-Creation-Date: 2011-05-10 20:30+0200\n"
-"PO-Revision-Date: 2011-08-03 13:50+0200\n"
+"PO-Revision-Date: 2011-08-11 00:03+0200\n"
 "Last-Translator: Sebastian Ionescu <sebastian.c.ionescu@gmail.com>\n"
 "Language-Team: GreenCart <contact@greencart-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,24 +44,24 @@ msgstr "Login"
 msgid "customers_login_text_1"
 msgstr "Please enter your login credentials to continue."
 
-msgid "customers_registration_form_label_name"
+msgid "customers_register_form_label_name"
 msgstr "Your name:"
 
-msgid "customers_registration_form_label_email"
+msgid "customers_register_form_label_email"
 msgstr "E-mail address:"
 
-msgid "customers_registration_form_label_password"
+msgid "customers_register_form_label_password"
 msgstr "Choose a password:"
 
-msgid "customers_registration_form_label_password_confirm"
+msgid "customers_register_form_label_password_confirm"
 msgstr "Re-enter password:"
 
-msgid "customers_registration_form_label_submit"
+msgid "customers_register_form_label_submit"
 msgstr "Create my account"
 
-msgid "customers_registration_page_title"
-msgstr "Customer Registration"
+msgid "customers_register_page_title"
+msgstr "Register An Account"
 
-msgid "customers_registration_text_1"
+msgid "customers_register_text_1"
 msgstr "Please fill the form below to become a registered customer."
 

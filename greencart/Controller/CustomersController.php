@@ -36,7 +36,7 @@ class CustomersController extends AppController
 
 		// Auth component settings
 
-		$this->Auth->allow('recover', 'registration');
+		$this->Auth->allow('register', 'recover');
 	}
 
 	/**
@@ -100,11 +100,11 @@ class CustomersController extends AppController
 	}
 
 	/**
-	 * CustomersController::registration() Action
+	 * CustomersController::register() Action
 	 *
 	 * @return void
 	 */
-	public function registration()
+	public function register()
 	{
 		if ($this->Auth->loggedIn()) {
 			$this->redirect($this->Auth->redirect());
