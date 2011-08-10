@@ -55,7 +55,7 @@ class TwigView extends ThemeView
 		$loader     = new Twig_Loader_Filesystem(reset(App::path('View')));
 		$this->Twig = new Twig_Environment($loader, $options);
 
-		$this->Twig->addGlobal('view', $this);
+		$this->Twig->addGlobal('_view', $this);
 		$this->Twig->addExtension(new Twig_Extension_Cake());
 	}
 
@@ -79,7 +79,7 @@ class TwigView extends ThemeView
 			include($___viewFn);
 		} else {
 			foreach ($this->Helpers->enabled() as $helper) {
-				$this->Twig->addGlobal(lcfirst($helper), $this->Helpers->{$helper});
+				$this->Twig->addGlobal('_'.lcfirst($helper), $this->Helpers->{$helper});
 			}
 
 			$___viewFn = str_replace(reset(App::path('View')), '', $___viewFn);

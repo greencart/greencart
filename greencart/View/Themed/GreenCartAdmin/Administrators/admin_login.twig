@@ -1,28 +1,28 @@
-{{ page.title(__d('admin', 'page_title_administrators_login')) }}
-{{ html.script('administrators_login', false) }}
+{{ _page.title(__d('admin', 'page_title_administrators_login')) }}
+{{ _html.script('administrators_login', false) }}
 
-{{ form.create('Administrator') }}
+{{ _form.create('Administrator') }}
 	<div class="modal authModal">
 		<div class="modalTitlebar">
 			<div class="title1">{{ __('Welcome to administration panel') }}</div>
 			<div class="title2">{{ __('Please enter your login credentials to continue.') }}</div>
 		</div>
 		<div class="modalContent">
-			{{ session.flash('auth') }}
+			{{ _session.flash('auth') }}
 			{{
-				form.input('username', {
+				_form.input('username', {
 					'label': __('Administrator:')
 				})
 			}}
 			{{
-				form.input('password', {
+				_form.input('password', {
 					'label': __('Password:')
 				})
 			}}
 			<div class="cf" style="margin-top: 10px;">
 				<div class="fl">
 				{{
-					form.input('Auth.remember', {
+					_form.input('Auth.remember', {
 						'type' : 'checkbox',
 						'label': __('Keep me logged in')
 					})
@@ -30,7 +30,7 @@
 				</div>
 				<div class="fr">
 				{{
-					form.submit(__('Login'))
+					_form.submit(__('Login'))
 				}}
 				</div>
 			</div>
@@ -39,4 +39,4 @@
 		</div>
 	</div>
 	<div class="modalOverlay"></div>
-{{ form.end() }}
+{{ _form.end() }}

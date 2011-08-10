@@ -1,20 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ i18n.lang }}" lang="{{ i18n.lang }}" dir="{{ i18n.dir }}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ _i18n.lang }}" lang="{{ _i18n.lang }}" dir="{{ _i18n.dir }}">
 <head>
-	{{ html.charset(i18n.charset) }}
+	{{ _html.charset(_i18n.charset) }}
 	<meta name="description" content="GreenCart - Administration Panel" />
 	<meta name="author" content="Sebastian Ionescu (Design and PHP Programming)" />
 	<meta name="robots" content="noindex,nofollow" />
-	{{ html.meta('icon') }}
-	{{ html.css(['styles']) }}
-	{{ html.script(['jquery', 'layout']) }}
-	{{ page.scripts }}
-	{# html.script('https://getfirebug.com/firebug-lite.js') #}
+	{{ _html.meta('icon') }}
+	{{ _html.css(['styles']) }}
+	{{ _html.script(['jquery', 'layout']) }}
+	{{ _page.scripts }}
+	{# _html.script('https://getfirebug.com/firebug-lite.js') #}
 	<title>{{ __d('admin', 'admin_panel_title', [page.title])|e }}</title>
 </head>
 <body>
 	<div id="pageHeader"></div>
-	{{ session.flash }}
-	{{ page.content }}
+	{{ _session.flash }}
+	{{ _page.content }}
 </body>
 </html>
