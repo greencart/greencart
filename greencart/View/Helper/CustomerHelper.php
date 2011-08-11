@@ -16,7 +16,7 @@ App::uses('AppHelper', 'View/Helper');
  *
  * @author Sebastian Ionescu <sebastian.c.ionescu@gmail.com>
  */
-class CustomerHelper extends AppHelper
+class CustomerHelper extends AppHelper implements ArrayAccess
 {
 	/**
 	 * Session data for current customer.
@@ -58,5 +58,44 @@ class CustomerHelper extends AppHelper
 		}
 
 		return isset($this->_customer[$field]) ? $this->_customer[$field] : null;
+	}
+
+	/**
+	 * Assigns a value to the specified offset.
+	 *
+	 * @param mixed $offset The offset to assign the value to.
+	 * @param mixed $value The value to set.
+	 * @return void
+	 */
+	public function offsetSet($offset, $value) {}
+
+	/**
+	 * Unsets an offset.
+	 *
+	 * @param mixed $offset The offset to unset.
+	 * @return void
+	 */
+	public function offsetUnset($offset) {}
+
+	/**
+	 * Returns the value at specified offset.
+	 *
+	 * @param mixed $offset The offset to retrieve.
+	 * @return mixed
+	 */
+	public function offsetGet($offset)
+	{
+		return isset($this->_customer[$offset]) ? $this->_customer[$offset] : null;
+	}
+
+	/**
+	 * Whether or not an offset exists.
+	 *
+	 * @param mixed $offset An offset to check for.
+	 * @return mixed
+	 */
+	public function offsetExists($offset)
+	{
+		return array_key_exists($offset, $this->_customer);
 	}
 }
