@@ -119,7 +119,7 @@ class CustomersController extends AppController
 			if ($this->Customer->set($data) && $this->Customer->validates()) {
 				$data['Customer'] = array_merge($data['Customer'], array(
 					'ip'       => array($this->request->clientIp(false)),
-					'tmp'      => array(),
+					'vars'     => array(),
 					'password' => AuthComponent::password($data['Customer']['password']),
 					'enabled'  => true
 				));

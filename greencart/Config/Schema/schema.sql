@@ -44,7 +44,7 @@ CREATE TABLE `gc_customers` (
 	`password`     VARCHAR(40) NOT NULL,
 
 	`ip`           TEXT,
-	`tmp`          TEXT,
+	`vars`         TEXT,
 
 	`enabled`      BOOL NOT NULL DEFAULT FALSE,
 	`blocked`      BOOL NOT NULL DEFAULT FALSE,

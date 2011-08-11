@@ -23,7 +23,7 @@ class Customer extends AppModel
 	 *
 	 * @var array
 	 */
-	public $actsAs = array('User', 'Serializable' => array('ip', 'tmp'));
+	public $actsAs = array('User', 'Serializable' => array('ip', 'vars'));
 
 	/**
 	 * List of validation rules.
