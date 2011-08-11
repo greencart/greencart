@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: GreenCart 1.0.0\n"
 "Report-Msgid-Bugs-To: sebastian@greencart-project.org\n"
 "POT-Creation-Date: 2011-05-10 20:30+0200\n"
-"PO-Revision-Date: 2011-08-03 17:40+0200\n"
+"PO-Revision-Date: 2011-08-11 10:21+0200\n"
 "Last-Translator: Sebastian Ionescu <sebastian.c.ionescu@gmail.com>\n"
 "Language-Team: GreenCart <contact@greencart-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,37 +14,30 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_name_not_empty"
 msgstr "This field is required and cannot be left blank!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_name_max_length"
 msgstr "Your name must not exceed %1$s characters!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_email_not_empty"
 msgstr "This field is required and cannot be left blank!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_email_max_length"
 msgstr "Your email address must not exceed %1$s characters!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_email_email"
 msgstr "Your email address is not valid!"
 
 msgid "customer_email_is_unique"
 msgstr "You already have registered with this email address!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_password_not_empty"
 msgstr "This field is required and cannot be left blank!"
 
-# Customer -----------------------------------------------------------------------------------------
 msgid "customer_password_min_length"
 msgstr "Your password should have at least %1$s characters!"
 
-msgid "customer_password_confirm_password_confirm"
+msgid "customer_password_password_confirm"
 msgstr "Passwords do not match!"
 

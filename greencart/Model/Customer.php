@@ -67,12 +67,10 @@ class Customer extends AppModel
 			'minLength' => array(
 				'rule'    => array('minLength', 8),
 				'message' => array('customer_password_min_length', 8)
-			)
-		),
-		'password_confirm' => array(
+			),
 			'passwordConfirm' => array(
 				'rule'    => array('passwordConfirm'),
-				'message' => array('customer_password_confirm_password_confirm')
+				'message' => array('customer_password_password_confirm')
 			)
 		),
 /*

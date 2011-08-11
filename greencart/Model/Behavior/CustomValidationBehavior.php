@@ -29,8 +29,8 @@ class CustomValidationBehavior extends ModelBehavior
 	 */
 	public function passwordConfirm($model, $check)
 	{
-		if (isset($model->data[$model->alias]['password'])) {
-			return $model->data[$model->alias]['password'] === $check['password_confirm'];
+		if (isset($model->data[$model->alias]['password_confirm'])) {
+			return $model->data[$model->alias]['password_confirm'] === $check['password'];
 		}
 
 		return false;

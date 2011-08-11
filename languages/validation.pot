@@ -10,9 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
 # Customer -----------------------------------------------------------------------------------------
-
 
 msgid "customer_name_not_empty"
 msgstr "This field is required and cannot be left blank!"
@@ -38,6 +36,6 @@ msgstr "This field is required and cannot be left blank!"
 msgid "customer_password_min_length"
 msgstr "Your password should have at least %1$s characters!"
 
-msgid "customer_password_confirm_password_confirm"
+msgid "customer_password_password_confirm"
 msgstr "Passwords do not match!"
 
