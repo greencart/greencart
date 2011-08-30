@@ -31,6 +31,7 @@ App::build(array(
  */
 App::uses('GreenCart', 'GreenCart');
 App::uses('Config', 'Utility');
+App::uses('Url', 'Utility');
 
 App::import('Lib', 'functions');
 App::import('Lib', 'basics');

@@ -99,7 +99,7 @@ class AppController extends Controller
 			AuthComponent::$sessionKey = 'Auth.Administrator';
 		} else {
 			$properties = array(
-				'loginAction'    => i18n_url(array('controller' => 'customers', 'action' => 'login')),
+				'loginAction'    => Url::i18n(array('controller' => 'customers', 'action' => 'login')),
 				'loginRedirect'  => '/',
 				'logoutRedirect' => '/',
 				'authError'      => __('customers_login_error_forbidden'),
@@ -139,6 +139,27 @@ class AppController extends Controller
 	 * @return void
 	 */
 	public function afterFilter() {}
+
+	/**
+	 * Redirects to given URL.
+	 *
+	 * @param mixed $url A string or array-based URL pointing to another location within the app
+	 * @param integer $status Optional HTTP status code (eg: 404)
+	 * @param bool $exit If true, exit() will be called after the redirect
+	 * @return mixed
+	 */
+	public function redirect($url, $status = null, $exit = true)
+	{
+		// short notation
+
+		$url = Url::shortNotation($url);
+
+		// multilanguage support
+
+		$url = Url::i18n($url);
+
+		return parent::redirect($url, $status, $exit);
+	}
 
 	/**
 	 * Used to set a session variable that can be used to output messages in the view.

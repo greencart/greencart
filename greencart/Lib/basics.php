@@ -54,30 +54,3 @@ function decipher($str, $key = null)
 	}
 	return false;
 }
-
-/**
- * Adds i18n support to specified URL.
- *
- * @param midex $url
- * @return mixed
- */
-function i18n_url($url)
-{
-	$lang = Configure::read('Config.language');
-
-	if (is_array($url)) {
-		if ($lang != Configure::read('I18n.default')) {
-			$url['lang'] = $lang;
-		}
-	} else if (is_string($url) && $url[0] === '/') {
-		$split = explode('/', $url);
-		$langs = Configure::read('I18n.languages');
-		if (!in_array($split[1], $langs)) {
-			if ($lang != Configure::read('I18n.default')) {
-				$url = rtrim('/'.$lang.$url, '/');
-			}
-		}
-	}
-
-	return $url;
-}

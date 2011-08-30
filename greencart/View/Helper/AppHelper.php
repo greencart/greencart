@@ -28,37 +28,14 @@ class AppHelper extends Helper
 	 */
 	public function url($url = null, $full = false)
 	{
-		// Shortcut notation
+		// short notation
 
-		if (is_string($url) && $url[0] === ':') {
-			$url = $this->__parseShortUrl($url);
-		} else if (isset($url[0][0]) && $url[0][0] === ':') {
-			$url = $this->__parseShortUrl(array_shift($url)) + $url;
-		}
+		$url = Url::shortNotation($url);
 
-		// Multilanguage support
+		// multilanguage support
 
-		$url = i18n_url($url);
+		$url = Url::i18n($url);
 
 		return parent::url($url, $full);
-	}
-
-	/**
-	 * Parses the short format notation for internal URLs.
-	 *
-	 * @param string $shortUrl
-	 * @return array
-	 */
-	private function __parseShortUrl($shortUrl)
-	{
-		$url      = array();
-		$params   = array('action', 'controller', 'plugin');
-		$shortUrl = array_reverse(explode('.', ltrim($shortUrl, ':')));
-
-		foreach ($shortUrl as $key => $value) {
-			$url[$params[$key]] = $value;
-		}
-
-		return $url;
 	}
 }
