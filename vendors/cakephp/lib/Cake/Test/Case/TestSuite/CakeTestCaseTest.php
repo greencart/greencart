@@ -43,22 +43,20 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * setUp
  *
- * @access public
  * @return void
  */
 	public function setUp() {
-		$this->_debug = Configure::read('debug');
+		parent::setUp();
 		$this->Reporter = $this->getMock('CakeHtmlReporter');
 	}
 
 /**
  * tearDown
  *
- * @access public
  * @return void
  */
 	public function tearDown() {
-		Configure::write('debug', $this->_debug);
+		parent::tearDown();
 		unset($this->Result);
 		unset($this->Reporter);
 	}
@@ -66,7 +64,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testAssertGoodTags
  *
- * @access public
  * @return void
  */
 	public function testAssertTagsQuotes() {
@@ -99,12 +96,31 @@ class CakeTestCaseTest extends CakeTestCase {
 			'/a'
 		);
 		$this->assertTrue($test->assertTags($input, $pattern), 'Single quoted attributes %s');
+
+		$input = "<span><strong>Text</strong></span>";
+		$pattern = array(
+			'<span',
+			'<strong',
+			'Text',
+			'/strong',
+			'/span'
+		);
+		$this->assertTrue($test->assertTags($input, $pattern), 'Tags with no attributes');
+
+		$input = "<span class='active'><strong>Text</strong></span>";
+		$pattern = array(
+			'span' => array('class'),
+			'<strong',
+			'Text',
+			'/strong',
+			'/span'
+		);
+		$this->assertTrue($test->assertTags($input, $pattern), 'Test attribute presence');
 	}
 
 /**
  * testNumericValuesInExpectationForAssertTags
  *
- * @access public
  * @return void
  */
 	public function testNumericValuesInExpectationForAssertTags() {
@@ -118,7 +134,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testBadAssertTags
  *
- * @access public
  * @return void
  */
 	public function testBadAssertTags() {
@@ -138,7 +153,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testLoadFixtures
  *
- * @access public
  * @return void
  */
 	public function testLoadFixtures() {
@@ -157,7 +171,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testLoadFixturesOnDemand
  *
- * @access public
  * @return void
  */
 	public function testLoadFixturesOnDemand() {
@@ -174,7 +187,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testLoadFixturesOnDemand
  *
- * @access public
  * @return void
  */
 	public function testUnoadFixturesAfterFailure() {
@@ -191,7 +203,6 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testThrowException
  *
- * @access public
  * @return void
  */
 	public function testThrowException() {
@@ -218,5 +229,15 @@ class CakeTestCaseTest extends CakeTestCase {
 		$test = new FixturizedTestCase('testSkipIfFalse');
 		$result = $test->run();
 		$this->assertEquals(0, $result->skippedCount());
+	}
+
+/**
+ * Test that CakeTestCase::setUp() backs up values.
+ *
+ * @return void
+ */
+	public function testSetupBackUpValues() {
+		$this->assertArrayHasKey('debug', $this->_configure);
+		$this->assertArrayHasKey('plugins', $this->_pathRestore);
 	}
 }

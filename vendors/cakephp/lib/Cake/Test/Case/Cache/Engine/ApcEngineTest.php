@@ -29,7 +29,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * setUp method
  *
- * @access public
  * @return void
  */
 	public function setUp() {
@@ -43,7 +42,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * tearDown method
  *
- * @access public
  * @return void
  */
 	public function tearDown() {
@@ -55,7 +53,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * testReadAndWriteCache method
  *
- * @access public
  * @return void
  */
 	public function testReadAndWriteCache() {
@@ -93,7 +90,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * testExpiry method
  *
- * @access public
  * @return void
  */
 	public function testExpiry() {
@@ -128,7 +124,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * testDeleteCache method
  *
- * @access public
  * @return void
  */
 	public function testDeleteCache() {
@@ -143,7 +138,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * testDecrement method
  *
- * @access public
  * @return void
  */
 	public function testDecrement() {
@@ -169,7 +163,6 @@ class ApcEngineTest extends CakeTestCase {
 /**
  * testIncrement method
  *
- * @access public
  * @return void
  */
 	public function testIncrement() {
@@ -197,10 +190,13 @@ class ApcEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testClear() {
+		apc_store('not_cake', 'survive');
 		Cache::write('some_value', 'value', 'apc');
 
 		$result = Cache::clear(false, 'apc');
 		$this->assertTrue($result);
 		$this->assertFalse(Cache::read('some_value', 'apc'));
+		$this->assertEquals('survive', apc_fetch('not_cake'));
+		apc_delete('not_cake');
 	}
 }

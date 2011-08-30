@@ -181,7 +181,7 @@ abstract class ControllerTestCase extends CakeTestCase {
  * @param string $url The url to test
  * @param array $options See options
  */
-	private function _testAction($url = '', $options = array()) {
+	protected function _testAction($url = '', $options = array()) {
 		$this->vars = $this->result = $this->view = $this->contents = $this->headers = null;
 
 		$options = array_merge(array(
@@ -190,17 +190,18 @@ abstract class ControllerTestCase extends CakeTestCase {
 			'return' => 'result'
 		), $options);
 
+		$_SERVER['REQUEST_METHOD'] = strtoupper($options['method']);
 		if (strtoupper($options['method']) == 'GET') {
 			$_GET = $options['data'];
 			$_POST = array();
 		} else {
-			$_POST = array('data' => $options['data']);
+			$_POST = $options['data'];
 			$_GET = array();
 		}
 		$request = new CakeRequest($url);
 		$Dispatch = new ControllerTestDispatcher();
 		foreach (Router::$routes as $route) {
-			if (is_a($route, 'RedirectRoute')) {
+			if ($route instanceof RedirectRoute) {
 				$route->response = $this->getMock('CakeResponse', array('send'));
 			}
 		}
@@ -213,8 +214,9 @@ abstract class ControllerTestCase extends CakeTestCase {
 		if ($this->controller !== null && Inflector::camelize($request->params['controller']) !== $this->controller->name) {
 			$this->controller = null;
 		}
+		$plugin = empty($request->params['plugin']) ? '' : Inflector::camelize($request->params['plugin']) . '.';
 		if ($this->controller === null && $this->autoMock) {
-			$this->generate(Inflector::camelize($request->params['controller']));
+			$this->generate(Inflector::camelize($plugin . $request->params['controller']));
 		}
 		$params = array();
 		if ($options['return'] == 'result') {

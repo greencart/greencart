@@ -84,7 +84,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveDateAsFirstEntry method
  *
- * @access public
  * @return void
  */
 	public function testSaveDateAsFirstEntry() {
@@ -116,7 +115,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUnderscoreFieldSave method
  *
- * @access public
  * @return void
  */
 	public function testUnderscoreFieldSave() {
@@ -142,7 +140,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testAutoSaveUuid method
  *
- * @access public
  * @return void
  */
 	public function testAutoSaveUuid() {
@@ -186,7 +183,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testZeroDefaultFieldValue method
  *
- * @access public
  * @return void
  */
 	public function testZeroDefaultFieldValue() {
@@ -205,7 +201,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Tests validation parameter order in custom validation methods
  *
- * @access public
  * @return void
  */
 	public function testAllowSimulatedFields() {
@@ -265,7 +260,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveWithCounterCache method
  *
- * @access public
  * @return void
  */
 	public function testSaveWithCounterCache() {
@@ -302,7 +296,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Tests that counter caches are updated when records are added
  *
- * @access public
  * @return void
  */
 	public function testCounterCacheIncrease() {
@@ -329,7 +322,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Tests that counter caches are updated when records are deleted
  *
- * @access public
  * @return void
  */
 	public function testCounterCacheDecrease() {
@@ -351,7 +343,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Tests that counter caches are updated when foreign keys of counted records change
  *
- * @access public
  * @return void
  */
 	public function testCounterCacheUpdated() {
@@ -375,7 +366,6 @@ class ModelWriteTest extends BaseModelTest {
  * Test counter cache with models that use a non-standard (i.e. not using 'id')
  * as their primary key.
  *
- * @access public
  * @return void
  */
 	public function testCounterCacheWithNonstandardPrimaryKey() {
@@ -430,7 +420,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveWithCounterCacheScope method
  *
- * @access public
  * @return void
  */
 	public function testSaveWithCounterCacheScope() {
@@ -466,6 +455,70 @@ class ModelWriteTest extends BaseModelTest {
 
 		$result = $TestModel->findById(1);
 		$this->assertEquals($result['Syfile']['item_count'], 1);
+	}
+
+/**
+ * Tests having multiple counter caches for an associated model
+ *
+ * @access public
+ * @return void
+ */
+	public function testCounterCacheMultipleCaches() {
+		$this->loadFixtures('CounterCacheUser', 'CounterCachePost');
+		$User = new CounterCacheUser();
+		$Post = new CounterCachePost();
+		$Post->unbindModel(array('belongsTo' => array('User')), false);
+		$Post->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'className' => 'CounterCacheUser',
+					'foreignKey' => 'user_id',
+					'counterCache' => array(
+						true,
+						'posts_published' => array('Post.published' => true)
+					)
+				)
+			)
+		), false);
+
+		// Count Increase
+		$user = $User->find('first', array(
+			'conditions' => array('id' => 66),
+			'recursive' => -1
+		));
+		$data = array('Post' => array(
+			'id' => 22,
+			'title' => 'New Post',
+			'user_id' => 66,
+			'published' => true
+		));
+		$Post->save($data);
+		$result = $User->find('first', array(
+			'conditions' => array('id' => 66),
+			'recursive' => -1
+		));
+		$this->assertEquals(3, $result[$User->alias]['post_count']);
+		$this->assertEquals(2, $result[$User->alias]['posts_published']);
+
+		// Count decrease
+		$Post->delete(1);
+		$result = $User->find('first', array(
+			'conditions' => array('id' => 66),
+			'recursive' => -1
+		));
+		$this->assertEquals(2, $result[$User->alias]['post_count']);
+		$this->assertEquals(2, $result[$User->alias]['posts_published']);
+
+		// Count update
+		$data = $Post->find('first', array(
+			'conditions' => array('id' => 1),
+			'recursive' => -1
+		));
+		$data[$Post->alias]['user_id'] = 301;
+		$Post->save($data);
+		$result = $User->find('all',array('order' => 'User.id'));
+		$this->assertEquals(2, $result[0]['User']['post_count']);
+		$this->assertEquals(1, $result[1]['User']['posts_published']);
 	}
 
 /**
@@ -508,7 +561,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveField method
  *
- * @access public
  * @return void
  */
 	public function testSaveField() {
@@ -578,7 +630,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveWithCreate method
  *
- * @access public
  * @return void
  */
 	public function testSaveWithCreate() {
@@ -827,7 +878,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveWithSet method
  *
- * @access public
  * @return void
  */
 	public function testSaveWithSet() {
@@ -955,7 +1005,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveWithNonExistentFields method
  *
- * @access public
  * @return void
  */
 	public function testSaveWithNonExistentFields() {
@@ -1007,7 +1056,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveFromXml method
  *
- * @access public
  * @return void
  */
 	public function testSaveFromXml() {
@@ -1035,7 +1083,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveHabtm method
  *
- * @access public
  * @return void
  */
 	public function testSaveHabtm() {
@@ -1513,7 +1560,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveHabtmCustomKeys method
  *
- * @access public
  * @return void
  */
 	public function testSaveHabtmCustomKeys() {
@@ -1612,7 +1658,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testHabtmSaveKeyResolution method
  *
- * @access public
  * @return void
  */
 	public function testHabtmSaveKeyResolution() {
@@ -1702,7 +1747,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testCreationOfEmptyRecord method
  *
- * @access public
  * @return void
  */
 	public function testCreationOfEmptyRecord() {
@@ -1722,7 +1766,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testCreateWithPKFiltering method
  *
- * @access public
  * @return void
  */
 	public function testCreateWithPKFiltering() {
@@ -1819,7 +1862,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testCreationWithMultipleData method
  *
- * @access public
  * @return void
  */
 	public function testCreationWithMultipleData() {
@@ -1991,7 +2033,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testCreationWithMultipleDataSameModel method
  *
- * @access public
  * @return void
  */
 	public function testCreationWithMultipleDataSameModel() {
@@ -2050,7 +2091,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testCreationWithMultipleDataSameModelManualInstances method
  *
- * @access public
  * @return void
  */
 	public function testCreationWithMultipleDataSameModelManualInstances() {
@@ -2089,7 +2129,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testRecordExists method
  *
- * @access public
  * @return void
  */
 	public function testRecordExists() {
@@ -2117,7 +2156,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUpdateExisting method
  *
- * @access public
  * @return void
  */
 	public function testUpdateExisting() {
@@ -2186,7 +2224,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUpdateMultiple method
  *
- * @access public
  * @return void
  */
 	public function testUpdateMultiple() {
@@ -2220,7 +2257,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testHabtmUuidWithUuidId method
  *
- * @access public
  * @return void
  */
 	public function testHabtmUuidWithUuidId() {
@@ -2290,7 +2326,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testHabtmUuidWithNumericId method
  *
- * @access public
  * @return void
  */
 	public function testHabtmUuidWithNumericId() {
@@ -2309,7 +2344,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveMultipleHabtm method
  *
- * @access public
  * @return void
  */
 	public function testSaveMultipleHabtm() {
@@ -2428,7 +2462,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAll method
  *
- * @access public
  * @return void
  */
 	public function testSaveAll() {
@@ -2568,7 +2601,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Test SaveAll with Habtm relations
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHabtm() {
@@ -2600,7 +2632,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Test SaveAll with Habtm relations and extra join table fields
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHabtmWithExtraJoinTableFields() {
@@ -2644,7 +2675,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllHasOne method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHasOne() {
@@ -2697,7 +2727,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllBelongsTo method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllBelongsTo() {
@@ -2737,7 +2766,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllHasOneValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHasOneValidation() {
@@ -2784,7 +2812,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllAtomic method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllAtomic() {
@@ -2859,7 +2886,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllHasMany method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHasMany() {
@@ -2936,7 +2962,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllHasManyValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHasManyValidation() {
@@ -3070,7 +3095,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllTransaction method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllTransaction() {
@@ -3267,7 +3291,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllValidation() {
@@ -3447,7 +3470,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllValidationOnly method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllValidationOnly() {
@@ -3501,7 +3523,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllValidateFirst method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllValidateFirst() {
@@ -3640,7 +3661,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAllHasManyValidationOnly method
  *
- * @access public
  * @return void
  */
 	public function testSaveAllHasManyValidationOnly() {
@@ -3718,7 +3738,6 @@ class ModelWriteTest extends BaseModelTest {
  * test that saveAll behaves like plain save() when suplied empty data
  *
  * @link http://cakephp.lighthouseapp.com/projects/42648/tickets/277-test-saveall-with-validation-returns-incorrect-boolean-when-saving-empty-data
- * @access public
  * @return void
  */
 	public function testSaveAllEmptyData() {
@@ -3737,7 +3756,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociated method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociated() {
@@ -3833,7 +3851,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveMany method
  *
- * @access public
  * @return void
  */
 	public function testSaveMany() {
@@ -3889,7 +3906,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Test SaveAssociated with Habtm relations
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHabtm() {
@@ -3921,7 +3937,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * Test SaveAssociated with Habtm relations and extra join table fields
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHabtmWithExtraJoinTableFields() {
@@ -3965,7 +3980,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedHasOne method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHasOne() {
@@ -4018,7 +4032,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedBelongsTo method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedBelongsTo() {
@@ -4058,7 +4071,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedHasOneValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHasOneValidation() {
@@ -4095,7 +4107,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedAtomic method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedAtomic() {
@@ -4134,7 +4145,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveManyAtomic method
  *
- * @access public
  * @return void
  */
 	public function testSaveManyAtomic() {
@@ -4182,7 +4192,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedHasMany method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHasMany() {
@@ -4259,7 +4268,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedHasManyValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedHasManyValidation() {
@@ -4393,7 +4401,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveManyTransaction method
  *
- * @access public
  * @return void
  */
 	public function testSaveManyTransaction() {
@@ -4590,7 +4597,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveManyValidation method
  *
- * @access public
  * @return void
  */
 	public function testSaveManyValidation() {
@@ -4770,7 +4776,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testValidateMany method
  *
- * @access public
  * @return void
  */
 	public function testValidateMany() {
@@ -4804,7 +4809,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testSaveAssociatedValidateFirst method
  *
- * @access public
  * @return void
  */
 	public function testSaveAssociatedValidateFirst() {
@@ -4943,7 +4947,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testValidateAssociated method
  *
- * @access public
  * @return void
  */
 	public function testValidateAssociated() {
@@ -5032,7 +5035,6 @@ class ModelWriteTest extends BaseModelTest {
  * test that saveMany behaves like plain save() when suplied empty data
  *
  * @link http://cakephp.lighthouseapp.com/projects/42648/tickets/277-test-saveall-with-validation-returns-incorrect-boolean-when-saving-empty-data
- * @access public
  * @return void
  */
 	public function testSaveManyEmptyData() {
@@ -5052,7 +5054,6 @@ class ModelWriteTest extends BaseModelTest {
  * test that saveAssociated behaves like plain save() when suplied empty data
  *
  * @link http://cakephp.lighthouseapp.com/projects/42648/tickets/277-test-saveall-with-validation-returns-incorrect-boolean-when-saving-empty-data
- * @access public
  * @return void
  */
 	public function testSaveAssociatedEmptyData() {
@@ -5071,7 +5072,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUpdateWithCalculation method
  *
- * @access public
  * @return void
  */
 	public function testUpdateWithCalculation() {
@@ -5101,7 +5101,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * TestFindAllWithoutForeignKey
  *
- * @access public
  * @return void
  */
 	public function testFindAllForeignKey() {
@@ -5179,7 +5178,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUpdateAllWithJoins
  *
- * @access public
  * @return void
  */
 	public function testUpdateAllWithJoins() {
@@ -5227,7 +5225,6 @@ class ModelWriteTest extends BaseModelTest {
 /**
  * testUpdateAllWithoutForeignKey
  *
- * @access public
  * @return void
  */
     function testUpdateAllWithoutForeignKey() {

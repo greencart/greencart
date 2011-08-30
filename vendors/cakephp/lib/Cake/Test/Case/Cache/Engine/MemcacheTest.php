@@ -46,7 +46,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * setUp method
  *
- * @access public
  * @return void
  */
 	public function setUp() {
@@ -64,7 +63,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * tearDown method
  *
- * @access public
  * @return void
  */
 	public function tearDown() {
@@ -76,7 +74,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testSettings method
  *
- * @access public
  * @return void
  */
 	public function testSettings() {
@@ -98,7 +95,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testSettings method
  *
- * @access public
  * @return void
  */
 	public function testMultipleServers() {
@@ -127,7 +123,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testConnect method
  *
- * @access public
  * @return void
  */
 	public function testConnect() {
@@ -172,7 +167,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testReadAndWriteCache method
  *
- * @access public
  * @return void
  */
 	public function testReadAndWriteCache() {
@@ -196,7 +190,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testExpiry method
  *
- * @access public
  * @return void
  */
 	public function testExpiry() {
@@ -245,7 +238,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testDeleteCache method
  *
- * @access public
  * @return void
  */
 	public function testDeleteCache() {
@@ -260,7 +252,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testDecrement method
  *
- * @access public
  * @return void
  */
 	public function testDecrement() {
@@ -283,7 +274,6 @@ class MemcacheEngineTest extends CakeTestCase {
 /**
  * testIncrement method
  *
- * @access public
  * @return void
  */
 	public function testIncrement() {
@@ -344,11 +334,24 @@ class MemcacheEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testClear() {
-		Cache::write('some_value', 'value', 'memcache');
+		Cache::config('memcache2', array(
+			'engine' => 'Memcache',
+			'prefix' => 'cake2_',
+			'duration' => 3600
+		));
 
+		Cache::write('some_value', 'cache1', 'memcache');
+		$result = Cache::clear(true, 'memcache');
+		$this->assertTrue($result);
+		$this->assertEquals('cache1', Cache::read('some_value', 'memcache'));
+
+		Cache::write('some_value', 'cache2', 'memcache2');
 		$result = Cache::clear(false, 'memcache');
 		$this->assertTrue($result);
 		$this->assertFalse(Cache::read('some_value', 'memcache'));
+		$this->assertEquals('cache2', Cache::read('some_value', 'memcache2'));
+
+		Cache::clear(false, 'memcache2');
 	}
 /**
  * test that a 0 duration can succesfully write.
