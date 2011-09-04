@@ -19,8 +19,7 @@
  *         Datasabe/Mysql     - MySQL 4 & 5,
  *         Datasabe/Sqlite    - SQLite (PHP5 only),
  *         Datasabe/Postgres  - PostgreSQL 7 and higher,
- *         Database/Sqlserver - Microsoft SQL Server 2005 and higher,
- *         Datasabe/Oracle    - Oracle 8 and higher
+ *         Database/Sqlserver - Microsoft SQL Server 2005 and higher
  *
  * - `persistent` - Determines whether or not the database should use a persistent connection.
  *
@@ -45,6 +44,7 @@ class DATABASE_CONFIG
 		'password'   => 'password',
 		'database'   => 'greencart',
 		'prefix'     => 'gc_',
+		'encoding'   => 'utf8'
 	);
 
 	public $test = array(
@@ -55,5 +55,6 @@ class DATABASE_CONFIG
 		'password'   => 'password',
 		'database'   => 'greencart_test',
 		'prefix'     => 'gc_test_',
+		'encoding'   => 'utf8'
 	);
 }

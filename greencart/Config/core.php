@@ -92,7 +92,7 @@ define('LOG_ERROR', 2);
  *
  * Options:
  *
- * - `Session.name` - The name of the cookie to use.
+ * - `Session.cookie` - The name of the cookie to use.
  * - `Session.timeout` - The number of minutes you want sessions to live for (this timeout is
  *    handled by CakePHP).
  * - `Session.cookieTimeout` - The number of minutes you want session cookies to live for.
@@ -146,8 +146,8 @@ Configure::write('Security.cipherKey' , 'kJIsLwIdmTYpaKhRgJaMlaeWqfghQcZd');
  * Will append a querystring parameter containing the time the file was modified. This is
  * useful for invalidating browser caches.
  *
- * Set to `true` to apply timestamps, when debug = 0, or set to 'force' to always enable
- * timestamping.
+ * Set to `true` to apply timestamps when debug > 0. Set to 'force' to always enable
+ * timestamping regardless of debug value.
  */
 Configure::write('Asset.timestamp', true);
 
@@ -185,7 +185,7 @@ Cache::config('_cake_core_', array(
 ));
 
 /**
- * Configure the cache for model, and datasource caches. This cache configuration
+ * Configure the cache for model and datasource caches. This cache configuration
  * is used to store schema descriptions, and table listings in connections.
  */
 Cache::config('_cake_model_', array(
