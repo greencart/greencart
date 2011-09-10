@@ -19,7 +19,7 @@ class Url
 	/**
 	 * Expands short notation of specified URL.
 	 *
-	 * @param midex $url
+	 * @param mixed $url
 	 * @return mixed
 	 */
 	public static function shortNotation($url)
@@ -55,7 +55,7 @@ class Url
 	/**
 	 * Adds i18n support to specified URL.
 	 *
-	 * @param midex $url
+	 * @param mixed $url
 	 * @return mixed
 	 */
 	public static function i18n($url)
@@ -77,5 +77,16 @@ class Url
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Checks whether an URL exists.
+	 *
+	 * @param string $url
+	 * @return bool
+	 */
+	public static function exists($url)
+	{
+		return is_array(@get_headers($url));
 	}
 }
