@@ -127,7 +127,19 @@ if ($plugins = CakePlugin::loaded()) {
 foreach ($prefixes as $prefix) {
 	$params      = array('prefix' => $prefix, $prefix => true);
 	$indexParams = $params + array('action' => 'index');
+
+	Router::connect(
+		"/:lang/{$prefix}/:controller",
+		array('lang' => $i18n['default']) + $indexParams,
+		array('lang' => $i18n['pattern'])
+	);
 	Router::connect("/{$prefix}/:controller", $indexParams);
+
+	Router::connect(
+		"/:lang/{$prefix}/:controller/:action/*",
+		array('lang' => $i18n['default']) + $params,
+		array('lang' => $i18n['pattern'])
+	);
 	Router::connect("/{$prefix}/:controller/:action/*", $params);
 }
 
