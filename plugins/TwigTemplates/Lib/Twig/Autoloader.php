@@ -43,7 +43,7 @@ class Twig_Autoloader
 		static $paths;
 
 		if (is_null($paths)) {
-			$vendorPaths = App::path('vendors');
+			$vendorPaths = App::path('Vendor');
 			$paths       = array(
 				reset(App::path('Lib')),
 				dirname(dirname(__FILE__)).DS

@@ -91,7 +91,7 @@ class SwiftMailerComponent extends Component
 	public function send($options = array())
 	{
 		if (!defined('SWIFT_REQUIRED_LOADED')) {
-			App::import('vendors', 'swiftmailer'.DS.'lib'.DS.'swift_required');
+			App::import('Vendor', 'swiftmailer'.DS.'lib'.DS.'swift_required');
 		}
 
 		$options += $this->_options;
