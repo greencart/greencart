@@ -87,6 +87,7 @@ class HelperTestComment extends Model {
 			'author_id' => array('type' => 'integer', 'null' => false, 'default' => '', 'length' => '8'),
 			'title' => array('type' => 'string', 'null' => false, 'default' => '', 'length' => '255'),
 			'body' => array('type' => 'string', 'null' => true, 'default' => '', 'length' => ''),
+			'BigField' => array('type' => 'string', 'null' => true, 'default' => '', 'length' => ''),
 			'created' => array('type' => 'date', 'null' => true, 'default' => '', 'length' => ''),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => '', 'length' => null)
 		);
@@ -228,6 +229,10 @@ class HelperTest extends CakeTestCase {
 			array(
 				'HelperTest.1.Comment.body',
 				array('HelperTest', '1', 'Comment', 'body')
+			),
+			array(
+				'HelperTestComment.BigField',
+				array('HelperTestComment', 'BigField')
 			)
 		);
 	}
@@ -299,6 +304,44 @@ class HelperTest extends CakeTestCase {
 		$this->assertEquals($expected, $this->Helper->entity());
 
 		$this->assertEquals('HelperTestComment', $this->Helper->model());
+	}
+
+/**
+ * Test that setEntity doesn't make CamelCase fields that are not associations an
+ * associated model.
+ *
+ * @return void
+ */
+	public function testSetEntityAssociatedCamelCaseField() {
+		$this->Helper->fieldset = array(
+			'HelperTestComment' => array(
+				'fields' => array('BigField' => array('type' => 'integer'))
+			)
+		);
+		$this->Helper->setEntity('HelperTestComment', true);
+		$this->Helper->setEntity('HelperTestComment.BigField');
+
+		$this->assertEquals('HelperTestComment', $this->Helper->model());
+		$this->assertEquals('BigField', $this->Helper->field());
+	}
+
+/**
+ * Test that multiple fields work when they are camelcase and in fieldset
+ *
+ * @return void
+ */
+	public function testSetEntityAssociatedCamelCaseFieldHabtmMultiple() {
+		$this->Helper->fieldset = array(
+			'HelperTestComment' => array(
+				'fields' => array('Tag' => array('type' => 'multiple'))
+			)
+		);
+		$this->Helper->setEntity('HelperTestComment', true);
+		$this->Helper->setEntity('Tag');
+
+		$this->assertEquals('Tag', $this->Helper->model());
+		$this->assertEquals('Tag', $this->Helper->field());
+		$this->assertEquals(array('Tag', 'Tag'), $this->Helper->entity());
 	}
 
 /**

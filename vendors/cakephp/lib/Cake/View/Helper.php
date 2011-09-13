@@ -65,6 +65,14 @@ class Helper extends Object {
 	public $plugin = null;
 
 /**
+ * Holds the fields array('field_name' => array('type'=> 'string', 'length'=> 100),
+ * primaryKey and validates array('field_name')
+ *
+ * @var array
+ */
+	public $fieldset = array();
+
+/**
  * Holds tag templates.
  *
  * @var array
@@ -446,23 +454,26 @@ class Helper extends Object {
 
 		$this->_association = null;
 
-		// check for associated model.
-		$reversed = array_reverse($parts);
-		foreach ($reversed as $part) {
-			if (preg_match('/^[A-Z]/', $part)) {
-				$this->_association = $part;
-				break;
-			}
-		}
-
 		// habtm models are special
 		if (
 			isset($this->fieldset[$this->_modelScope]['fields'][$parts[0]]['type']) &&
 			$this->fieldset[$this->_modelScope]['fields'][$parts[0]]['type'] === 'multiple'
 		) {
+			$this->_association = $parts[0];
 			$entity = $parts[0] . '.' . $parts[0];
+		} else {
+			// check for associated model.
+			$reversed = array_reverse($parts);
+			foreach ($reversed as $part) {
+				if (
+					!isset($this->fieldset[$this->_modelScope]['fields'][$part]) &&
+					preg_match('/^[A-Z]/', $part)
+				) {
+					$this->_association = $part;
+					break;
+				}
+			}
 		}
-
 		$this->_entityPath = $entity;
 		return;
 	}
